@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "functions": {
+    "app/api/crypto/anchor/route.ts": { "maxDuration": 60 },
+    "app/api/crypto/withdraw/route.ts": { "maxDuration": 30 },
+    "app/api/crypto/webhook/route.ts": { "maxDuration": 30 },
+    "app/api/kyc/webhook/route.ts": { "maxDuration": 30 },
+    "app/api/ai/chat/route.ts": { "maxDuration": 60 },
+    "app/api/ai/analyze-project/route.ts": { "maxDuration": 60 },
+    "app/api/ai/recommendations/route.ts": { "maxDuration": 60 },
+    "app/api/ai/generate-content/route.ts": { "maxDuration": 60 },
+    "app/api/ai/onboarding/route.ts": { "maxDuration": 30 },
+    "app/api/crm/campaigns/route.ts": { "maxDuration": 60 },
+    "app/api/invoicing/route.ts": { "maxDuration": 30 },
+    "app/api/secondary/trades/route.ts": { "maxDuration": 30 }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(self)" }
+      ]
+    }
+  ]
+}
