@@ -16,6 +16,7 @@ import {
   extractText,
 } from '@/lib/anthropic/client';
 import { ANALYST_SYSTEM_PROMPT, buildUserContext } from './prompts';
+import { buildMemoryContext, saveMemory, type MemoryType } from '@/lib/ai/memory';
 
 interface ConversationContext {
   userId: string;
@@ -77,6 +78,24 @@ const ANALYST_FUNCTIONS: Anthropic.Tool[] = [
     description: 'Obtener recomendaciones personalizadas de la IA según el perfil',
     input_schema: { type: 'object', properties: {} },
   },
+  {
+    name: 'save_memory',
+    description:
+      'Guardar información importante sobre el usuario para recordar entre conversaciones. Usar cuando comparte preferencias, objetivos, decisiones o hechos clave.',
+    input_schema: {
+      type: 'object',
+      properties: {
+        memory_type: {
+          type: 'string',
+          enum: ['user_preference', 'decision', 'context', 'important_fact', 'goal', 'concern'],
+        },
+        summary: { type: 'string', description: 'Resumen en 1 oración' },
+        details: { type: 'string' },
+        importance: { type: 'integer', description: '0-10' },
+      },
+      required: ['memory_type', 'summary'],
+    },
+  },
 ];
 
 // ============================================
@@ -121,6 +140,9 @@ export async function sendMessage(params: {
     content: userMessage,
   });
 
+  // Cargar memorias persistentes del usuario para este turno
+  const memoryBlock = await buildMemoryContext(supabaseClient, userContext.userId);
+
   let totalInput = 0;
   let totalOutput = 0;
   const functionCallsLog: any[] = [];
@@ -140,7 +162,7 @@ export async function sendMessage(params: {
         totalInvested: userContext.totalInvested,
         walletBalance: userContext.walletBalance,
         riskProfile: userContext.riskProfile,
-      })}`,
+      })}${memoryBlock}`,
       tools: ANALYST_FUNCTIONS,
       messages,
     });
@@ -289,6 +311,18 @@ async function executeFunctionCall(
         .order('priority', { ascending: false })
         .limit(3);
       return { recommendations: data || [] };
+    }
+
+    case 'save_memory': {
+      const saved = await saveMemory(supabase, userContext.userId, {
+        memory_type: args.memory_type as MemoryType,
+        summary: args.summary,
+        details: args.details,
+        importance: args.importance,
+      });
+      return saved
+        ? { saved: true, memory_id: saved.id, summary: saved.summary }
+        : { saved: false, error: 'no se pudo guardar' };
     }
 
     default:

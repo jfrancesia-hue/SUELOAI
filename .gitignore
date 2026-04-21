@@ -48,3 +48,15 @@ coverage/
 # Temp
 tmp/
 temp/
+
+# Mobile / Expo
+apps/mobile/node_modules/
+apps/mobile/.expo/
+apps/mobile/dist/
+apps/mobile/*.apk
+apps/mobile/*.ipa
+
+# Playwright
+playwright-report/
+test-results/
+blob-report/

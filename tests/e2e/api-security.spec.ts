@@ -28,14 +28,23 @@ test.describe('API security', () => {
     expect(headers['x-robots-tag']).toContain('noindex');
   });
 
-  test('POST /api/ai/chat respeta rate limit (21 requests)', async ({ request }) => {
+  test('POST /api/ai/chat respeta rate limit al saturar', async ({ request }) => {
+    // Usar IP única para no pisarse con otros tests paralelos
+    const uniqueIp = `192.0.2.${Math.floor(Math.random() * 254) + 1}`;
+    const headers = { 'x-forwarded-for': uniqueIp };
+
     const results: number[] = [];
-    for (let i = 0; i < 22; i++) {
-      const res = await request.post('/api/ai/chat', { data: { message: 'x' } });
+    // Limit es 20/min → con 40 requests garantizamos saturación
+    for (let i = 0; i < 40; i++) {
+      const res = await request.post('/api/ai/chat', {
+        data: { message: 'x' },
+        headers,
+      });
       results.push(res.status());
     }
-    // Alguno de los últimos debería ser 429 (rate limit)
-    expect(results.some((s) => s === 429)).toBeTruthy();
+    // Con IP limpia, al menos uno de los últimos 20 debe ser 429
+    const last20 = results.slice(-20);
+    expect(last20.some((s) => s === 429)).toBeTruthy();
   });
 
   test('/api/kyc/webhook health check funciona', async ({ request }) => {

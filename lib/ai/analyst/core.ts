@@ -185,6 +185,41 @@ export const ANALYST_TOOLS: Anthropic.Tool[] = [
       required: ['type', 'title', 'reasoning'],
     },
   },
+  {
+    name: 'save_memory',
+    description:
+      'Guarda información importante sobre el usuario para recordar entre conversaciones. Usar cuando el usuario comparte preferencias, objetivos, preocupaciones, decisiones, o hechos clave que deban persistir.',
+    input_schema: {
+      type: 'object',
+      properties: {
+        memory_type: {
+          type: 'string',
+          enum: [
+            'user_preference',
+            'decision',
+            'context',
+            'important_fact',
+            'goal',
+            'concern',
+          ],
+          description: 'Categoría de la memoria',
+        },
+        summary: {
+          type: 'string',
+          description: 'Resumen en 1 oración. Ej: "Prefiere proyectos residenciales en Paraguay"',
+        },
+        details: {
+          type: 'string',
+          description: 'Contexto adicional opcional',
+        },
+        importance: {
+          type: 'integer',
+          description: '0-10, default 5. 8+ para hechos críticos como "es contador matriculado"',
+        },
+      },
+      required: ['memory_type', 'summary'],
+    },
+  },
 ];
 
 // ============================================
