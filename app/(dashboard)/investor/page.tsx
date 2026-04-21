@@ -1,7 +1,8 @@
 import { createClient } from '@/lib/supabase-server';
 import { redirect } from 'next/navigation';
-import { formatCurrency, formatDate, getStatusColor, getStatusLabel, getProgressPercent } from '@/utils/helpers';
+import { formatCurrency, formatDate, getStatusLabel } from '@/utils/helpers';
 import { StatCard, Badge, ProgressBar, EmptyState } from '@/components/ui';
+import { PortfolioCharts } from '@/components/dashboard/PortfolioCharts';
 import { Wallet, TrendingUp, Building2, FileText, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -35,6 +36,22 @@ export default async function InvestorDashboard() {
 
   const activeInvestments = investments?.filter((i) => i.status === 'confirmed') || [];
   const projectIds = [...new Set(activeInvestments.map((i) => i.project_id))];
+
+  // Breakdown para charts
+  const byLocationMap = new Map<string, number>();
+  const byProjectMap = new Map<string, number>();
+  for (const inv of activeInvestments) {
+    const loc = inv.project?.location || 'Sin ubicación';
+    const title = inv.project?.title || 'Proyecto';
+    const amount = Number(inv.amount) || 0;
+    byLocationMap.set(loc, (byLocationMap.get(loc) ?? 0) + amount);
+    byProjectMap.set(title, (byProjectMap.get(title) ?? 0) + amount);
+  }
+  const byLocation = Array.from(byLocationMap.entries()).map(([name, value]) => ({ name, value }));
+  const byProject = Array.from(byProjectMap.entries())
+    .map(([name, value]) => ({ name, value }))
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 8);
 
   return (
     <div className="max-w-7xl mx-auto space-y-8">
@@ -73,6 +90,11 @@ export default async function InvestorDashboard() {
           icon={FileText}
         />
       </div>
+
+      {/* Charts */}
+      {byLocation.length > 0 && (
+        <PortfolioCharts byLocation={byLocation} byProject={byProject} />
+      )}
 
       {/* Investments list */}
       <div>

@@ -1,8 +1,13 @@
 import { createClient } from '@/lib/supabase-server';
 import { sendMessage, getOrCreateActiveConversation } from '@/lib/ai/analyst/conversation-manager';
+import { limitByIp } from '@/lib/rate-limit';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
+  // Rate limit primero (antes de verificar auth) — protege contra abuso anónimo
+  const rl = await limitByIp(request, 'ai-chat', { requests: 20, window: 60 });
+  if (!rl.success) return rl.response;
+
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 

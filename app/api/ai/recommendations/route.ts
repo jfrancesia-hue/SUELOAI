@@ -8,6 +8,7 @@
 
 import { createClient } from '@/lib/supabase-server';
 import { anthropic, CLAUDE_MODELS, parseJsonResponse, extractText } from '@/lib/anthropic/client';
+import { limitByIp } from '@/lib/rate-limit';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(_request: NextRequest) {
@@ -31,7 +32,11 @@ export async function GET(_request: NextRequest) {
   return NextResponse.json({ data: data || [] });
 }
 
-export async function POST(_request: NextRequest) {
+export async function POST(request: NextRequest) {
+  // Rate limit agresivo: generar recs con Claude Opus cuesta tokens
+  const rl = await limitByIp(request, 'ai-recs', { requests: 5, window: 3600 });
+  if (!rl.success) return rl.response;
+
   const supabase = createClient();
   const {
     data: { user },

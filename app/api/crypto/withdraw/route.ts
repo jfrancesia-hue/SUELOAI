@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase-server';
 import { isValidAddress } from '@/lib/crypto/hd-wallet';
 import { getExchangeRate } from '@/lib/crypto/rates';
+import { limitByIp } from '@/lib/rate-limit';
 import { NextRequest, NextResponse } from 'next/server';
 import type { CryptoNetwork, CryptoToken } from '@/types/crypto';
 import { Resend } from 'resend';
@@ -15,6 +16,10 @@ const ADMIN_EMAILS = (process.env.ADMIN_NOTIFY_EMAILS || '')
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
 export async function POST(request: NextRequest) {
+  // Rate limit crypto withdraws: máx 5 por IP cada 10 min
+  const rl = await limitByIp(request, 'crypto-withdraw', { requests: 5, window: 600 });
+  if (!rl.success) return rl.response;
+
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
