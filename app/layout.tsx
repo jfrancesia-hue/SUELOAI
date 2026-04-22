@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import '@/styles/globals.css';
+import { SmoothScrollProvider } from '@/components/animations/SmoothScrollProvider';
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://suelo.ai';
 
@@ -75,7 +76,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es" className="dark">
       <body className="min-h-screen bg-surface-50 text-surface-900 antialiased">
         <div className="noise-overlay" />
-        {children}
+        <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>
     </html>
   );

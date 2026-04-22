@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Shield } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -9,11 +8,11 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center">
-                <Shield className="w-4.5 h-4.5 text-white" />
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center shadow-[0_0_0_1px_rgba(0,200,83,0.4),0_8px_20px_-4px_rgba(0,200,83,0.4)]">
+                <span className="text-white font-[700] text-base">S</span>
               </div>
-              <span className="font-display font-bold text-lg text-surface-900">
-                Prop<span className="text-brand-500">Chain</span>
+              <span className="font-display font-[620] text-[19px] text-surface-900 tracking-[-0.01em]">
+                Suelo<span className="text-brand-400">.ai</span>
               </span>
             </div>
             <p className="text-sm text-surface-500 max-w-md leading-relaxed">
