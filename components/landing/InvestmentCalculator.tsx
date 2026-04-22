@@ -10,11 +10,30 @@ const MAX_AMOUNT = 10000;
 const MIN_MONTHS = 6;
 const MAX_MONTHS = 60;
 
-// Retornos históricos estimados por perfil de proyecto (anualizados)
+// Retornos históricos estimados por perfil de proyecto (anualizados).
+// Clases Tailwind explícitas — JIT no genera clases interpoladas dinámicamente.
 const PROFILES = [
-  { label: 'Conservador', rate: 0.09, color: 'brand', description: 'Activos terminados + renta' },
-  { label: 'Balanceado', rate: 0.14, color: 'earth', description: 'Mix obra + renta' },
-  { label: 'Crecimiento', rate: 0.22, color: 'terra', description: 'Desarrollos emergentes' },
+  {
+    label: 'Conservador',
+    rate: 0.09,
+    description: 'Activos terminados + renta',
+    activeBg: 'bg-brand-500/10 border-brand-500/40',
+    activeText: 'text-brand-400',
+  },
+  {
+    label: 'Balanceado',
+    rate: 0.14,
+    description: 'Mix obra + renta',
+    activeBg: 'bg-earth-500/10 border-earth-500/40',
+    activeText: 'text-earth-300',
+  },
+  {
+    label: 'Crecimiento',
+    rate: 0.22,
+    description: 'Desarrollos emergentes',
+    activeBg: 'bg-terra-500/10 border-terra-500/40',
+    activeText: 'text-terra-400',
+  },
 ] as const;
 
 function fmt(n: number) {
@@ -138,13 +157,13 @@ export function InvestmentCalculator() {
                         onClick={() => setProfile(p)}
                         className={`relative p-3 rounded-[12px] border text-left transition-all duration-200 ${
                           active
-                            ? `bg-${p.color}-500/10 border-${p.color}-500/40`
+                            ? p.activeBg
                             : 'bg-surface-100 border-surface-200 hover:border-surface-300'
                         }`}
                       >
                         <p
                           className={`text-[12px] font-[580] ${
-                            active ? `text-${p.color}-400` : 'text-surface-800'
+                            active ? p.activeText : 'text-surface-800'
                           }`}
                         >
                           {p.label}
@@ -154,7 +173,7 @@ export function InvestmentCalculator() {
                         </p>
                         <p
                           className={`text-[11px] font-mono font-[600] mt-1 tabular-nums ${
-                            active ? `text-${p.color}-400` : 'text-surface-500'
+                            active ? p.activeText : 'text-surface-500'
                           }`}
                         >
                           ~{(p.rate * 100).toFixed(0)}% anual

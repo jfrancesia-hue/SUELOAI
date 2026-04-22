@@ -62,55 +62,6 @@ export function useCounterAnimation(targetValue: number, options?: { duration?: 
 }
 
 /**
- * Hook que hace un tilt 3D al mouse sobre el elemento.
- */
-export function useTilt3D(options?: { max?: number; scale?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
-
-    const max = options?.max ?? 6;
-    const scale = options?.scale ?? 1.02;
-
-    const onMove = (e: MouseEvent) => {
-      const rect = el.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      gsap.to(el, {
-        rotateX: -y * max,
-        rotateY: x * max,
-        scale,
-        transformPerspective: 1000,
-        duration: 0.6,
-        ease: 'power2.out',
-      });
-    };
-    const onLeave = () => {
-      gsap.to(el, {
-        rotateX: 0,
-        rotateY: 0,
-        scale: 1,
-        duration: 0.8,
-        ease: 'power3.out',
-      });
-    };
-
-    el.addEventListener('mousemove', onMove);
-    el.addEventListener('mouseleave', onLeave);
-    return () => {
-      el.removeEventListener('mousemove', onMove);
-      el.removeEventListener('mouseleave', onLeave);
-    };
-  }, [options?.max, options?.scale]);
-
-  return ref;
-}
-
-/**
  * Hook que hace scramble de texto al entrar en viewport.
  * Implementación manual (sin plugin premium).
  */
