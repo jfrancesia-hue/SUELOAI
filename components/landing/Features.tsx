@@ -22,7 +22,7 @@ export function Features() {
   const ref = useRevealOnScroll({ stagger: 0.06, duration: 0.7 });
 
   return (
-    <section ref={ref} id="como-funciona" className="relative py-24 md:py-32">
+    <section ref={ref} id="como-funciona" className="relative scroll-mt-24 py-24 md:py-32">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-surface-100/40 to-transparent" />
       <div className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-brand-500/[0.04] rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-terra-500/[0.03] rounded-full blur-[120px] pointer-events-none" />

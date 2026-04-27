@@ -1,7 +1,7 @@
 import { chromium } from 'playwright';
 import { mkdir } from 'node:fs/promises';
 
-const URL = 'http://localhost:3000';
+const URL = process.env.BASE_URL || 'http://localhost:3003';
 const OUT = './test-results/qa';
 
 await mkdir(OUT, { recursive: true });
@@ -48,7 +48,7 @@ consoleWarnings.slice(0, 5).forEach((e) => console.log(`  ! ${e.slice(0, 200)}`)
 
 // Screenshot específico del calculator (verificar fix de clases)
 await page.evaluate(() => {
-  const el = document.getElementById('calculadora');
+  const el = document.getElementById('simulador');
   if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY, behavior: 'instant' });
 });
 await page.waitForTimeout(500);
@@ -90,7 +90,7 @@ const mobileShots = [
   { id: null, y: 0, file: 'mobile-01-hero.png' },
   { id: 'como-funciona', y: 0, file: 'mobile-02-features.png' },
   { id: 'analista-ia', y: 0, file: 'mobile-03-ai.png' },
-  { id: 'calculadora', y: 0, file: 'mobile-04-calculator.png' },
+  { id: 'simulador', y: 0, file: 'mobile-04-calculator.png' },
   { id: 'traccion', y: 0, file: 'mobile-05-social.png' },
   { id: 'seguridad', y: 0, file: 'mobile-06-security.png' },
   { id: 'faq', y: 0, file: 'mobile-07-faq.png' },

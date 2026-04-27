@@ -56,6 +56,7 @@ export function Sidebar({ profile }: SidebarProps) {
   const links: any[] = profile.role === 'developer' ? developerLinks : investorLinks;
 
   const handleLogout = async () => {
+    await fetch('/api/demo/logout', { method: 'POST' }).catch(() => null);
     await supabase.auth.signOut();
     router.push('/');
     router.refresh();

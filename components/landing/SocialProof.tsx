@@ -1,163 +1,127 @@
 'use client';
 
-import { TrendingUp, Users, Building2, Award } from 'lucide-react';
-import { useCounterAnimation } from '@/components/animations/useScrollAnimation';
+import Image from 'next/image';
+import { Award, Building2, CircleDollarSign, HandCoins, ShieldCheck, Users } from 'lucide-react';
+import { ActivityTicker } from '@/components/ui/activity-ticker';
 import { useRevealOnScroll } from '@/components/animations/useReveal';
+import { useCounterAnimation } from '@/components/animations/useScrollAnimation';
 
 const stats = [
-  { icon: TrendingUp, value: 2.4, suffix: 'M', prefix: 'USD ', decimals: 1, label: 'Capital invertido' },
-  { icon: Building2, value: 847, suffix: '', prefix: '', decimals: 0, label: 'Proyectos financiados' },
-  { icon: Users, value: 12400, suffix: '', prefix: '', decimals: 0, label: 'Inversores activos' },
-  { icon: Award, value: 98.4, suffix: '%', prefix: '', decimals: 1, label: 'Tasa de éxito' },
+  { icon: Users, value: 12400, suffix: '', prefix: '', decimals: 0, label: 'Usuarios registrados', tone: 'text-emerald-300' },
+  { icon: CircleDollarSign, value: 2.4, suffix: 'M', prefix: 'USD ', decimals: 1, label: 'Monto financiado', tone: 'text-cyan-300' },
+  { icon: Building2, value: 38, suffix: '', prefix: '', decimals: 0, label: 'Proyectos activos', tone: 'text-[#F5C542]' },
+  { icon: HandCoins, value: 184, suffix: 'k', prefix: 'USD ', decimals: 0, label: 'Rentas distribuidas', tone: 'text-violet-300' },
+  { icon: ShieldCheck, value: 27, suffix: '', prefix: '', decimals: 0, label: 'Developers verificados', tone: 'text-emerald-300' },
+  { icon: Award, value: 98.4, suffix: '%', prefix: '', decimals: 1, label: 'Contratos verificados', tone: 'text-cyan-300' },
 ];
 
-const partners = [
-  'Mercado Pago',
-  'Didit KYC',
-  'Polygon',
-  'Twilio',
-  'Resend',
-  'Supabase',
-  'Anthropic',
-  'Mercado Pago',
-  'Didit KYC',
-  'Polygon',
+const activity = [
+  'María invirtió USD 500 en Asunción',
+  'Carlos recibió su primera renta mensual',
+  'Torre Horizonte alcanzó 72% de funding',
+  'Developer verificado en Córdoba',
+  'Contrato #8472 registrado con hash público',
+  'Nueva oportunidad A+ en Paraguay',
 ];
 
 const testimonials = [
   {
     name: 'María Fernanda Ríos',
     role: 'Inversora, Asunción',
-    text: 'Empecé con USD 100 el año pasado. Hoy tengo participaciones en 4 proyectos y el analista IA me avisó cuándo conviene rebalancear. Transparente de verdad.',
-    avatar: 'MR',
-    color: 'from-brand-400 to-brand-600',
+    text: 'Lo entendí en diez minutos: proyecto real, contrato verificable y una IA que me explicó el riesgo sin venderme humo.',
+    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80&auto=format&fit=crop',
   },
   {
     name: 'Carlos Aguilera',
-    role: 'Desarrollador inmobiliario, Córdoba',
-    text: 'Levanté capital para dos proyectos en 11 días. La plataforma me trajo inversores fraccionados que nunca hubiera alcanzado solo. Cambio de juego.',
-    avatar: 'CA',
-    color: 'from-earth-400 to-earth-600',
+    role: 'Developer, Córdoba',
+    text: 'Nos ayudó a ordenar la captación, documentación y seguimiento. Se siente mucho más serio que mandar PDFs por WhatsApp.',
+    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80&auto=format&fit=crop',
   },
   {
     name: 'Laura Méndez',
     role: 'Inversora, Montevideo',
-    text: 'Lo que más valoro es poder verificar cada contrato en Polygon. Paso el hash a mi contador y se termina la discusión. Serio y moderno.',
-    avatar: 'LM',
-    color: 'from-terra-400 to-terra-600',
+    text: 'Ver el avance, la renta estimada y el hash del contrato en el mismo lugar cambia totalmente la confianza.',
+    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80&auto=format&fit=crop',
   },
 ];
 
-function Stat({ stat, index }: { stat: typeof stats[number]; index: number }) {
-  const ref = useCounterAnimation(stat.value, { decimals: stat.decimals, duration: 1.6 + index * 0.1 });
+function StatCard({ stat, index }: { stat: (typeof stats)[number]; index: number }) {
+  const ref = useCounterAnimation(stat.value, { decimals: stat.decimals, duration: 1.4 + index * 0.06 });
   const Icon = stat.icon;
+
   return (
-    <div className="relative group">
-      <div className="absolute inset-0 rounded-[20px] bg-gradient-to-br from-brand-500/5 via-transparent to-terra-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      <div className="relative p-6 md:p-7 rounded-[20px] bg-surface-100/60 border border-surface-200/60 backdrop-blur-sm transition-all duration-500 hover:border-brand-500/20 hover:-translate-y-0.5">
-        <Icon className="w-5 h-5 text-brand-400 mb-4" strokeWidth={1.5} />
-        <div className="flex items-baseline gap-0.5">
-          <span className="text-[11px] font-mono text-surface-500 mb-1">{stat.prefix}</span>
-          <span
-            ref={ref}
-            className="font-display text-3xl md:text-4xl font-[680] text-surface-900 tabular-nums tracking-[-0.02em]"
-          >
-            0
-          </span>
-          <span className="text-xl md:text-2xl font-display font-[620] text-surface-700">
-            {stat.suffix}
-          </span>
-        </div>
-        <p className="mt-2 text-[13px] text-surface-600 leading-tight">{stat.label}</p>
+    <div data-reveal className="rounded-2xl border border-white/10 bg-white/[0.055] p-5 backdrop-blur-xl">
+      <Icon className={`mb-4 h-5 w-5 ${stat.tone}`} strokeWidth={1.7} />
+      <div className="flex items-baseline gap-1">
+        {stat.prefix && <span className="font-mono text-[11px] text-white/45">{stat.prefix}</span>}
+        <span ref={ref} className="font-display text-3xl font-bold tracking-[-0.02em] text-white">
+          0
+        </span>
+        {stat.suffix && <span className="font-display text-xl font-semibold text-white/70">{stat.suffix}</span>}
       </div>
+      <p className="mt-2 text-xs leading-tight text-white/46">{stat.label}</p>
     </div>
   );
 }
 
 export function SocialProof() {
-  const ref = useRevealOnScroll({ stagger: 0.07, duration: 0.7 });
+  const ref = useRevealOnScroll({ stagger: 0.05, duration: 0.7 });
 
   return (
-    <section ref={ref} id="traccion" className="relative py-24 md:py-28 overflow-hidden">
-      {/* Ambient */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-brand-500/[0.04] rounded-full blur-[140px] pointer-events-none" />
+    <section ref={ref} id="traccion" className="relative scroll-mt-24 overflow-hidden bg-[#07111F] py-24 md:py-32">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_22%,rgba(16,185,129,0.13),transparent_34%),radial-gradient(circle_at_82%_52%,rgba(6,182,212,0.12),transparent_32%),linear-gradient(180deg,#07111F_0%,#111827_56%,#07111F_100%)]" />
+      <div className="absolute inset-0 bg-grid-pattern bg-grid opacity-[0.055]" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <p
-            data-reveal
-            className="text-brand-500 text-[11px] font-semibold tracking-[0.18em] uppercase mb-4"
-          >
-            Tracción
-          </p>
-          <h2
-            data-reveal
-            className="font-display text-3xl md:text-5xl font-bold text-surface-900 tracking-[-0.02em] leading-[1.05]"
-          >
-            Miles de latinoamericanos{' '}
-            <span className="font-serif italic font-[400] text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-earth-300 to-terra-400">
-              ya pisan firme.
-            </span>
-          </h2>
-        </div>
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+          <div>
+            <p data-reveal className="mb-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-300">
+              Tracción
+            </p>
+            <h2 data-reveal className="font-display text-3xl font-bold leading-[1.05] tracking-[-0.02em] text-white md:text-5xl">
+              Señales de confianza{' '}
+              <span className="font-serif italic font-[400] text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-cyan-300 to-[#F5C542]">
+                en tiempo real.
+              </span>
+            </h2>
+            <p data-reveal className="mt-5 max-w-xl text-base leading-relaxed text-white/58 md:text-lg">
+              La plataforma debe sentirse viva: inversiones, rentas, verificaciones y developers reales moviéndose en la misma infraestructura.
+            </p>
+          </div>
 
-        {/* Stats grid */}
-        <div data-reveal className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-20">
-          {stats.map((stat, i) => (
-            <Stat key={stat.label} stat={stat} index={i} />
-          ))}
-        </div>
-
-        {/* Partners marquee */}
-        <div data-reveal className="mb-20">
-          <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-surface-500 text-center mb-6">
-            Con el respaldo de
-          </p>
-          <div className="relative overflow-hidden py-2 mask-fade-x">
-            <div className="flex gap-12 animate-marquee whitespace-nowrap">
-              {[...partners, ...partners].map((p, i) => (
-                <span
-                  key={`${p}-${i}`}
-                  className="text-lg md:text-xl font-display font-[580] text-surface-500/80 tracking-[-0.01em] shrink-0"
-                >
-                  {p}
-                </span>
-              ))}
-            </div>
+          <div data-reveal className="rounded-[26px] border border-white/10 bg-white/[0.055] p-4 backdrop-blur-xl">
+            <ActivityTicker items={activity} />
           </div>
         </div>
 
-        {/* Testimonials */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {testimonials.map((t) => (
+        <div className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+          {stats.map((stat, index) => (
+            <StatCard key={stat.label} stat={stat} index={index} />
+          ))}
+        </div>
+
+        <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
+          {testimonials.map((testimonial) => (
             <div
-              key={t.name}
+              key={testimonial.name}
               data-reveal
-              className="group relative rounded-[20px] bg-surface-100/60 border border-surface-200/60 backdrop-blur-sm p-6 md:p-7 transition-all duration-500 hover:border-brand-500/20 hover:-translate-y-0.5"
+              className="overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.055] shadow-[0_24px_80px_-44px_rgba(0,0,0,0.95)] backdrop-blur-xl"
             >
-              {/* Quote icon subtil */}
-              <svg
-                className="absolute top-6 right-6 w-8 h-8 text-surface-300/40"
-                viewBox="0 0 32 32"
-                fill="currentColor"
-              >
-                <path d="M10 8C5.58 8 2 11.58 2 16v8h8v-8H6c0-2.21 1.79-4 4-4V8zm12 0c-4.42 0-8 3.58-8 8v8h8v-8h-4c0-2.21 1.79-4 4-4V8z" />
-              </svg>
-
-              <p className="text-[14px] md:text-[15px] text-surface-800 leading-[1.6] font-[440] relative z-10">
-                {t.text}
-              </p>
-
-              <div className="mt-6 pt-5 border-t border-surface-200/60 flex items-center gap-3">
-                <div
-                  className={`w-10 h-10 rounded-full bg-gradient-to-br ${t.color} flex items-center justify-center text-white text-[13px] font-[620]`}
-                >
-                  {t.avatar}
-                </div>
-                <div className="min-w-0">
-                  <p className="text-[13px] font-[560] text-surface-900 truncate">{t.name}</p>
-                  <p className="text-[11px] text-surface-500 truncate">{t.role}</p>
+              <div className="relative h-44">
+                <Image
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                  fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.12)_0%,rgba(7,17,31,0.82)_100%)]" />
+              </div>
+              <div className="p-6">
+                <p className="text-sm leading-relaxed text-white/72">“{testimonial.text}”</p>
+                <div className="mt-5 border-t border-white/10 pt-4">
+                  <p className="text-sm font-semibold text-white">{testimonial.name}</p>
+                  <p className="mt-1 text-xs text-white/42">{testimonial.role}</p>
                 </div>
               </div>
             </div>

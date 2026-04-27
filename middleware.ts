@@ -36,6 +36,8 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser();
   const pathname = request.nextUrl.pathname;
+  const demoRole = request.cookies.get('suelo_demo_role')?.value;
+  const hasDemoSession = demoRole === 'investor' || demoRole === 'developer';
 
   // Rutas protegidas del dashboard
   const protectedRoutes = [
@@ -53,10 +55,15 @@ export async function middleware(request: NextRequest) {
   const isProtected = protectedRoutes.some((route) => pathname.startsWith(route));
 
   // Si no está autenticado y quiere acceder a ruta protegida
-  if (!user && isProtected) {
+  if (!user && !hasDemoSession && isProtected) {
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('redirect', pathname);
     return NextResponse.redirect(loginUrl);
+  }
+
+  if (hasDemoSession && (pathname === '/login' || pathname === '/register')) {
+    const destination = demoRole === 'developer' ? '/developer' : '/wallet';
+    return NextResponse.redirect(new URL(destination, request.url));
   }
 
   // Si está autenticado y va a login/register, redirigir al dashboard
