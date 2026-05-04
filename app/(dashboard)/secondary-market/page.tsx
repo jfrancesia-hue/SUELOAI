@@ -167,7 +167,7 @@ export default function SecondaryMarketPage() {
                   )}
                 </div>
 
-                {l.notes && <p className="text-sm text-surface-600 italic">"{l.notes}"</p>}
+                {l.notes && <p className="text-sm text-surface-600 italic">&ldquo;{l.notes}&rdquo;</p>}
 
                 {!isMine ? (
                   buyForm.listingId === l.id ? (

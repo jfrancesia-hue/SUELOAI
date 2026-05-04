@@ -1,13 +1,22 @@
 import type { Profile, Wallet, WalletMovement } from '@/types';
 
-export const DEMO_PASSWORD = 'SueloDemo123!';
-export const DEMO_PASSWORDS = [DEMO_PASSWORD, 'demo', '123456', 'suelo'];
+const truthyValues = new Set(['1', 'true', 'yes', 'on']);
+
+export function isDemoModeEnabled() {
+  const explicit = process.env.NEXT_PUBLIC_DEMO_MODE ?? process.env.DEMO_MODE;
+  if (explicit != null) return truthyValues.has(explicit.trim().toLowerCase());
+  return process.env.NODE_ENV !== 'production';
+}
+
+export const DEMO_PASSWORD = process.env.NEXT_PUBLIC_DEMO_PASSWORD || 'SueloDemo123!';
+export const DEMO_PASSWORDS = [DEMO_PASSWORD];
 
 const demoEmailAliases: Record<string, 'investor' | 'developer'> = {
   'inversor@demo.suelo.ai': 'investor',
   'inversor@suelo.ai': 'investor',
   'demo@suelo.ai': 'investor',
   'investor@suelo.ai': 'investor',
+  'jfrancesia@gmail.com': 'investor',
   'developer@demo.suelo.ai': 'developer',
   'developer@suelo.ai': 'developer',
   'desarrollador@suelo.ai': 'developer',
@@ -16,8 +25,8 @@ const demoEmailAliases: Record<string, 'investor' | 'developer'> = {
 export const demoProfiles: Record<'investor' | 'developer', Profile> = {
   investor: {
     id: '00000000-0000-4000-8000-000000000101',
-    email: 'inversor@demo.suelo.ai',
-    full_name: 'Inversor Demo Suelo',
+    email: 'jfrancesia@gmail.com',
+    full_name: 'Jorge Francesia',
     role: 'investor',
     phone: '+595 981 000 101',
     dni: 'DEMO-INV',
@@ -47,12 +56,18 @@ export const demoProfiles: Record<'investor' | 'developer', Profile> = {
 };
 
 export function getDemoRoleFromEmail(email: string): 'investor' | 'developer' | null {
+  if (!isDemoModeEnabled()) return null;
   const normalized = email.trim().toLowerCase();
   return demoEmailAliases[normalized] || null;
 }
 
 export function isDemoPassword(password: string) {
-  return DEMO_PASSWORDS.includes(password.trim());
+  return isDemoModeEnabled() && DEMO_PASSWORDS.includes(password.trim());
+}
+
+export function normalizeDemoRole(value: string | undefined | null): 'investor' | 'developer' | null {
+  if (!isDemoModeEnabled()) return null;
+  return value === 'investor' || value === 'developer' ? value : null;
 }
 
 export function demoWallet(role: 'investor' | 'developer', balance = role === 'investor' ? 10000 : 2500): Wallet {

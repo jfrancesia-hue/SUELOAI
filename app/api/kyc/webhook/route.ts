@@ -22,6 +22,7 @@ import { createHmac, timingSafeEqual } from 'crypto';
 function verifySignature(rawBody: string, signature: string | null): boolean {
   const secret = process.env.DIDIT_WEBHOOK_SECRET;
   if (!secret) {
+    if (process.env.NODE_ENV === 'production') return false;
     console.warn('[kyc/webhook] DIDIT_WEBHOOK_SECRET no configurado — aceptando sin validar.');
     return true;
   }

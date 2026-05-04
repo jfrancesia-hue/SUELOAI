@@ -1,9 +1,26 @@
 import { createClient } from '@/lib/supabase-server';
 import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { demoProjects } from '@/lib/demo-data';
+import { normalizeDemoRole } from '@/lib/demo-session';
 import { slugify } from '@/utils/helpers';
 
 // GET /api/projects - Listar proyectos públicos
 export async function GET(request: NextRequest) {
+  const demoRole = normalizeDemoRole(cookies().get('suelo_demo_role')?.value);
+  if (demoRole) {
+    const { searchParams } = new URL(request.url);
+    const status = searchParams.get('status');
+    const featured = searchParams.get('featured');
+    const limit = parseInt(searchParams.get('limit') || '20');
+
+    let data = [...demoProjects];
+    if (status) data = data.filter((project) => project.status === status);
+    if (featured === 'true') data = data.filter((project) => project.featured);
+
+    return NextResponse.json({ data: data.slice(0, limit), mode: 'demo' });
+  }
+
   const supabase = createClient();
   const { searchParams } = new URL(request.url);
 

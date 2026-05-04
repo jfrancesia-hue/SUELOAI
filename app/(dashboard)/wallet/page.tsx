@@ -339,21 +339,21 @@ export default function WalletPage() {
           <h1 className="mt-2 font-display text-3xl font-bold tracking-[-0.02em] text-surface-900 md:text-4xl">
             Tu capital listo para invertir.
           </h1>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-surface-500">
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/82">
             Cargá saldo, transferí entre usuarios, solicitá retiros y seguí cada movimiento con trazabilidad.
           </p>
         </div>
 
         <div className="flex flex-wrap gap-2">
-          <Button variant="secondary" icon={RefreshCw} loading={refreshing} onClick={() => loadWallet(true)}>
+          <Button variant="secondary" icon={RefreshCw} loading={refreshing} onClick={() => loadWallet(true)} className="wallet-toolbar-button">
             Actualizar
           </Button>
-          <Button variant="ghost" icon={Download} onClick={exportCsv}>
+          <Button variant="ghost" icon={Download} onClick={exportCsv} className="wallet-toolbar-button">
             Exportar CSV
           </Button>
-          <Link href="/wallet/crypto" className="btn-secondary text-sm">
-            <Bitcoin className="h-4 w-4" />
-            Crypto
+          <Link href="/wallet/crypto" className="wallet-toolbar-link">
+            <Bitcoin className="h-4 w-4 shrink-0 text-white" />
+            <span>Crypto</span>
           </Link>
         </div>
       </div>
@@ -378,31 +378,31 @@ export default function WalletPage() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(16,185,129,0.22),transparent_34%),radial-gradient(circle_at_80%_28%,rgba(6,182,212,0.14),transparent_32%),linear-gradient(135deg,#07111F,#111827)]" />
           <div className="relative grid grid-cols-1 gap-6 lg:grid-cols-[1fr_300px]">
             <div>
-              <div className="mb-8 flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-emerald-300/20 bg-emerald-300/10">
+              <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex min-w-0 items-center gap-3">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-emerald-300/20 bg-emerald-300/10">
                     <WalletIcon className="h-5 w-5 text-emerald-300" strokeWidth={1.8} />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-sm font-semibold">Wallet Suelo</p>
-                    <button onClick={copyWalletId} className="mt-1 flex items-center gap-1.5 text-xs text-white/45 hover:text-white/75">
+                    <button onClick={copyWalletId} className="mt-1 flex max-w-full items-center gap-1.5 text-xs text-white/72 hover:text-white">
                       {wallet.id.slice(0, 8)}...{wallet.id.slice(-6)}
-                      <Copy className="h-3 w-3" />
+                      <Copy className="h-3 w-3 shrink-0" />
                     </button>
                   </div>
                 </div>
                 <Badge variant={wallet.is_active ? 'success' : 'danger'}>{wallet.is_active ? 'Activa' : 'Inactiva'}</Badge>
               </div>
 
-              <p className="text-sm text-white/48">Balance total</p>
-              <p className="mt-2 font-display text-5xl font-bold tracking-[-0.04em] md:text-7xl">
+              <p className="text-sm text-white/72">Balance total</p>
+              <p className="mt-2 break-words font-display text-4xl font-bold tracking-[-0.04em] sm:text-5xl md:text-7xl">
                 {money(summary.total, wallet.currency)}
               </p>
-              <p className="mt-3 text-sm text-white/48">
+              <p className="mt-3 text-sm text-white/78">
                 Disponible para invertir: <span className="font-semibold text-emerald-300">{money(summary.available, wallet.currency)}</span>
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-2">
+              <div className="mt-8 grid grid-cols-1 gap-2 sm:grid-cols-3">
                 {[
                   { key: 'deposit' as const, icon: Plus, label: 'Cargar saldo' },
                   { key: 'withdraw' as const, icon: ArrowUpRight, label: 'Retirar' },
@@ -411,14 +411,14 @@ export default function WalletPage() {
                   <button
                     key={key}
                     onClick={() => setMode(key)}
-                    className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all ${
+                    className={`inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all ${
                       mode === key
                         ? 'bg-emerald-300 text-[#03130D]'
-                        : 'border border-white/10 bg-white/[0.06] text-white/76 hover:bg-white/[0.09]'
+                        : 'border border-white/18 bg-white/[0.09] text-white hover:bg-white/[0.13]'
                     }`}
                   >
-                    <Icon className="h-4 w-4" strokeWidth={2} />
-                    {label}
+                    <Icon className="h-4 w-4 shrink-0" strokeWidth={2} />
+                    <span className="whitespace-nowrap">{label}</span>
                   </button>
                 ))}
               </div>
@@ -426,21 +426,21 @@ export default function WalletPage() {
 
             <div className="rounded-[24px] border border-white/10 bg-white/[0.055] p-4 backdrop-blur-xl">
               <div className="mb-4 flex items-center justify-between">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/45">Flujo</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/66">Flujo</p>
                 <span className="text-xs text-emerald-300">Últimos movimientos</span>
               </div>
-              <div className="h-40">
+              <div className="h-36 sm:h-40">
                 <WalletSparkline values={summary.spark} />
               </div>
               <div className="mt-4 grid grid-cols-2 gap-3">
                 <div className="rounded-2xl border border-white/10 bg-white/[0.045] p-3">
                   <ArrowDownLeft className="mb-2 h-4 w-4 text-emerald-300" />
-                  <p className="text-xs text-white/45">Ingresos</p>
+                  <p className="text-xs text-white/70">Ingresos</p>
                   <p className="mt-1 font-mono text-sm font-semibold text-white">{money(summary.income)}</p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-white/[0.045] p-3">
                   <ArrowUpRight className="mb-2 h-4 w-4 text-amber-300" />
-                  <p className="text-xs text-white/45">Egresos</p>
+                  <p className="text-xs text-white/70">Egresos</p>
                   <p className="mt-1 font-mono text-sm font-semibold text-white">{money(summary.outcome)}</p>
                 </div>
               </div>
@@ -448,7 +448,7 @@ export default function WalletPage() {
           </div>
         </section>
 
-        <section className="rounded-[28px] border border-surface-200 bg-surface-100 p-5 md:p-6">
+        <section className="wallet-action-panel rounded-[28px] border border-white/10 bg-[#0B0F0D]/92 p-5 shadow-[0_24px_80px_-56px_rgba(0,0,0,0.9)] md:p-6">
           {mode === 'deposit' && (
             <form onSubmit={submitDeposit} className="space-y-5">
               <ActionHeader icon={Plus} title="Cargar saldo" description="Mercado Pago si está configurado; fallback manual en desarrollo." />
@@ -464,7 +464,7 @@ export default function WalletPage() {
               />
               <div className="grid grid-cols-3 gap-2">
                 {[500, 1000, 2500].map((value) => (
-                  <button key={value} type="button" onClick={() => setDepositAmount(String(value))} className="rounded-xl border border-surface-300 bg-surface-150 px-3 py-2 text-sm text-surface-800 hover:border-brand-500/40">
+                  <button key={value} type="button" onClick={() => setDepositAmount(String(value))} className="rounded-xl border border-white/12 bg-white/[0.06] px-3 py-2 text-sm font-medium text-white/86 hover:border-brand-500/40 hover:bg-white/[0.1]">
                     {money(value)}
                   </button>
                 ))}
@@ -497,7 +497,7 @@ export default function WalletPage() {
                     key={item.value}
                     type="button"
                     onClick={() => setWithdrawMethod(item.value)}
-                    className={`rounded-xl border px-3 py-2 text-sm ${withdrawMethod === item.value ? 'border-brand-500/40 bg-brand-500/10 text-brand-400' : 'border-surface-300 bg-surface-150 text-surface-700'}`}
+                    className={`rounded-xl border px-3 py-2 text-sm font-semibold ${withdrawMethod === item.value ? 'border-brand-500/40 bg-brand-500/10 text-brand-300' : 'border-white/12 bg-white/[0.06] text-white/82'}`}
                   >
                     {item.label}
                   </button>
@@ -564,26 +564,26 @@ export default function WalletPage() {
         <div className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <h2 className="font-display text-xl font-bold text-surface-900">Movimientos</h2>
-            <p className="mt-1 text-sm text-surface-500">Historial auditable de depósitos, retiros, inversiones y transferencias.</p>
+            <p className="mt-1 text-sm text-white/58">Historial auditable de depósitos, retiros, inversiones y transferencias.</p>
           </div>
 
-          <div className="flex flex-col gap-2 sm:flex-row">
-            <div className="relative">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-surface-500" />
+          <div className="flex w-full flex-col gap-2 sm:flex-row lg:w-auto">
+            <div className="relative w-full sm:w-48 lg:w-56">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/56" />
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                className="input-field h-10 pl-9 text-sm"
+                className="wallet-filter-input input-field h-10 w-full pl-9 text-sm"
                 placeholder="Buscar referencia"
               />
             </div>
-            <select value={typeFilter} onChange={(event) => setTypeFilter(event.target.value as FilterType)} className="input-field h-10 text-sm">
+            <select value={typeFilter} onChange={(event) => setTypeFilter(event.target.value as FilterType)} className="wallet-filter-select input-field h-10 w-full text-sm sm:w-56">
               <option value="all">Todos los tipos</option>
               {Object.keys(typeLabel).map((type) => (
                 <option key={type} value={type}>{typeLabel[type]}</option>
               ))}
             </select>
-            <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as FilterStatus)} className="input-field h-10 text-sm">
+            <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as FilterStatus)} className="wallet-filter-select input-field h-10 w-full text-sm sm:w-56">
               <option value="all">Todos los estados</option>
               {Object.entries(statusLabel).map(([status, label]) => (
                 <option key={status} value={status}>{label}</option>
@@ -613,23 +613,23 @@ export default function WalletPage() {
                 return (
                   <div key={movement.id} className="grid grid-cols-1 gap-3 px-4 py-4 md:grid-cols-[1.2fr_1fr_0.8fr_0.8fr] md:items-center">
                     <div className="flex items-center gap-3">
-                      <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${positive ? 'bg-brand-500/10 text-brand-400' : 'bg-surface-300 text-surface-700'}`}>
+                      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${positive ? 'bg-brand-500/15 text-brand-300' : 'bg-white/10 text-white/76'}`}>
                         <Icon className="h-4 w-4" strokeWidth={1.8} />
                       </div>
                       <div className="min-w-0">
                         <p className="truncate text-sm font-semibold text-surface-900">
                           {movement.description || typeLabel[movement.type] || movement.type}
                         </p>
-                        <p className="mt-0.5 text-xs text-surface-500">{movement.reference_code}</p>
+                        <p className="mt-0.5 break-all text-xs text-white/52">{movement.reference_code}</p>
                       </div>
                     </div>
-                    <p className="text-sm text-surface-600">{formatDate(movement.created_at)}</p>
+                    <p className="text-sm text-white/64">{formatDate(movement.created_at)}</p>
                     <div>
                       <Badge variant={movement.status === 'completed' ? 'success' : movement.status === 'pending' ? 'warning' : 'danger'}>
                         {statusLabel[movement.status] || movement.status}
                       </Badge>
                     </div>
-                    <p className={`text-left font-mono text-sm font-semibold md:text-right ${positive ? 'text-brand-400' : 'text-surface-900'}`}>
+                    <p className={`text-left font-mono text-sm font-semibold md:pr-8 md:text-right ${positive ? 'text-brand-400' : 'text-surface-900'}`}>
                       {positive ? '+' : '-'}{money(Number(movement.amount), movement.currency || wallet.currency)}
                     </p>
                   </div>
@@ -645,11 +645,11 @@ export default function WalletPage() {
 
 function ActionHeader({ icon: Icon, title, description }: { icon: any; title: string; description: string }) {
   return (
-    <div className="flex items-start gap-3">
+    <div className="flex min-w-0 items-start gap-3">
       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-brand-500/20 bg-brand-500/10">
         <Icon className="h-5 w-5 text-brand-400" strokeWidth={1.8} />
       </div>
-      <div>
+      <div className="min-w-0">
         <h2 className="font-display text-xl font-bold text-surface-900">{title}</h2>
         <p className="mt-1 text-sm leading-relaxed text-surface-500">{description}</p>
       </div>
@@ -665,7 +665,7 @@ function Metric({ title, value, icon: Icon, tone }: { title: string; value: stri
         <Icon className="h-4 w-4" strokeWidth={1.8} />
       </div>
       <p className="text-xs font-semibold uppercase tracking-[0.13em] text-surface-500">{title}</p>
-      <p className="mt-2 font-display text-2xl font-bold text-surface-900">{value}</p>
+      <p className="mt-2 break-words font-display text-xl font-bold text-surface-900 md:text-2xl">{value}</p>
     </div>
   );
 }

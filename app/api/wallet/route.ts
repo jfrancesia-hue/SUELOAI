@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { demoMovements, demoProfiles, demoWallet } from '@/lib/demo-session';
+import { demoMovements, demoProfiles, demoWallet, normalizeDemoRole } from '@/lib/demo-session';
 import { createAdminClient, createClient } from '@/lib/supabase-server';
 import { ensureWallet } from '@/lib/wallet/server';
 
 export async function GET() {
-  const demoRole = cookies().get('suelo_demo_role')?.value;
-  if (demoRole === 'investor' || demoRole === 'developer') {
+  const demoRole = normalizeDemoRole(cookies().get('suelo_demo_role')?.value);
+  if (demoRole) {
     const balance = Number(cookies().get('suelo_demo_wallet_balance')?.value || (demoRole === 'investor' ? 10000 : 2500));
     return NextResponse.json({
       wallet: demoWallet(demoRole, balance),

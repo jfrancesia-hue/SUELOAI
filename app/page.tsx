@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import { Navbar } from '@/components/landing/Navbar';
 import { Hero } from '@/components/landing/Hero';
+import { CinematicCapabilities } from '@/components/landing/CinematicCapabilities';
 import { Features } from '@/components/landing/Features';
 import { Footer } from '@/components/landing/Footer';
 
@@ -49,6 +50,7 @@ export default function HomePage() {
     <main className="min-h-screen">
       <Navbar />
       <Hero />
+      <CinematicCapabilities />
       <FeaturedProjects />
       <TrustExperience />
       <Features />

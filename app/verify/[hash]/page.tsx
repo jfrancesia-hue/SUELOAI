@@ -1,6 +1,8 @@
 import { createAdminClient } from '@/lib/supabase-server';
+import { demoProjects } from '@/lib/demo-data';
+import { demoProfiles, isDemoModeEnabled } from '@/lib/demo-session';
 import { formatCurrency, formatDate } from '@/utils/helpers';
-import { Shield, CheckCircle2, XCircle, FileText, Hash, Clock, Building2, User } from 'lucide-react';
+import { Shield, CheckCircle2, XCircle, FileText, Hash } from 'lucide-react';
 import Link from 'next/link';
 
 interface PageProps {
@@ -8,6 +10,31 @@ interface PageProps {
 }
 
 export default async function PublicVerifyPage({ params }: PageProps) {
+  const demoProject = isDemoModeEnabled() && params.hash.startsWith('demo-') ? demoProjects.find((project) => params.hash.includes(project.slug)) || demoProjects[0] : null;
+  if (demoProject) {
+    return (
+      <VerifyView
+        hash={params.hash}
+        record={{
+          id: 'demo-hash-record',
+          algorithm: 'SHA-256',
+          verified: true,
+          created_at: new Date().toISOString(),
+        }}
+        investment={{
+          amount: demoProject.token_price,
+          tokens_purchased: 1,
+          created_at: new Date().toISOString(),
+          investor: { full_name: demoProfiles.investor.full_name },
+          project: {
+            ...demoProject,
+            developer: demoProfiles.developer,
+          },
+        }}
+      />
+    );
+  }
+
   const supabase = createAdminClient();
 
   const { data: record } = await supabase
@@ -23,8 +50,13 @@ export default async function PublicVerifyPage({ params }: PageProps) {
     .eq('hash', params.hash)
     .single();
 
-  const isValid = !!record && record.verified;
   const investment = record?.investment;
+
+  return <VerifyView hash={params.hash} record={record} investment={investment} />;
+}
+
+function VerifyView({ hash, record, investment }: { hash: string; record: any; investment: any }) {
+  const isValid = !!record && record.verified;
   const project = investment?.project;
 
   return (
@@ -81,7 +113,7 @@ export default async function PublicVerifyPage({ params }: PageProps) {
             <span className="text-xs font-semibold text-surface-500 uppercase tracking-wider">Hash SHA-256</span>
           </div>
           <p className="font-mono text-xs text-surface-700 break-all bg-surface-200 p-3 rounded-lg">
-            {params.hash}
+            {hash}
           </p>
         </div>
 

@@ -1,9 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { demoInvestments, getDemoProject } from '@/lib/demo-data';
+import { demoProfiles, normalizeDemoRole } from '@/lib/demo-session';
 import { createAdminClient, createClient } from '@/lib/supabase-server';
 import { buildMovementHash, ensureWallet, walletNumber } from '@/lib/wallet/server';
 import { createContractSnapshot, generateHash } from '@/utils/hash';
 
 export async function GET(_request: NextRequest) {
+  const demoRole = normalizeDemoRole(cookies().get('suelo_demo_role')?.value);
+  if (demoRole) {
+    const lastInvestmentCookie = cookies().get('suelo_demo_last_investment')?.value;
+    const extra = lastInvestmentCookie ? safeParseDemoInvestment(lastInvestmentCookie) : null;
+    return NextResponse.json({
+      data: extra ? [extra, ...demoInvestments()] : demoInvestments(),
+      mode: 'demo',
+    });
+  }
+
   const supabase = createClient();
   const {
     data: { user },
@@ -27,6 +40,83 @@ export async function GET(_request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const demoRole = normalizeDemoRole(cookies().get('suelo_demo_role')?.value);
+  if (demoRole) {
+    if (demoRole !== 'investor') {
+      return NextResponse.json({ error: 'Solo los inversores pueden invertir' }, { status: 403 });
+    }
+
+    const { project_id, tokens_purchased } = await request.json();
+    const tokens = Math.floor(Number(tokens_purchased));
+    const project = getDemoProject(String(project_id || ''));
+
+    if (!project || !tokens || tokens < 1) {
+      return NextResponse.json({ error: 'Datos invalidos' }, { status: 400 });
+    }
+    if (project.status !== 'funding') {
+      return NextResponse.json({ error: 'Proyecto no acepta inversiones actualmente' }, { status: 400 });
+    }
+
+    const availableTokens = Number(project.total_tokens) - Number(project.sold_tokens);
+    if (tokens > availableTokens) {
+      return NextResponse.json({ error: `Solo quedan ${availableTokens} tokens disponibles` }, { status: 400 });
+    }
+
+    const amount = Math.round(tokens * Number(project.token_price) * 100) / 100;
+    if (amount < Number(project.min_investment)) {
+      return NextResponse.json({ error: `Inversion minima: USD ${project.min_investment}` }, { status: 400 });
+    }
+
+    const currentBalance = Number(cookies().get('suelo_demo_wallet_balance')?.value || 10000);
+    if (currentBalance < amount) {
+      return NextResponse.json(
+        { error: `Saldo insuficiente. Necesitas USD ${amount.toFixed(2)} y tenes USD ${currentBalance.toFixed(2)}` },
+        { status: 402 }
+      );
+    }
+
+    const createdAt = new Date().toISOString();
+    const id = `demo-investment-${Date.now()}`;
+    const contractHash = `demo-${project.slug}-${Date.now().toString(36)}`;
+    const investment = {
+      id,
+      investor_id: demoProfiles.investor.id,
+      project_id: project.id,
+      tokens_purchased: tokens,
+      amount,
+      status: 'confirmed',
+      contract_hash: contractHash,
+      contract_url: null,
+      notes: 'Inversion demo confirmada',
+      created_at: createdAt,
+      updated_at: createdAt,
+      project,
+      verification_url: `/verify/${contractHash}`,
+      wallet_movement: {
+        id: `demo-movement-${Date.now()}`,
+        type: 'investment',
+        amount,
+        balance_before: currentBalance,
+        balance_after: currentBalance - amount,
+      },
+    };
+
+    const response = NextResponse.json({ data: investment, mode: 'demo' }, { status: 201 });
+    response.cookies.set('suelo_demo_wallet_balance', String(currentBalance - amount), {
+      httpOnly: true,
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+    });
+    response.cookies.set('suelo_demo_last_investment', JSON.stringify(investment), {
+      httpOnly: true,
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+    });
+    return response;
+  }
+
   const supabase = createClient();
   const {
     data: { user },
@@ -163,6 +253,14 @@ export async function POST(request: NextRequest) {
     },
     { status: 201 }
   );
+}
+
+function safeParseDemoInvestment(value: string) {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return null;
+  }
 }
 
 async function executePrimaryInvestmentFallback({

@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { createAdminClient, createClient } from '@/lib/supabase-server';
+import { normalizeDemoRole } from '@/lib/demo-session';
 import { buildMovementHash, ensureWallet, normalizeAmount, walletNumber } from '@/lib/wallet/server';
 
 export async function POST(request: NextRequest) {
-  const demoRole = cookies().get('suelo_demo_role')?.value;
-  if (demoRole === 'investor' || demoRole === 'developer') {
+  const demoRole = normalizeDemoRole(cookies().get('suelo_demo_role')?.value);
+  if (demoRole) {
     const body = await request.json();
     const amount = normalizeAmount(body.amount);
     const current = Number(cookies().get('suelo_demo_wallet_balance')?.value || (demoRole === 'investor' ? 10000 : 2500));

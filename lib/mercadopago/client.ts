@@ -64,6 +64,7 @@ export async function getPaymentStatus(paymentId: string) {
     amount: payment.transaction_amount,
     external_reference: payment.external_reference,
     date_approved: payment.date_approved,
+    metadata: payment.metadata,
     payer_email: payment.payer?.email,
   };
 }

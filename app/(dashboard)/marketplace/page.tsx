@@ -3,6 +3,9 @@ import { formatCurrency, getProgressPercent } from '@/utils/helpers';
 import { Badge, ProgressBar, EmptyState } from '@/components/ui';
 import { Building2, MapPin, TrendingUp, ArrowRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
+import { cookies } from 'next/headers';
+import { demoProjectScores, demoProjects } from '@/lib/demo-data';
+import { normalizeDemoRole } from '@/lib/demo-session';
 
 /** Color del badge según rating IA (A+ = verde, D = rojo). */
 function ratingVariant(rating: string | null): 'success' | 'info' | 'warning' | 'danger' | 'default' {
@@ -21,18 +24,22 @@ function ratingLabel(rating: string | null): string {
 }
 
 export default async function MarketplacePage() {
+  const demoRole = normalizeDemoRole(cookies().get('suelo_demo_role')?.value);
+  const isDemo = !!demoRole;
   const supabase = createClient();
 
-  const { data: projects } = await supabase
-    .from('projects')
-    .select(`
-      *,
-      developer:profiles(full_name, company_name),
-      score:project_scores(rating, overall_score, ai_analysis)
-    `)
-    .in('status', ['funding', 'funded', 'in_progress'])
-    .order('featured', { ascending: false })
-    .order('created_at', { ascending: false });
+  const projects = isDemo
+    ? demoProjects.map((project) => ({ ...project, score: demoProjectScores[project.id] }))
+    : (await supabase
+        .from('projects')
+        .select(`
+          *,
+          developer:profiles(full_name, company_name),
+          score:project_scores(rating, overall_score, ai_analysis)
+        `)
+        .in('status', ['funding', 'funded', 'in_progress'])
+        .order('featured', { ascending: false })
+        .order('created_at', { ascending: false })).data;
 
   return (
     <div className="max-w-7xl mx-auto space-y-8">
@@ -77,9 +84,15 @@ export default async function MarketplacePage() {
                   {project.featured && <Badge variant="success">Destacado</Badge>}
                 </div>
 
-                {/* Project image placeholder */}
-                <div className="h-40 -mx-6 -mt-6 mb-4 bg-gradient-to-br from-surface-200 to-surface-300 flex items-center justify-center">
-                  <Building2 className="w-10 h-10 text-surface-400" />
+                <div className="relative -mx-6 -mt-6 mb-4 flex h-44 items-center justify-center overflow-hidden bg-gradient-to-br from-surface-200 to-surface-300">
+                  {project.image_url ? (
+                    <>
+                      <img src={project.image_url} alt={project.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/45" />
+                    </>
+                  ) : (
+                    <Building2 className="w-10 h-10 text-surface-400" />
+                  )}
                 </div>
 
                 <div className="space-y-3">

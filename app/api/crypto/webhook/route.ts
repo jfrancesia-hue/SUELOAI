@@ -1,5 +1,6 @@
 import { createAdminClient } from '@/lib/supabase-server';
 import { processCryptoDeposit } from '@/lib/crypto/monitor';
+import { verifyStaticWebhookSecret } from '@/lib/webhook-security';
 import { NextRequest, NextResponse } from 'next/server';
 import type { CryptoNetwork, CryptoToken } from '@/types/crypto';
 
@@ -29,7 +30,11 @@ export async function POST(request: NextRequest) {
 
     // Validar signature del webhook provider
     const webhookSecret = process.env.CRYPTO_WEBHOOK_SECRET;
-    if (webhookSecret && signature !== webhookSecret) {
+    if (process.env.NODE_ENV === 'production' && !webhookSecret) {
+      return NextResponse.json({ error: 'Webhook no configurado' }, { status: 503 });
+    }
+
+    if (webhookSecret && !verifyStaticWebhookSecret(String(signature || ''), webhookSecret)) {
       return NextResponse.json({ error: 'Signature inválida' }, { status: 401 });
     }
 
@@ -51,6 +56,10 @@ export async function POST(request: NextRequest) {
 
 // GET para polling manual / verificación desde el frontend
 export async function GET(request: NextRequest) {
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json({ error: 'No disponible en produccion' }, { status: 404 });
+  }
+
   const { searchParams } = new URL(request.url);
   const txHash = searchParams.get('tx_hash');
   const network = searchParams.get('network') as CryptoNetwork;

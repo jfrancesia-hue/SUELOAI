@@ -18,7 +18,12 @@ async function createDiditSession(
 ): Promise<{ reference: string; workflowUrl: string } | null> {
   const apiKey = process.env.DIDIT_API_KEY;
   const workflowId = process.env.DIDIT_WORKFLOW_ID;
-  if (!apiKey || !workflowId) return null;
+  if (!apiKey || !workflowId) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('Didit no configurado');
+    }
+    return null;
+  }
 
   try {
     const res = await fetch('https://verification.didit.me/v1/session/', {
@@ -93,7 +98,16 @@ export async function POST(_request: NextRequest) {
     return NextResponse.json({ data: existing, message: 'Ya tenés un KYC en curso.' });
   }
 
-  const session = await createDiditSession(user.id, user.email || '');
+  let session: { reference: string; workflowUrl: string } | null = null;
+  try {
+    session = await createDiditSession(user.id, user.email || '');
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message || 'KYC no configurado' }, { status: 503 });
+  }
+
+  if (process.env.NODE_ENV === 'production' && !session) {
+    return NextResponse.json({ error: 'No pudimos iniciar KYC' }, { status: 503 });
+  }
 
   const { data, error } = await supabase
     .from('kyc_requests')

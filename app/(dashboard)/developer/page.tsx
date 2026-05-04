@@ -4,8 +4,9 @@ import { redirect } from 'next/navigation';
 import { ArrowRight, Building2, DollarSign, FolderPlus, TrendingUp, Users } from 'lucide-react';
 import type { ComponentType, ReactNode } from 'react';
 import { Badge, ProgressBar } from '@/components/ui';
+import { demoProjects as demoDataProjects } from '@/lib/demo-data';
 import { createClient } from '@/lib/supabase-server';
-import { demoProfiles } from '@/lib/demo-session';
+import { demoProfiles, normalizeDemoRole } from '@/lib/demo-session';
 import { formatCurrency, formatDate, getProgressPercent, getStatusLabel } from '@/utils/helpers';
 
 type DeveloperProject = {
@@ -31,10 +32,10 @@ type DeveloperInvestment = {
 };
 
 export default async function DeveloperDashboard() {
-  const demoRole = cookies().get('suelo_demo_role')?.value;
+  const demoRole = normalizeDemoRole(cookies().get('suelo_demo_role')?.value);
 
   if (demoRole === 'developer') {
-    return <DeveloperDashboardView projects={demoProjects} investments={demoInvestments} />;
+    return <DeveloperDashboardView projects={demoDataProjects as DeveloperProject[]} investments={demoInvestments} />;
   }
 
   const supabase = createClient();
@@ -85,15 +86,31 @@ function DeveloperDashboardView({
 
   return (
     <div className="mx-auto max-w-7xl space-y-8">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <h1 className="font-display text-2xl font-bold text-surface-900">Panel de Desarrollador</h1>
-          <p className="mt-1 text-surface-500">Gestiona proyectos, inversores y funding en tiempo real.</p>
+      <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[#07111F] p-6 text-white shadow-[0_30px_100px_-58px_rgba(6,182,212,0.48)] md:p-8">
+        <div
+          className="absolute inset-0 opacity-34"
+          style={{
+            backgroundImage:
+              "linear-gradient(90deg, rgba(7,17,31,0.94), rgba(7,17,31,0.64), rgba(7,17,31,0.9)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600&q=78&auto=format&fit=crop')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <div className="relative flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/80">Developer cockpit</p>
+            <h1 className="mt-3 font-serif text-5xl italic leading-[0.9] tracking-[-2px] text-white md:text-6xl">
+              Panel de desarrollador
+            </h1>
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/70">
+              Gestioná proyectos, inversores, fideicomisos y funding en una experiencia visual hecha para vender confianza.
+            </p>
+          </div>
+          <Link href="/projects?new=true" className="liquid-glass-strong inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white">
+            <FolderPlus className="h-4 w-4" />
+            Nuevo Proyecto
+          </Link>
         </div>
-        <Link href="/projects?new=true" className="btn-primary">
-          <FolderPlus className="h-4 w-4" />
-          Nuevo Proyecto
-        </Link>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -247,33 +264,6 @@ function MiniMetric({ label, value, highlight = false }: { label: string; value:
     </div>
   );
 }
-
-const demoProjects: DeveloperProject[] = [
-  {
-    id: 'demo-project-asuncion',
-    title: 'Torre Asuncion Eje',
-    location: 'Asuncion, Paraguay',
-    status: 'funding',
-    total_value: 100000,
-    token_price: 100,
-    total_tokens: 1000,
-    sold_tokens: 720,
-    expected_return: 14.2,
-    created_at: new Date(Date.now() - 1000 * 60 * 60 * 24 * 15).toISOString(),
-  },
-  {
-    id: 'demo-project-montevideo',
-    title: 'Residencias Punta Carretas',
-    location: 'Montevideo, Uruguay',
-    status: 'in_progress',
-    total_value: 180000,
-    token_price: 150,
-    total_tokens: 1200,
-    sold_tokens: 890,
-    expected_return: 11.6,
-    created_at: new Date(Date.now() - 1000 * 60 * 60 * 24 * 38).toISOString(),
-  },
-];
 
 const demoInvestments: DeveloperInvestment[] = [
   {

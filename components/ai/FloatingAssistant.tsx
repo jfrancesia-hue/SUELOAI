@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   ArrowRight,
   Bot,
@@ -38,6 +39,7 @@ function getWhatsAppHref(message: string) {
 }
 
 export function FloatingAssistant() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -67,6 +69,7 @@ export function FloatingAssistant() {
   }, [messages]);
 
   const whatsappHref = getWhatsAppHref(whatsappMessage);
+  const hideCompactButton = pathname?.startsWith('/wallet');
 
   async function send(text = input) {
     const content = text.trim();
@@ -124,7 +127,7 @@ export function FloatingAssistant() {
   return (
     <>
       {!open && (
-        <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">
+        <div className={cn('fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3', hideCompactButton && 'hidden sm:flex')}>
           {whatsappHref && (
             <a
               href={whatsappHref}
