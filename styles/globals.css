@@ -156,6 +156,9 @@
   .wallet-action-panel .text-surface-700 {
     color: rgba(255, 255, 255, 0.72);
   }
+  .wallet-action-panel .text-surface-800 {
+    color: rgba(255, 255, 255, 0.86);
+  }
   .wallet-action-panel .text-surface-500,
   .wallet-action-panel .text-surface-600 {
     color: rgba(255, 255, 255, 0.52);
@@ -222,6 +225,41 @@
     @apply inline-flex items-center justify-center gap-2 px-4 py-2
            text-surface-700 hover:text-surface-900 hover:bg-surface-200/50
            font-medium rounded-xl transition-all duration-200;
+  }
+  .wallet-toolbar-button {
+    min-height: 44px !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    background: rgba(255, 255, 255, 0.09) !important;
+    color: rgba(255, 255, 255, 0.94) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  }
+  .wallet-toolbar-button:hover {
+    background: rgba(255, 255, 255, 0.14) !important;
+    color: #ffffff !important;
+  }
+  .wallet-toolbar-button svg {
+    color: currentColor !important;
+    flex-shrink: 0;
+  }
+  .wallet-toolbar-link {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.09);
+    padding: 0.75rem 1.5rem;
+    color: rgba(255, 255, 255, 0.94);
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+  }
+  .wallet-toolbar-link:hover {
+    border-color: rgba(52, 211, 153, 0.34);
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
   }
   .input-field {
     @apply w-full px-4 py-3 bg-surface-100 border border-surface-300
