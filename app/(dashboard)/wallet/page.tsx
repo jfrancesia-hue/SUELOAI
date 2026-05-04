@@ -573,17 +573,17 @@ export default function WalletPage() {
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                className="input-field h-10 w-full pl-9 text-sm"
+                className="wallet-filter-input input-field h-10 w-full pl-9 text-sm"
                 placeholder="Buscar referencia"
               />
             </div>
-            <select value={typeFilter} onChange={(event) => setTypeFilter(event.target.value as FilterType)} className="input-field h-10 w-full text-sm sm:w-56">
+            <select value={typeFilter} onChange={(event) => setTypeFilter(event.target.value as FilterType)} className="wallet-filter-select input-field h-10 w-full text-sm sm:w-56">
               <option value="all">Todos los tipos</option>
               {Object.keys(typeLabel).map((type) => (
                 <option key={type} value={type}>{typeLabel[type]}</option>
               ))}
             </select>
-            <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as FilterStatus)} className="input-field h-10 w-full text-sm sm:w-56">
+            <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as FilterStatus)} className="wallet-filter-select input-field h-10 w-full text-sm sm:w-56">
               <option value="all">Todos los estados</option>
               {Object.entries(statusLabel).map(([status, label]) => (
                 <option key={status} value={status}>{label}</option>
