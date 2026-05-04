@@ -60,3 +60,10 @@ apps/mobile/*.ipa
 playwright-report/
 test-results/
 blob-report/
+
+# marketing — rendered video artifacts (re-render desde marketing/intro-source/ con `npm run render`)
+marketing/*.mp4
+marketing/*.mov
+marketing/*.webm
+marketing/**/renders/
+marketing/**/node_modules/
