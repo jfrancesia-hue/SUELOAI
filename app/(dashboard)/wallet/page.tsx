@@ -402,7 +402,7 @@ export default function WalletPage() {
                 Disponible para invertir: <span className="font-semibold text-emerald-300">{money(summary.available, wallet.currency)}</span>
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-2">
+              <div className="mt-8 grid grid-cols-1 gap-2 sm:grid-cols-3">
                 {[
                   { key: 'deposit' as const, icon: Plus, label: 'Cargar saldo' },
                   { key: 'withdraw' as const, icon: ArrowUpRight, label: 'Retirar' },
@@ -411,7 +411,7 @@ export default function WalletPage() {
                   <button
                     key={key}
                     onClick={() => setMode(key)}
-                    className={`inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all sm:flex-none ${
+                    className={`inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all ${
                       mode === key
                         ? 'bg-emerald-300 text-[#03130D]'
                         : 'border border-white/18 bg-white/[0.09] text-white hover:bg-white/[0.13]'
@@ -429,7 +429,7 @@ export default function WalletPage() {
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/66">Flujo</p>
                 <span className="text-xs text-emerald-300">Últimos movimientos</span>
               </div>
-              <div className="h-40">
+              <div className="h-36 sm:h-40">
                 <WalletSparkline values={summary.spark} />
               </div>
               <div className="mt-4 grid grid-cols-2 gap-3">
