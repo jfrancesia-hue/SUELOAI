@@ -39,7 +39,13 @@ export default function ProjectsPage() {
   async function loadProjects() {
     setLoading(true);
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
+    if (!user) {
+      const response = await fetch('/api/projects', { cache: 'no-store' });
+      const data = await response.json();
+      setProjects(data.data || []);
+      setLoading(false);
+      return;
+    }
 
     const { data } = await supabase
       .from('projects')

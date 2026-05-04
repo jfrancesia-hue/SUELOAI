@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import Image from 'next/image';
 import { createClient } from '@/lib/supabase-browser';
 import { formatCurrency, formatDate } from '@/utils/helpers';
 import { Button, Select, Badge, EmptyState, LoadingSpinner } from '@/components/ui';
@@ -11,7 +12,7 @@ import {
 } from 'lucide-react';
 
 export default function CryptoWalletPage() {
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
   const [activeTab, setActiveTab] = useState<'deposit' | 'withdraw' | 'history'>('deposit');
   const [selectedNetwork, setSelectedNetwork] = useState<CryptoNetwork>('tron');
   const [selectedToken, setSelectedToken] = useState<CryptoToken>('USDT');
@@ -22,18 +23,14 @@ export default function CryptoWalletPage() {
   const [generating, setGenerating] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    loadTransactions();
-  }, []);
-
-  useEffect(() => {
-    generateAddress();
-  }, [selectedNetwork, selectedToken]);
-
-  async function loadTransactions() {
+  const loadTransactions = useCallback(async () => {
     setLoading(true);
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
+    if (!user) {
+      setTransactions([]);
+      setLoading(false);
+      return;
+    }
 
     const { data } = await supabase
       .from('crypto_transactions')
@@ -44,9 +41,9 @@ export default function CryptoWalletPage() {
 
     setTransactions(data || []);
     setLoading(false);
-  }
+  }, [supabase]);
 
-  async function generateAddress() {
+  const generateAddress = useCallback(async () => {
     setGenerating(true);
     const res = await fetch('/api/crypto/deposit', {
       method: 'POST',
@@ -59,7 +56,15 @@ export default function CryptoWalletPage() {
       setQrUrl(data.qr_code_url);
     }
     setGenerating(false);
-  }
+  }, [selectedNetwork, selectedToken]);
+
+  useEffect(() => {
+    loadTransactions();
+  }, [loadTransactions]);
+
+  useEffect(() => {
+    generateAddress();
+  }, [generateAddress]);
 
   function copyAddress() {
     navigator.clipboard.writeText(address);
@@ -71,14 +76,14 @@ export default function CryptoWalletPage() {
   const availableTokens = networkInfo.tokens;
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8">
+    <div className="mx-auto max-w-6xl space-y-8">
       {/* Header */}
       <div>
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center">
-            <Bitcoin className="w-5 h-5 text-white" />
+        <div className="mb-2 flex min-w-0 items-center gap-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-orange-400 to-orange-600">
+            <Bitcoin className="h-5 w-5 text-white" />
           </div>
-          <div>
+          <div className="min-w-0">
             <h1 className="font-display text-2xl font-bold text-surface-900">
               Crypto Wallet
             </h1>
@@ -89,13 +94,13 @@ export default function CryptoWalletPage() {
 
       {/* Info banner */}
       <div className="card bg-gradient-to-br from-brand-500/5 to-purple-500/5 border-brand-500/20">
-        <div className="flex gap-4">
+        <div className="flex min-w-0 gap-4">
           <div className="shrink-0">
-            <div className="w-10 h-10 rounded-xl bg-brand-500/20 flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-brand-400" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-500/20">
+              <Sparkles className="h-5 w-5 text-brand-400" />
             </div>
           </div>
-          <div>
+          <div className="min-w-0">
             <h3 className="font-semibold text-surface-900 mb-1">
               Invertí desde cualquier parte del mundo
             </h3>
@@ -108,7 +113,7 @@ export default function CryptoWalletPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-surface-200">
+      <div className="flex gap-2 overflow-x-auto border-b border-surface-200">
         {[
           { id: 'deposit', label: 'Depositar', icon: ArrowDownToLine },
           { id: 'withdraw', label: 'Retirar', icon: ArrowUpFromLine },
@@ -117,13 +122,13 @@ export default function CryptoWalletPage() {
           <button
             key={id}
             onClick={() => setActiveTab(id as any)}
-            className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+            className={`flex shrink-0 items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
               activeTab === id
                 ? 'border-brand-500 text-brand-500'
                 : 'border-transparent text-surface-500 hover:text-surface-700'
             }`}
           >
-            <Icon className="w-4 h-4" />
+            <Icon className="h-4 w-4 shrink-0" />
             {label}
           </button>
         ))}
@@ -156,18 +161,18 @@ export default function CryptoWalletPage() {
                             setSelectedToken(info.tokens[0]);
                           }
                         }}
-                        className={`p-3 rounded-xl border text-left transition-all ${
+                        className={`min-w-0 rounded-xl border p-3 text-left transition-all ${
                           selectedNetwork === net
                             ? 'border-brand-500 bg-brand-500/5'
                             : 'border-surface-300 hover:border-surface-400'
                         }`}
                       >
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="font-semibold text-sm text-surface-900">
+                        <div className="mb-1 flex items-center justify-between gap-2">
+                          <span className="min-w-0 truncate text-sm font-semibold text-surface-900">
                             {info.displayName}
                           </span>
                           {info.recommended && (
-                            <Badge variant="success" className="text-[10px]">
+                            <Badge variant="success" className="shrink-0 text-[10px]">
                               Recomendada
                             </Badge>
                           )}
@@ -190,7 +195,7 @@ export default function CryptoWalletPage() {
                   <button
                     key={tok}
                     onClick={() => setSelectedToken(tok)}
-                    className={`p-3 rounded-xl border text-center transition-all ${
+                    className={`min-h-[76px] rounded-xl border p-3 text-center transition-all ${
                       selectedToken === tok
                         ? 'border-brand-500 bg-brand-500/5 text-surface-900'
                         : 'border-surface-300 text-surface-600 hover:border-surface-400'
@@ -206,8 +211,8 @@ export default function CryptoWalletPage() {
             </div>
 
             {/* Warning */}
-            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 flex gap-2">
-              <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+            <div className="flex gap-2 rounded-xl border border-amber-500/20 bg-amber-500/10 p-3">
+              <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
               <div className="text-xs text-amber-200">
                 <strong>Importante:</strong> Solo enviá {selectedToken} en la red {networkInfo.displayName}.
                 Enviar otro token o red causa pérdida permanente de fondos.
@@ -226,8 +231,15 @@ export default function CryptoWalletPage() {
             ) : address ? (
               <div className="card text-center">
                 {qrUrl && (
-                  <div className="bg-white p-4 rounded-xl inline-block mb-4">
-                    <img src={qrUrl} alt="QR Code" className="w-48 h-48" />
+                  <div className="mb-4 inline-block rounded-xl bg-white p-4">
+                    <Image
+                      src={qrUrl}
+                      alt="QR Code"
+                      width={192}
+                      height={192}
+                      unoptimized
+                      className="h-48 w-48 max-w-full"
+                    />
                   </div>
                 )}
 
@@ -235,7 +247,7 @@ export default function CryptoWalletPage() {
                   Tu dirección {selectedToken} ({networkInfo.displayName})
                 </p>
 
-                <div className="flex items-center gap-2 p-3 rounded-xl bg-surface-200 font-mono text-xs break-all text-surface-900 mb-3">
+                <div className="mb-3 flex items-start gap-2 break-all rounded-xl bg-surface-200 p-3 text-left font-mono text-xs text-surface-900">
                   {address}
                 </div>
 
@@ -250,11 +262,11 @@ export default function CryptoWalletPage() {
 
                 <div className="mt-4 pt-4 border-t border-surface-200 space-y-2 text-xs text-left">
                   <p className="flex items-start gap-2 text-surface-600">
-                    <Shield className="w-3.5 h-3.5 text-brand-500 mt-0.5 shrink-0" />
+                    <Shield className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-500" />
                     Los fondos se acreditan tras {networkInfo.confirmationsRequired} confirmaciones
                   </p>
                   <p className="flex items-start gap-2 text-surface-600">
-                    <Sparkles className="w-3.5 h-3.5 text-brand-500 mt-0.5 shrink-0" />
+                    <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-500" />
                     Comisión Suelo: 0.5% sobre monto depositado
                   </p>
                 </div>
@@ -281,8 +293,9 @@ export default function CryptoWalletPage() {
               description="Tus depósitos y retiros aparecerán acá"
             />
           ) : (
-            <div className="card p-0 overflow-hidden">
-              <table className="w-full text-sm">
+            <div className="card overflow-hidden p-0">
+              <div className="overflow-x-auto">
+              <table className="min-w-[760px] w-full text-sm">
                 <thead>
                   <tr className="border-b border-surface-200">
                     <th className="text-left p-4 text-xs font-medium text-surface-500 uppercase tracking-wider">
@@ -343,7 +356,7 @@ export default function CryptoWalletPage() {
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-1 text-xs text-brand-500 hover:text-brand-400"
                           >
-                            Ver <ExternalLink className="w-3 h-3" />
+                            Ver <ExternalLink className="h-3 w-3 shrink-0" />
                           </a>
                         )}
                       </td>
@@ -351,6 +364,7 @@ export default function CryptoWalletPage() {
                   ))}
                 </tbody>
               </table>
+              </div>
             </div>
           )}
         </div>
@@ -363,7 +377,7 @@ export default function CryptoWalletPage() {
 // WITHDRAW FORM
 // ============================================
 function WithdrawForm() {
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
   const [amount, setAmount] = useState('');
   const [network, setNetwork] = useState<CryptoNetwork>('polygon');
   const [token, setToken] = useState<CryptoToken>('USDT');
@@ -380,7 +394,7 @@ function WithdrawForm() {
       setKycStatus(data?.kyc_status || 'not_started');
     }
     loadKyc();
-  }, []);
+  }, [supabase]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -411,8 +425,10 @@ function WithdrawForm() {
 
   if (kycStatus !== 'approved') {
     return (
-      <div className="card text-center py-12">
-        <Shield className="w-12 h-12 text-surface-400 mx-auto mb-3" />
+      <div className="card py-12 text-center">
+        <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-surface-200">
+          <Shield className="h-7 w-7 text-surface-500" />
+        </div>
         <h3 className="font-display text-lg font-semibold text-surface-900">
           KYC requerido
         </h3>

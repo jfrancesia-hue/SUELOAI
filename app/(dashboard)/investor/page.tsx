@@ -5,8 +5,9 @@ import { ArrowRight, Building2, FileText, TrendingUp, Wallet } from 'lucide-reac
 import type { ComponentType, ReactNode } from 'react';
 import { PortfolioCharts } from '@/components/dashboard/PortfolioCharts';
 import { Badge, ProgressBar } from '@/components/ui';
+import { demoInvestments as getDemoInvestments } from '@/lib/demo-data';
 import { createClient } from '@/lib/supabase-server';
-import { demoProfiles } from '@/lib/demo-session';
+import { demoProfiles, normalizeDemoRole } from '@/lib/demo-session';
 import { formatCurrency, formatDate, getStatusLabel } from '@/utils/helpers';
 
 type DashboardInvestment = {
@@ -29,13 +30,13 @@ type DashboardTransaction = {
 };
 
 export default async function InvestorDashboard() {
-  const demoRole = cookies().get('suelo_demo_role')?.value;
+  const demoRole = normalizeDemoRole(cookies().get('suelo_demo_role')?.value);
 
   if (demoRole === 'investor') {
     return (
       <InvestorDashboardView
         profile={demoProfiles.investor}
-        investments={demoInvestments}
+        investments={getDemoInvestments() as DashboardInvestment[]}
         transactions={demoTransactions}
       />
     );
@@ -103,17 +104,31 @@ function InvestorDashboardView({
 
   return (
     <div className="mx-auto max-w-7xl space-y-8">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h1 className="font-display text-2xl font-bold text-surface-900">
-            Hola, {profile.full_name?.split(' ')[0] || 'Inversor'}
-          </h1>
-          <p className="mt-1 text-surface-500">Resumen de tu portafolio de inversiones</p>
+      <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[#07111F] p-6 text-white shadow-[0_30px_100px_-58px_rgba(16,185,129,0.5)] md:p-8">
+        <div
+          className="absolute inset-0 opacity-34"
+          style={{
+            backgroundImage:
+              "linear-gradient(90deg, rgba(7,17,31,0.94), rgba(7,17,31,0.62), rgba(7,17,31,0.9)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=78&auto=format&fit=crop')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <div className="relative flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-200/80">Portfolio privado</p>
+            <h1 className="mt-3 font-serif text-5xl italic leading-[0.9] tracking-[-2px] text-white md:text-6xl">
+              Hola, {profile.full_name?.split(' ')[0] || 'Inversor'}
+            </h1>
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/70">
+              Resumen de tu portafolio, movimientos y exposición por proyecto con una lectura clara del capital.
+            </p>
+          </div>
+          <Link href="/wallet" className="liquid-glass-strong inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white">
+            <Wallet className="h-4 w-4" />
+            Ir a mi billetera
+          </Link>
         </div>
-        <Link href="/wallet" className="btn-primary">
-          <Wallet className="h-4 w-4" />
-          Ir a mi billetera
-        </Link>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -250,41 +265,6 @@ function ServerEmptyState({ title, description, action }: { title: string; descr
     </div>
   );
 }
-
-const demoInvestments: DashboardInvestment[] = [
-  {
-    id: 'demo-investment-001',
-    investor_id: demoProfiles.investor.id,
-    project_id: 'demo-project-asuncion',
-    tokens_purchased: 5,
-    amount: 500,
-    status: 'confirmed',
-    created_at: new Date(Date.now() - 86400000).toISOString(),
-    project: {
-      title: 'Torre Asuncion Eje',
-      location: 'Asuncion, Paraguay',
-      sold_tokens: 720,
-      total_tokens: 1000,
-      expected_return: 14.2,
-    },
-  },
-  {
-    id: 'demo-investment-002',
-    investor_id: demoProfiles.investor.id,
-    project_id: 'demo-project-cordoba',
-    tokens_purchased: 12,
-    amount: 1200,
-    status: 'confirmed',
-    created_at: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(),
-    project: {
-      title: 'Renta Cordoba Norte',
-      location: 'Cordoba, Argentina',
-      sold_tokens: 610,
-      total_tokens: 1250,
-      expected_return: 12.8,
-    },
-  },
-];
 
 const demoTransactions: DashboardTransaction[] = [
   {

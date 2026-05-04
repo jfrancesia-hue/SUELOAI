@@ -184,8 +184,27 @@ export function AIAnalystDemo() {
                       <p className="text-xs text-white/45">Memoria, tools y scoring</p>
                     </div>
                   </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.055] p-4 text-sm leading-relaxed text-white/72">
-                    <TypedLine text="Con USD 1.000, te conviene diversificar entre renta mensual y obra avanzada. Evitaría concentrar más en Argentina hasta balancear riesgo país." />
+                  <div className="mb-3 flex justify-end">
+                    <div className="max-w-[88%] rounded-2xl rounded-br-md bg-emerald-300 px-4 py-3 text-sm font-medium leading-relaxed text-[#03130D] shadow-[0_18px_38px_-24px_rgba(16,185,129,0.9)]">
+                      Tengo USD 1.000. Quiero empezar sin asumir demasiado riesgo.
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl rounded-bl-md border border-white/10 bg-white/[0.055] p-4 text-sm leading-relaxed text-white/72">
+                    <TypedLine text="Te conviene dividirlo: 60% en renta mensual y 40% en obra avanzada A+. Evitaria concentrar mas en Argentina hasta balancear riesgo pais." />
+                  </div>
+
+                  <div className="mt-3 grid grid-cols-3 gap-2">
+                    {[
+                      ['Renta', '60%'],
+                      ['Obra A+', '40%'],
+                      ['Riesgo', 'Bajo'],
+                    ].map(([label, value]) => (
+                      <div key={label} className="rounded-xl border border-white/10 bg-white/[0.045] p-3">
+                        <p className="text-[10px] text-white/42">{label}</p>
+                        <p className="mt-1 font-mono text-xs font-semibold text-white">{value}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
 

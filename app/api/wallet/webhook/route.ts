@@ -1,18 +1,37 @@
 import { createAdminClient } from '@/lib/supabase-server';
 import { getPaymentStatus } from '@/lib/mercadopago/client';
+import { verifyMercadoPagoSignature } from '@/lib/webhook-security';
 import { generateHash } from '@/utils/hash';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    const paymentId = body.data?.id?.toString();
+
+    if (process.env.NODE_ENV === 'production' && !process.env.MP_WEBHOOK_SECRET) {
+      return NextResponse.json({ error: 'Webhook no configurado' }, { status: 503 });
+    }
+
+    if (process.env.MP_WEBHOOK_SECRET) {
+      const { searchParams } = new URL(request.url);
+      const isValid = verifyMercadoPagoSignature({
+        dataId: searchParams.get('data.id') || paymentId,
+        requestId: request.headers.get('x-request-id'),
+        signature: request.headers.get('x-signature'),
+        secret: process.env.MP_WEBHOOK_SECRET,
+      });
+
+      if (!isValid) {
+        return NextResponse.json({ error: 'Firma invalida' }, { status: 401 });
+      }
+    }
 
     // MP envía notificaciones con formato: { type: 'payment', data: { id: '...' } }
     if (body.type !== 'payment') {
       return NextResponse.json({ ok: true });
     }
 
-    const paymentId = body.data?.id;
     if (!paymentId) {
       return NextResponse.json({ error: 'No payment id' }, { status: 400 });
     }
@@ -38,6 +57,7 @@ export async function POST(request: NextRequest) {
       .eq('user_id', userId)
       .eq('provider', 'mercadopago')
       .eq('status', 'pending')
+      .eq('amount', payment.amount)
       .order('created_at', { ascending: false })
       .limit(1)
       .single();

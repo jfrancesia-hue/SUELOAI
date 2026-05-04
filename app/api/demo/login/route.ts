@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { demoProfiles, getDemoRoleFromEmail, isDemoPassword } from '@/lib/demo-session';
+import { demoProfiles, getDemoRoleFromEmail, isDemoModeEnabled, isDemoPassword } from '@/lib/demo-session';
 
 export async function POST(request: NextRequest) {
+  if (!isDemoModeEnabled()) {
+    return NextResponse.json({ error: 'Modo demo deshabilitado' }, { status: 404 });
+  }
+
   const { email, password } = await request.json();
   const role = getDemoRoleFromEmail(String(email || ''));
 

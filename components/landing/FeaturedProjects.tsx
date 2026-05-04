@@ -2,14 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-  ArrowRight,
-  Building2,
-  CheckCircle2,
-  MapPin,
-  ShieldCheck,
-  TrendingUp,
-} from 'lucide-react';
+import { ArrowRight, Building2, CheckCircle2, MapPin, ShieldCheck, TrendingUp } from 'lucide-react';
 import { useRevealOnScroll } from '@/components/animations/useReveal';
 import { FundingBar } from '@/components/ui/funding-bar';
 import { RiskBadge } from '@/components/ui/risk-badge';
@@ -128,18 +121,38 @@ export function FeaturedProjects() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          {projects.map((project) => {
+        <div
+          data-reveal
+          className="mb-5 grid grid-cols-1 gap-3 rounded-[22px] border border-surface-200/70 bg-surface-100/50 p-3 backdrop-blur-sm md:grid-cols-3"
+        >
+          {[
+            ['Capital activo', 'USD 2.4M', 'financiado en proyectos reales'],
+            ['Velocidad', '72%', 'deal principal ya fondeado'],
+            ['Confianza', '98.4%', 'contratos con verificacion'],
+          ].map(([label, value, detail]) => (
+            <div key={label} className="rounded-2xl border border-surface-200/70 bg-surface-50/70 p-4">
+              <p className="text-[10px] font-mono uppercase tracking-[0.16em] text-surface-500">{label}</p>
+              <p className="mt-2 font-display text-2xl font-bold tracking-[-0.02em] text-surface-900">{value}</p>
+              <p className="mt-1 text-xs text-surface-600">{detail}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-4">
+          {projects.map((project, index) => {
             const tone = accentMap[project.accent];
+            const featured = index === 0;
 
             return (
               <Link
                 key={project.title}
                 data-reveal
                 href="/marketplace"
-                className={`group relative overflow-hidden rounded-[20px] border ${tone.border} bg-surface-100/70 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-brand-500/30 hover:bg-surface-100`}
+                className={`group relative overflow-hidden rounded-[22px] border ${tone.border} bg-surface-100/74 shadow-[0_24px_90px_-58px_rgba(0,0,0,0.92)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-brand-500/30 hover:bg-surface-100 ${
+                  featured ? 'lg:col-span-2' : ''
+                }`}
               >
-                <div className="relative aspect-[4/3] overflow-hidden bg-surface-200">
+                <div className={`relative overflow-hidden bg-surface-200 ${featured ? 'aspect-[16/10] lg:aspect-[16/9]' : 'aspect-[4/3]'}`}>
                   <Image
                     src={project.image}
                     alt={project.title}
@@ -159,7 +172,7 @@ export function FeaturedProjects() {
                   </div>
 
                   <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="font-display text-2xl font-[680] leading-tight tracking-[-0.015em] text-white">
+                    <h3 className={`font-display font-[680] leading-tight tracking-[-0.015em] text-white ${featured ? 'text-3xl md:text-4xl' : 'text-2xl'}`}>
                       {project.title}
                     </h3>
                     <p className="mt-1 flex items-center gap-1.5 text-[13px] text-white/75">
@@ -194,7 +207,7 @@ export function FeaturedProjects() {
                     {project.thesis}
                   </p>
 
-                  <div className="mt-5 grid grid-cols-3 gap-2 border-y border-surface-200/70 py-4">
+                  <div className={`mt-5 grid gap-2 border-y border-surface-200/70 py-4 ${featured ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-3'}`}>
                     {project.metrics.map((metric) => (
                       <div key={metric} className="min-w-0">
                         <p className="truncate text-[11px] leading-tight text-surface-500">

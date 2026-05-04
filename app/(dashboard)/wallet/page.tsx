@@ -339,7 +339,7 @@ export default function WalletPage() {
           <h1 className="mt-2 font-display text-3xl font-bold tracking-[-0.02em] text-surface-900 md:text-4xl">
             Tu capital listo para invertir.
           </h1>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-surface-500">
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/68">
             Cargá saldo, transferí entre usuarios, solicitá retiros y seguí cada movimiento con trazabilidad.
           </p>
         </div>
@@ -348,11 +348,11 @@ export default function WalletPage() {
           <Button variant="secondary" icon={RefreshCw} loading={refreshing} onClick={() => loadWallet(true)}>
             Actualizar
           </Button>
-          <Button variant="ghost" icon={Download} onClick={exportCsv}>
+          <Button variant="ghost" icon={Download} onClick={exportCsv} className="text-white/68 hover:text-white">
             Exportar CSV
           </Button>
-          <Link href="/wallet/crypto" className="btn-secondary text-sm">
-            <Bitcoin className="h-4 w-4" />
+          <Link href="/wallet/crypto" className="btn-secondary min-h-11 text-sm">
+            <Bitcoin className="h-4 w-4 shrink-0" />
             Crypto
           </Link>
         </div>
@@ -378,16 +378,16 @@ export default function WalletPage() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(16,185,129,0.22),transparent_34%),radial-gradient(circle_at_80%_28%,rgba(6,182,212,0.14),transparent_32%),linear-gradient(135deg,#07111F,#111827)]" />
           <div className="relative grid grid-cols-1 gap-6 lg:grid-cols-[1fr_300px]">
             <div>
-              <div className="mb-8 flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-emerald-300/20 bg-emerald-300/10">
+              <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex min-w-0 items-center gap-3">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-emerald-300/20 bg-emerald-300/10">
                     <WalletIcon className="h-5 w-5 text-emerald-300" strokeWidth={1.8} />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-sm font-semibold">Wallet Suelo</p>
-                    <button onClick={copyWalletId} className="mt-1 flex items-center gap-1.5 text-xs text-white/45 hover:text-white/75">
+                    <button onClick={copyWalletId} className="mt-1 flex max-w-full items-center gap-1.5 text-xs text-white/45 hover:text-white/75">
                       {wallet.id.slice(0, 8)}...{wallet.id.slice(-6)}
-                      <Copy className="h-3 w-3" />
+                      <Copy className="h-3 w-3 shrink-0" />
                     </button>
                   </div>
                 </div>
@@ -395,7 +395,7 @@ export default function WalletPage() {
               </div>
 
               <p className="text-sm text-white/48">Balance total</p>
-              <p className="mt-2 font-display text-5xl font-bold tracking-[-0.04em] md:text-7xl">
+              <p className="mt-2 break-words font-display text-4xl font-bold tracking-[-0.04em] sm:text-5xl md:text-7xl">
                 {money(summary.total, wallet.currency)}
               </p>
               <p className="mt-3 text-sm text-white/48">
@@ -411,14 +411,14 @@ export default function WalletPage() {
                   <button
                     key={key}
                     onClick={() => setMode(key)}
-                    className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all ${
+                    className={`inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all sm:flex-none ${
                       mode === key
                         ? 'bg-emerald-300 text-[#03130D]'
                         : 'border border-white/10 bg-white/[0.06] text-white/76 hover:bg-white/[0.09]'
                     }`}
                   >
-                    <Icon className="h-4 w-4" strokeWidth={2} />
-                    {label}
+                    <Icon className="h-4 w-4 shrink-0" strokeWidth={2} />
+                    <span className="whitespace-nowrap">{label}</span>
                   </button>
                 ))}
               </div>
@@ -448,7 +448,7 @@ export default function WalletPage() {
           </div>
         </section>
 
-        <section className="rounded-[28px] border border-surface-200 bg-surface-100 p-5 md:p-6">
+        <section className="wallet-action-panel rounded-[28px] border border-white/10 bg-[#0B0F0D]/92 p-5 shadow-[0_24px_80px_-56px_rgba(0,0,0,0.9)] md:p-6">
           {mode === 'deposit' && (
             <form onSubmit={submitDeposit} className="space-y-5">
               <ActionHeader icon={Plus} title="Cargar saldo" description="Mercado Pago si está configurado; fallback manual en desarrollo." />
@@ -564,26 +564,26 @@ export default function WalletPage() {
         <div className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <h2 className="font-display text-xl font-bold text-surface-900">Movimientos</h2>
-            <p className="mt-1 text-sm text-surface-500">Historial auditable de depósitos, retiros, inversiones y transferencias.</p>
+            <p className="mt-1 text-sm text-white/58">Historial auditable de depósitos, retiros, inversiones y transferencias.</p>
           </div>
 
-          <div className="flex flex-col gap-2 sm:flex-row">
-            <div className="relative">
+          <div className="flex w-full flex-col gap-2 sm:flex-row lg:w-auto">
+            <div className="relative w-full sm:w-48 lg:w-56">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-surface-500" />
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                className="input-field h-10 pl-9 text-sm"
+                className="input-field h-10 w-full pl-9 text-sm"
                 placeholder="Buscar referencia"
               />
             </div>
-            <select value={typeFilter} onChange={(event) => setTypeFilter(event.target.value as FilterType)} className="input-field h-10 text-sm">
+            <select value={typeFilter} onChange={(event) => setTypeFilter(event.target.value as FilterType)} className="input-field h-10 w-full text-sm sm:w-56">
               <option value="all">Todos los tipos</option>
               {Object.keys(typeLabel).map((type) => (
                 <option key={type} value={type}>{typeLabel[type]}</option>
               ))}
             </select>
-            <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as FilterStatus)} className="input-field h-10 text-sm">
+            <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as FilterStatus)} className="input-field h-10 w-full text-sm sm:w-56">
               <option value="all">Todos los estados</option>
               {Object.entries(statusLabel).map(([status, label]) => (
                 <option key={status} value={status}>{label}</option>
@@ -620,7 +620,7 @@ export default function WalletPage() {
                         <p className="truncate text-sm font-semibold text-surface-900">
                           {movement.description || typeLabel[movement.type] || movement.type}
                         </p>
-                        <p className="mt-0.5 text-xs text-surface-500">{movement.reference_code}</p>
+                        <p className="mt-0.5 break-all text-xs text-surface-500">{movement.reference_code}</p>
                       </div>
                     </div>
                     <p className="text-sm text-surface-600">{formatDate(movement.created_at)}</p>
@@ -629,7 +629,7 @@ export default function WalletPage() {
                         {statusLabel[movement.status] || movement.status}
                       </Badge>
                     </div>
-                    <p className={`text-left font-mono text-sm font-semibold md:text-right ${positive ? 'text-brand-400' : 'text-surface-900'}`}>
+                    <p className={`text-left font-mono text-sm font-semibold md:pr-8 md:text-right ${positive ? 'text-brand-400' : 'text-surface-900'}`}>
                       {positive ? '+' : '-'}{money(Number(movement.amount), movement.currency || wallet.currency)}
                     </p>
                   </div>
@@ -645,11 +645,11 @@ export default function WalletPage() {
 
 function ActionHeader({ icon: Icon, title, description }: { icon: any; title: string; description: string }) {
   return (
-    <div className="flex items-start gap-3">
+    <div className="flex min-w-0 items-start gap-3">
       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-brand-500/20 bg-brand-500/10">
         <Icon className="h-5 w-5 text-brand-400" strokeWidth={1.8} />
       </div>
-      <div>
+      <div className="min-w-0">
         <h2 className="font-display text-xl font-bold text-surface-900">{title}</h2>
         <p className="mt-1 text-sm leading-relaxed text-surface-500">{description}</p>
       </div>
@@ -665,7 +665,7 @@ function Metric({ title, value, icon: Icon, tone }: { title: string; value: stri
         <Icon className="h-4 w-4" strokeWidth={1.8} />
       </div>
       <p className="text-xs font-semibold uppercase tracking-[0.13em] text-surface-500">{title}</p>
-      <p className="mt-2 font-display text-2xl font-bold text-surface-900">{value}</p>
+      <p className="mt-2 break-words font-display text-xl font-bold text-surface-900 md:text-2xl">{value}</p>
     </div>
   );
 }

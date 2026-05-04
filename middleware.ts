@@ -1,5 +1,6 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
+import { normalizeDemoRole } from '@/lib/demo-session';
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({
@@ -36,8 +37,8 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser();
   const pathname = request.nextUrl.pathname;
-  const demoRole = request.cookies.get('suelo_demo_role')?.value;
-  const hasDemoSession = demoRole === 'investor' || demoRole === 'developer';
+  const demoRole = normalizeDemoRole(request.cookies.get('suelo_demo_role')?.value);
+  const hasDemoSession = !!demoRole;
 
   // Rutas protegidas del dashboard
   const protectedRoutes = [
@@ -45,6 +46,7 @@ export async function middleware(request: NextRequest) {
     '/developer',
     '/projects',
     '/marketplace',
+    '/fideicomisos',
     '/wallet',
     '/ai-analyst',
     '/assistant',

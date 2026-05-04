@@ -56,6 +56,26 @@ export default function ProjectDetailPage() {
     setInvestError('');
 
     try {
+      const [projectApiRes, investmentsApiRes, walletApiRes] = await Promise.all([
+        fetch(`/api/projects/${projectId}`, { cache: 'no-store' }).catch(() => null),
+        fetch('/api/investments', { cache: 'no-store' }).catch(() => null),
+        fetch('/api/wallet', { cache: 'no-store' }).catch(() => null),
+      ]);
+
+      if (projectApiRes?.ok) {
+        const projectApi = await projectApiRes.json();
+        if (projectApi.mode === 'demo') {
+          const investmentsApi = investmentsApiRes?.ok ? await investmentsApiRes.json() : { data: [] };
+          const walletApi = walletApiRes?.ok ? await walletApiRes.json() : null;
+
+          setProfile(walletApi?.profile || null);
+          setProject(projectApi.data);
+          setInvestments((investmentsApi.data || []).filter((investment: Investment) => investment.project_id === projectId));
+          setWallet(walletApi?.wallet || null);
+          return;
+        }
+      }
+
       const {
         data: { user },
       } = await supabase.auth.getUser();

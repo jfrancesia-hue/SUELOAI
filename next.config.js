@@ -21,6 +21,7 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com data:",
       "img-src 'self' data: blob: https: https://*.supabase.co https://images.unsplash.com",
+      "media-src 'self' blob: https://d8j0ntlcm91z4.cloudfront.net",
       "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.anthropic.com https://api.mercadopago.com https://api.twilio.com https://api.resend.com https://*.upstash.io https://verification.didit.me https://polygon-rpc.com https://api.trongrid.io https://api.etherscan.io https://api.polygonscan.com",
       "frame-ancestors 'none'",
       "base-uri 'self'",

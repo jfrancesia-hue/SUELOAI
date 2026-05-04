@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { createAdminClient, createClient } from '@/lib/supabase-server';
+import { normalizeDemoRole } from '@/lib/demo-session';
 import { createDepositPreference } from '@/lib/mercadopago/client';
 import { buildMovementHash, ensureWallet, normalizeAmount, walletNumber } from '@/lib/wallet/server';
 
 export async function POST(request: NextRequest) {
-  const demoRole = cookies().get('suelo_demo_role')?.value;
-  if (demoRole === 'investor' || demoRole === 'developer') {
+  const demoRole = normalizeDemoRole(cookies().get('suelo_demo_role')?.value);
+  if (demoRole) {
     const { amount } = await request.json();
     const normalizedAmount = normalizeAmount(amount);
     const current = Number(cookies().get('suelo_demo_wallet_balance')?.value || (demoRole === 'investor' ? 10000 : 2500));
@@ -49,6 +50,10 @@ export async function POST(request: NextRequest) {
     }
 
     if (!process.env.MP_ACCESS_TOKEN) {
+      if (process.env.NODE_ENV === 'production') {
+        return NextResponse.json({ error: 'Mercado Pago no configurado' }, { status: 503 });
+      }
+
       const available = walletNumber(wallet.balance_available);
       const hash = await buildMovementHash({
         user_id: user.id,
