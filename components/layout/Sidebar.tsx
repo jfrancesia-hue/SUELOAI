@@ -85,20 +85,22 @@ export function Sidebar({ profile }: SidebarProps) {
       </div>
 
       {/* User info */}
-      <div className="px-4 py-4 border-b border-white/10">
-        <div className="liquid-glass flex items-center gap-3 rounded-2xl px-3 py-3">
-          <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center shrink-0 border border-white/10">
-            <User className="w-4 h-4 text-brand-500" />
+      <div className="border-b border-white/10 px-4 py-4">
+        <div className="flex items-center gap-3 rounded-2xl border border-white/16 bg-white/[0.08] px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-xl">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-emerald-300/24 bg-emerald-300/12">
+            <User className="h-4 w-4 text-emerald-200" strokeWidth={2} />
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-medium text-surface-900 truncate">
+            <p className="truncate text-sm font-semibold leading-tight text-white">
               {profile.full_name || 'Sin nombre'}
             </p>
-            <div className="flex items-center gap-1.5">
-              <p className="text-xs text-surface-500 capitalize">{profile.role}</p>
+            <div className="mt-1 flex min-w-0 flex-wrap items-center gap-1.5">
+              <span className="rounded-full bg-white/[0.08] px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.08em] text-white/68">
+                {profile.role}
+              </span>
               {profile.kyc_verified && (
-                <span className="inline-flex items-center gap-0.5 text-[10px] text-brand-500">
-                  <Sparkles className="w-2.5 h-2.5" />
+                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-300/14 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-emerald-200">
+                  <Sparkles className="h-2.5 w-2.5 shrink-0" />
                   KYC
                 </span>
               )}
