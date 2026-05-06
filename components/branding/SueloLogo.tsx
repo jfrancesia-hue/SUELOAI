@@ -1,4 +1,5 @@
-﻿import { cn } from '@/utils/helpers';
+﻿import { Sprout } from 'lucide-react';
+import { cn } from '@/utils/helpers';
 
 type SueloLogoProps = {
   className?: string;
@@ -26,7 +27,7 @@ export function SueloLogo({
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.58),transparent_34%)]" />
         <div className="absolute -bottom-4 -right-4 h-9 w-9 rounded-full bg-[#07111F]/18" />
-        <span className="relative font-display text-xl font-black tracking-[-0.05em] text-[#03130D]">S</span>
+        <Sprout className="relative h-6 w-6 text-[#03130D]" strokeWidth={2.8} />
       </div>
       <div className="min-w-0">
         <span
