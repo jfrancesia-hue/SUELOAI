@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Award, Building2, CircleDollarSign, HandCoins, ShieldCheck, Users } from 'lucide-react';
+import { Award, Building2, CircleDollarSign, HandCoins, Quote, ShieldCheck, Star, Users } from 'lucide-react';
 import { ActivityTicker } from '@/components/ui/activity-ticker';
 import { useRevealOnScroll } from '@/components/animations/useReveal';
 import { useCounterAnimation } from '@/components/animations/useScrollAnimation';
@@ -135,7 +135,7 @@ export function SocialProof() {
               data-reveal
               className="overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.055] shadow-[0_24px_80px_-44px_rgba(0,0,0,0.95)] backdrop-blur-xl"
             >
-              <div className="relative h-44">
+              <div className="relative h-52">
                 <Image
                   src={testimonial.image}
                   alt={testimonial.name}
@@ -143,13 +143,33 @@ export function SocialProof() {
                   sizes="(min-width: 768px) 33vw, 100vw"
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.12)_0%,rgba(7,17,31,0.82)_100%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.02)_0%,rgba(7,17,31,0.18)_58%,rgba(7,17,31,0.78)_100%)]" />
+                <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full border border-white/10 bg-black/32 px-3 py-2 backdrop-blur-xl">
+                  <Quote className="h-4 w-4 text-emerald-300" />
+                  <span className="text-xs font-bold text-white">Opinión verificada</span>
+                </div>
               </div>
               <div className="p-6">
-                <p className="text-sm leading-relaxed text-white/72">{testimonial.text}</p>
-                <div className="mt-5 border-t border-white/10 pt-4">
-                  <p className="text-sm font-semibold text-white">{testimonial.name}</p>
-                  <p className="mt-1 text-xs text-white/42">{testimonial.role}</p>
+                <div className="mb-4 flex items-center gap-1">
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <Star key={index} className="h-4 w-4 fill-[#F5C542] text-[#F5C542]" />
+                  ))}
+                </div>
+                <p className="text-sm leading-relaxed text-white/76">“{testimonial.text}”</p>
+                <div className="mt-5 flex items-center gap-3 border-t border-white/10 pt-4">
+                  <div className="relative h-11 w-11 overflow-hidden rounded-full border border-white/10">
+                    <Image
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      fill
+                      sizes="44px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-white">{testimonial.name}</p>
+                    <p className="mt-1 text-xs text-white/42">{testimonial.role}</p>
+                  </div>
                 </div>
               </div>
             </div>
