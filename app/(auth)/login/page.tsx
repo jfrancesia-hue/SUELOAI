@@ -71,10 +71,10 @@ export default function LoginPage() {
             Demo completa
           </Link>
           <Link
-            href="/api/demo/access?role=investor&redirect=/investor"
+            href="/api/demo/access?role=investor&redirect=/marketplace"
             className="inline-flex items-center justify-center rounded-xl border border-surface-300 bg-white px-3 py-2 text-sm font-semibold text-surface-800 hover:bg-surface-100"
           >
-            Inversor
+            Ver proyectos
           </Link>
           <Link
             href="/api/demo/access?role=developer&redirect=/developer"

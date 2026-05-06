@@ -1,4 +1,5 @@
 ﻿import { createClient } from '@/lib/supabase-server';
+import { cookies } from 'next/headers';
 import Image from 'next/image';
 import { formatCurrency, getProgressPercent } from '@/utils/helpers';
 import { Badge, ProgressBar, EmptyState } from '@/components/ui';
@@ -24,7 +25,10 @@ function ratingLabel(rating: string | null): string {
 }
 
 export default async function MarketplacePage() {
-  if (isDemoMode()) {
+  const publicDemo = process.env.NEXT_PUBLIC_ENABLE_PUBLIC_DEMO_ACCESS !== 'false'
+    && cookies().get('suelo_public_demo')?.value === '1';
+
+  if (isDemoMode() || publicDemo) {
     return <MarketplaceView projects={demoProjects.map((project, index) => ({
       ...project,
       score: { rating: index === 0 ? 'A_plus' : index === 1 ? 'A' : 'B', overall_score: index === 0 ? 94 : index === 1 ? 88 : 81, ai_analysis: null },

@@ -16,5 +16,11 @@ export async function POST() {
     path: '/',
     maxAge: 0,
   });
+  response.cookies.set('suelo_public_demo_client', '', {
+    httpOnly: false,
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 0,
+  });
   return response;
 }

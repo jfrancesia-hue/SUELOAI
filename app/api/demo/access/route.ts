@@ -35,6 +35,12 @@ export async function GET(request: NextRequest) {
     path: '/',
     maxAge: 60 * 60 * 24 * 14,
   });
+  response.cookies.set('suelo_public_demo_client', '1', {
+    httpOnly: false,
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 60 * 60 * 24 * 14,
+  });
 
   return response;
 }

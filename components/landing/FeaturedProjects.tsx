@@ -17,6 +17,7 @@ import { SueloScoreBadge } from '@/components/ui/suelo-score-badge';
 
 const projects = [
   {
+    id: 'demo-asuncion-eje',
     title: 'Torre Asunción Eje',
     location: 'Asunción, Paraguay',
     image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=85&auto=format&fit=crop',
@@ -33,6 +34,7 @@ const projects = [
     accent: 'brand' as const,
   },
   {
+    id: 'demo-santa-cruz-lofts',
     title: 'Santa Cruz Business Lofts',
     location: 'Santa Cruz, Bolivia',
     image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=85&auto=format&fit=crop',
@@ -49,6 +51,7 @@ const projects = [
     accent: 'earth' as const,
   },
   {
+    id: 'demo-la-paz-altura',
     title: 'Residencias La Paz Altura',
     location: 'La Paz, Bolivia',
     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=85&auto=format&fit=crop',
@@ -120,7 +123,7 @@ export function FeaturedProjects() {
 
           <Link
             data-reveal
-            href="/marketplace"
+            href="/api/demo/access?role=investor&redirect=/marketplace"
             className="group inline-flex items-center justify-center gap-2 rounded-xl border border-surface-300 bg-surface-100 px-5 py-3 text-sm font-[560] text-surface-900 transition-all duration-200 hover:border-brand-500/30 hover:bg-surface-150"
           >
             Ver marketplace
@@ -136,7 +139,7 @@ export function FeaturedProjects() {
               <Link
                 key={project.title}
                 data-reveal
-                href="/marketplace"
+                href={`/api/demo/access?role=investor&redirect=/projects/${project.id}`}
                 className={`group relative overflow-hidden rounded-[20px] border ${tone.border} bg-surface-100/70 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-brand-500/30 hover:bg-surface-100`}
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-surface-200">
@@ -245,7 +248,7 @@ export function FeaturedProjects() {
             </div>
           </div>
           <Link
-            href="/assistant"
+            href="/api/demo/access?role=investor&redirect=/assistant"
             className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-brand-500 px-4 py-2.5 text-sm font-[560] text-white transition-all duration-200 hover:bg-brand-600"
           >
             Preguntar al analista

@@ -67,15 +67,15 @@ export function Hero() {
           </motion.p>
 
           <motion.div variants={fadeUp} className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <PremiumCta href="/register">Empezar a invertir</PremiumCta>
-            <PremiumCta href="#proyectos" variant="secondary">Ver proyectos</PremiumCta>
+            <PremiumCta href="/api/demo/access?role=investor&redirect=/marketplace">Ver proyectos libre</PremiumCta>
+            <PremiumCta href="#proyectos" variant="secondary">Vista rápida</PremiumCta>
           </motion.div>
 
           <motion.div variants={fadeUp} className="mt-5 flex flex-wrap gap-2">
             {[
-              ['Demo inversor', '/investor'],
-              ['Demo developer', '/developer'],
-              ['Demo admin', '/admin'],
+              ['Demo inversor', '/api/demo/access?role=investor&redirect=/marketplace'],
+              ['Demo developer', '/api/demo/access?role=developer&redirect=/developer'],
+              ['Demo admin', '/api/demo/access?role=admin&redirect=/admin'],
             ].map(([label, href]) => (
               <Link
                 key={href}

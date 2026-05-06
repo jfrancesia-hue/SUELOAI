@@ -60,20 +60,20 @@ export function FinalCTA() {
           className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-3"
         >
           <Link
-            href="/register"
+            href="/api/demo/access?role=investor&redirect=/marketplace"
             className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-b from-brand-400 to-brand-600 text-white text-[15px] font-[560] rounded-[14px] transition-all duration-200 w-full sm:w-auto
                        shadow-[0_1px_0_rgba(255,255,255,0.2)_inset,0_0_0_1px_rgba(0,200,83,0.4),0_12px_32px_-8px_rgba(0,200,83,0.5)]
                        hover:shadow-[0_1px_0_rgba(255,255,255,0.25)_inset,0_0_0_1px_rgba(0,200,83,0.6),0_16px_40px_-6px_rgba(0,200,83,0.65)]
                        hover:-translate-y-px active:translate-y-0"
           >
-            Crear cuenta gratis
+            Ver proyectos libre
             <ArrowRight
               className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5"
               strokeWidth={2}
             />
           </Link>
           <Link
-            href="/marketplace"
+            href="/api/demo/access?role=investor&redirect=/marketplace"
             className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-surface-100 hover:bg-surface-150 text-surface-900 text-[15px] font-[520] rounded-[14px] transition-all duration-200 border border-surface-200 hover:border-surface-300 w-full sm:w-auto"
           >
             Explorar proyectos

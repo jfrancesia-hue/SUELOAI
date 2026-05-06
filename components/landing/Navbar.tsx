@@ -52,7 +52,7 @@ export function Navbar() {
           </div>
 
           <div className="hidden items-center gap-2 md:flex">
-            <Link href="/wallet" className="inline-flex items-center gap-2 rounded-[10px] border border-white/10 bg-white/[0.055] px-4 py-2.5 text-[13px] font-semibold text-white/78 transition-colors hover:bg-white/[0.09] hover:text-white">
+            <Link href="/api/demo/access?role=investor&redirect=/wallet" className="inline-flex items-center gap-2 rounded-[10px] border border-white/10 bg-white/[0.055] px-4 py-2.5 text-[13px] font-semibold text-white/78 transition-colors hover:bg-white/[0.09] hover:text-white">
               <Wallet className="h-3.5 w-3.5 text-emerald-300" strokeWidth={2} />
               Billetera
             </Link>
@@ -60,11 +60,11 @@ export function Navbar() {
               Iniciar sesión
             </Link>
             <Link
-              href="/register"
+              href="/api/demo/access?role=investor&redirect=/marketplace"
               className="group inline-flex items-center gap-2 rounded-[10px] bg-gradient-to-b from-emerald-300 to-emerald-500 px-5 py-2.5 text-[13px] font-semibold text-[#03130D] shadow-[0_1px_0_rgba(255,255,255,0.2)_inset,0_0_0_1px_rgba(16,185,129,0.4),0_8px_20px_-4px_rgba(16,185,129,0.4)] transition-all hover:-translate-y-px hover:shadow-[0_1px_0_rgba(255,255,255,0.25)_inset,0_0_0_1px_rgba(16,185,129,0.55),0_10px_24px_-4px_rgba(16,185,129,0.55)] active:translate-y-0"
             >
               <Sparkles className="h-3 w-3" strokeWidth={2} />
-              Probá gratis
+              Ver proyectos libre
             </Link>
           </div>
 
@@ -93,15 +93,15 @@ export function Navbar() {
               </Link>
             ))}
             <div className="space-y-2 border-t border-white/[0.06] pt-3">
-              <Link href="/wallet" className="flex w-full items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.055] px-4 py-2.5 text-center text-sm font-medium text-white/80">
+              <Link href="/api/demo/access?role=investor&redirect=/wallet" className="flex w-full items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.055] px-4 py-2.5 text-center text-sm font-medium text-white/80">
                 <Wallet className="h-4 w-4 text-emerald-300" />
                 Billetera
               </Link>
               <Link href="/login" className="block w-full rounded-lg border border-white/10 bg-white/[0.055] px-4 py-2.5 text-center text-sm font-medium text-white/80">
                 Iniciar sesión
               </Link>
-              <Link href="/register" className="block w-full rounded-lg bg-gradient-to-b from-emerald-300 to-emerald-500 px-4 py-2.5 text-center text-sm font-semibold text-[#03130D]">
-                Probá gratis
+              <Link href="/api/demo/access?role=investor&redirect=/marketplace" className="block w-full rounded-lg bg-gradient-to-b from-emerald-300 to-emerald-500 px-4 py-2.5 text-center text-sm font-semibold text-[#03130D]">
+                Ver proyectos libre
               </Link>
             </div>
           </div>

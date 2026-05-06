@@ -2,7 +2,10 @@
 
 export function isDemoMode() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-  return process.env.NEXT_PUBLIC_DEMO_MODE === 'true' || !url || url.includes('placeholder.supabase.co');
+  const browserPublicDemo =
+    typeof document !== 'undefined' &&
+    document.cookie.split(';').some((cookie) => cookie.trim() === 'suelo_public_demo_client=1');
+  return process.env.NEXT_PUBLIC_DEMO_MODE === 'true' || browserPublicDemo || !url || url.includes('placeholder.supabase.co');
 }
 
 const now = new Date().toISOString();
