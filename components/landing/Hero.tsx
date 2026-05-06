@@ -149,23 +149,57 @@ export function Hero() {
 
 function ConstructionHeroVisual() {
   const stages = ['Cimientos', 'Estructura', 'Fachada', 'Entrega'];
+  const realPhotos = [
+    {
+      src: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=82&auto=format&fit=crop',
+      label: 'Obra real',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=82&auto=format&fit=crop',
+      label: 'Edificio terminado',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=82&auto=format&fit=crop',
+      label: 'Proyecto urbano',
+    },
+  ];
 
   return (
-    <div className="relative min-h-[460px] overflow-hidden rounded-[32px] border border-white/10 bg-[#07111F]/55 shadow-[0_30px_100px_-42px_rgba(16,185,129,0.45)] backdrop-blur-2xl">
+    <div className="relative min-h-[520px] overflow-hidden rounded-[32px] border border-white/10 bg-[#07111F]/55 shadow-[0_30px_100px_-42px_rgba(16,185,129,0.45)] backdrop-blur-2xl">
       <Image
-        src="/images/hero-construction-stages.jpg"
-        alt="Edificio 3D avanzando desde cimientos hasta obra terminada"
+        src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&q=86&auto=format&fit=crop"
+        alt="Foto real de obra y construcción inmobiliaria"
         fill
         priority
-        quality={82}
+        quality={86}
         sizes="(min-width: 1024px) 54vw, 100vw"
         className="object-cover"
       />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.04)_0%,rgba(7,17,31,0.14)_48%,rgba(7,17,31,0.72)_100%)]" />
-      <div className="absolute left-5 top-5 rounded-2xl border border-emerald-300/20 bg-black/28 px-4 py-3 text-sm font-semibold text-white/90 backdrop-blur-xl">
-        Obra real, etapa por etapa
-        <p className="mt-1 text-xs font-normal text-white/58">De cimientos a entrega final</p>
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.02)_0%,rgba(7,17,31,0.16)_45%,rgba(7,17,31,0.82)_100%)]" />
+      <div className="absolute left-5 top-5 rounded-2xl border border-emerald-300/25 bg-black/34 px-4 py-3 text-sm font-semibold text-white/95 backdrop-blur-xl">
+        Fotos reales del rubro inmobiliario
+        <p className="mt-1 text-xs font-normal text-white/66">Obra, edificio terminado y proyecto urbano</p>
       </div>
+
+      <div className="absolute bottom-28 left-5 right-5 grid grid-cols-3 gap-3">
+        {realPhotos.map((photo) => (
+          <div key={photo.label} className="relative h-24 overflow-hidden rounded-2xl border border-white/18 bg-white/10 shadow-[0_16px_42px_-28px_rgba(0,0,0,0.9)]">
+            <Image
+              src={photo.src}
+              alt={photo.label}
+              fill
+              quality={74}
+              sizes="180px"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+            <p className="absolute bottom-2 left-2 right-2 text-[11px] font-bold text-white drop-shadow">
+              {photo.label}
+            </p>
+          </div>
+        ))}
+      </div>
+
       <div className="absolute bottom-5 left-5 right-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
         {stages.map((stage, index) => (
           <div key={stage} className="rounded-2xl border border-white/10 bg-black/25 p-3 backdrop-blur-xl">
