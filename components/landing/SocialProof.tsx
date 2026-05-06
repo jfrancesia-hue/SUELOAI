@@ -29,19 +29,22 @@ const testimonials = [
     name: 'María Fernanda Ríos',
     role: 'Inversora, Asunción',
     text: 'Lo entendí en diez minutos: proyecto real, contrato verificable y una IA que me explicó el riesgo sin venderme humo.',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80&auto=format&fit=crop',
+    coverImage: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=85&auto=format&fit=crop',
+    avatarImage: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=85&auto=format&fit=facearea&facepad=2',
   },
   {
     name: 'Carlos Aguilera',
     role: 'Desarrollador, Santa Cruz',
     text: 'Nos ayudó a presentar el proyecto con documentación, seguimiento y trazabilidad. Es mucho más claro que enviar archivos sueltos por WhatsApp.',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80&auto=format&fit=crop',
+    coverImage: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=85&auto=format&fit=crop',
+    avatarImage: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=85&auto=format&fit=facearea&facepad=2',
   },
   {
     name: 'Laura Méndez',
     role: 'Inversora, La Paz',
     text: 'Ver el avance, la renta estimada y el hash del contrato en el mismo lugar cambia totalmente la confianza.',
-    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80&auto=format&fit=crop',
+    coverImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=85&auto=format&fit=crop',
+    avatarImage: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=85&auto=format&fit=facearea&facepad=2',
   },
 ];
 
@@ -137,8 +140,8 @@ export function SocialProof() {
             >
               <div className="relative h-52">
                 <Image
-                  src={testimonial.image}
-                  alt={testimonial.name}
+                  src={testimonial.coverImage}
+                  alt={`Contexto inmobiliario de ${testimonial.role}`}
                   fill
                   sizes="(min-width: 768px) 33vw, 100vw"
                   className="object-cover"
@@ -159,7 +162,7 @@ export function SocialProof() {
                 <div className="mt-5 flex items-center gap-3 border-t border-white/10 pt-4">
                   <div className="relative h-11 w-11 overflow-hidden rounded-full border border-white/10">
                     <Image
-                      src={testimonial.image}
+                      src={testimonial.avatarImage}
                       alt={testimonial.name}
                       fill
                       sizes="44px"
