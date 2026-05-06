@@ -37,7 +37,8 @@ export default function LoginPage() {
 
     if (user) {
       const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single();
-      const destination = getRedirectTarget() || (profile?.role === 'developer' ? '/developer' : '/investor');
+      const hasOnboarding = typeof window !== 'undefined' && window.localStorage.getItem('suelo_onboarding');
+      const destination = getRedirectTarget() || (profile?.role === 'developer' ? '/developer' : hasOnboarding ? '/investor' : '/onboarding');
       router.push(destination);
       router.refresh();
     }
@@ -71,6 +72,12 @@ export default function LoginPage() {
           onChange={(event) => setForm({ ...form, password: event.target.value })}
           required
         />
+
+        <div className="flex justify-end">
+          <Link href="/forgot-password" className="text-sm font-medium text-brand-500 hover:text-brand-400">
+            ¿Olvidaste tu contraseña?
+          </Link>
+        </div>
 
         <div className="grid gap-3 rounded-2xl border border-surface-200 bg-surface-100/70 p-4 text-sm text-surface-600">
           <div className="flex gap-3">

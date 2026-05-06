@@ -1,4 +1,6 @@
-﻿import { redirect } from 'next/navigation';
+import { redirect } from 'next/navigation';
+import Link from 'next/link';
+import { AlertTriangle, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { features } from '@/lib/config/features';
 import { markets } from '@/lib/config/markets';
 import { requireAdminProfile } from '@/lib/auth/server';
@@ -27,14 +29,24 @@ export default async function AdminPage() {
   if ('error' in auth) redirect('/investor');
 
   const admin = auth.admin;
-  const [users, projects, fundingProjects, pendingKyc, pendingWallet, invoices] = await Promise.all([
+  const [users, projects, fundingProjects, pendingKyc, pendingWallet, invoices, leads, contacts, conversations, investments] = await Promise.all([
     count(admin, 'profiles'),
     count(admin, 'projects'),
     count(admin, 'projects', (q) => q.eq('status', 'funding')),
     count(admin, 'kyc_verifications', (q) => q.eq('status', 'pending')),
     count(admin, 'wallet_movements', (q) => q.eq('status', 'pending')),
     count(admin, 'invoices'),
+    count(admin, 'crm_leads'),
+    count(admin, 'crm_contacts'),
+    count(admin, 'ai_conversations'),
+    count(admin, 'investments', (q) => q.eq('status', 'confirmed')),
   ]);
+
+  const alerts = [
+    pendingKyc > 0 ? `${pendingKyc} KYC pendientes de revisión` : null,
+    pendingWallet > 0 ? `${pendingWallet} movimientos de billetera pendientes` : null,
+    fundingProjects === 0 ? 'No hay proyectos activos en financiación' : null,
+  ].filter(Boolean) as string[];
 
   return (
     <div className="mx-auto max-w-7xl space-y-8">
@@ -53,9 +65,42 @@ export default async function AdminPage() {
         <Card title="Movimientos pendientes" value={pendingWallet} hint="Depósitos/retiros por validar" />
         <Card title="Facturas" value={invoices} />
         <Card title="Mercados activos" value="PY + BO" hint="USD, USDT, PYG, BOB" />
+        <Card title="Leads CRM" value={leads} hint={`${contacts} contactos`} />
+        <Card title="Conversaciones IA" value={conversations} hint="Actividad del agente" />
+        <Card title="Inversiones confirmadas" value={investments} />
       </div>
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="card lg:col-span-1">
+          <h2 className="section-title text-lg">Alertas operativas</h2>
+          <div className="mt-4 space-y-3">
+            {alerts.length > 0 ? alerts.map((alert) => (
+              <div key={alert} className="flex gap-3 rounded-xl border border-amber-500/20 bg-amber-500/10 p-3 text-sm text-amber-300">
+                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+                {alert}
+              </div>
+            )) : (
+              <div className="flex gap-3 rounded-xl border border-brand-500/20 bg-brand-500/10 p-3 text-sm text-brand-500">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
+                Sin alertas críticas.
+              </div>
+            )}
+          </div>
+          <div className="mt-5 grid gap-2">
+            {[
+              ['/crm/leads', 'Revisar leads'],
+              ['/projects', 'Gestionar proyectos'],
+              ['/invoicing', 'Ver facturación'],
+              ['/wallet', 'Ver billetera'],
+            ].map(([href, label]) => (
+              <Link key={href} href={href} className="flex items-center justify-between rounded-xl bg-surface-100 px-3 py-2 text-sm font-medium text-surface-800 hover:bg-surface-200">
+                {label}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            ))}
+          </div>
+        </div>
+
         <div className="card">
           <h2 className="section-title text-lg">Feature flags</h2>
           <div className="mt-4 grid gap-2 text-sm">

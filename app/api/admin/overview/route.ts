@@ -16,7 +16,7 @@ export async function GET() {
   if ('error' in auth) return NextResponse.json({ error: auth.error }, { status: auth.status });
 
   const admin = auth.admin;
-  const [users, developers, investors, projects, fundingProjects, investments, pendingKyc, pendingWallet] = await Promise.all([
+  const [users, developers, investors, projects, fundingProjects, investments, pendingKyc, pendingWallet, leads, contacts, conversations, invoices] = await Promise.all([
     safeCount(admin, 'profiles'),
     safeCount(admin, 'profiles', (q) => q.eq('role', 'developer')),
     safeCount(admin, 'profiles', (q) => q.eq('role', 'investor')),
@@ -25,6 +25,10 @@ export async function GET() {
     safeCount(admin, 'investments'),
     safeCount(admin, 'kyc_verifications', (q) => q.eq('status', 'pending')),
     safeCount(admin, 'wallet_movements', (q) => q.eq('status', 'pending')),
+    safeCount(admin, 'crm_leads'),
+    safeCount(admin, 'crm_contacts'),
+    safeCount(admin, 'ai_conversations'),
+    safeCount(admin, 'invoices'),
   ]);
 
   return NextResponse.json({
@@ -39,8 +43,12 @@ export async function GET() {
       investments: investments.count,
       pendingKyc: pendingKyc.count,
       pendingWallet: pendingWallet.count,
+      leads: leads.count,
+      contacts: contacts.count,
+      conversations: conversations.count,
+      invoices: invoices.count,
     },
-    warnings: [users, developers, investors, projects, fundingProjects, investments, pendingKyc, pendingWallet]
+    warnings: [users, developers, investors, projects, fundingProjects, investments, pendingKyc, pendingWallet, leads, contacts, conversations, invoices]
       .filter((x) => x.error)
       .map((x) => x.error),
   });

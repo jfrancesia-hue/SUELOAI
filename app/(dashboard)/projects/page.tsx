@@ -14,7 +14,7 @@ export default function ProjectsPage() {
   const searchParams = useSearchParams();
   const supabase = createClient();
   const [projects, setProjects] = useState<Project[]>([]);
-  const [showForm, setShowForm] = useState(searchParams.get('new') === 'true');
+  const [showForm, setShowForm] = useState(searchParams?.get('new') === 'true');
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');

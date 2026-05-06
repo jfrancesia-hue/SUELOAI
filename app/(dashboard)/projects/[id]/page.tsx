@@ -32,8 +32,8 @@ type InvestmentResult = Investment & {
 };
 
 export default function ProjectDetailPage() {
-  const params = useParams();
-  const projectId = String(params.id);
+  const params = useParams<{ id?: string }>();
+  const projectId = params?.id ?? '';
   const supabase = createClient();
 
   const [project, setProject] = useState<Project | null>(null);
@@ -52,6 +52,7 @@ export default function ProjectDetailPage() {
   }, [projectId]);
 
   async function loadData() {
+    if (!projectId) return;
     setLoading(true);
     setInvestError('');
 
@@ -105,7 +106,7 @@ export default function ProjectDetailPage() {
     }
 
     if (amount < Number(project.min_investment)) {
-      setInvestError(`La inversion minima es ${formatCurrency(Number(project.min_investment))}`);
+      setInvestError(`La inversión mínima es ${formatCurrency(Number(project.min_investment))}`);
       setInvesting(false);
       return;
     }
@@ -121,7 +122,7 @@ export default function ProjectDetailPage() {
     const result = await response.json();
 
     if (!response.ok) {
-      setInvestError(result.error || 'No pudimos confirmar la inversion');
+      setInvestError(result.error || 'No pudimos confirmar la inversión');
       setInvesting(false);
       return;
     }
@@ -231,7 +232,7 @@ export default function ProjectDetailPage() {
               </span>
               <span className="flex items-center gap-2">
                 <Landmark className="h-4 w-4 text-amber-300" />
-                {(project.developer as any)?.company_name || (project.developer as any)?.full_name || 'Developer verificado'}
+                {(project.developer as any)?.company_name || (project.developer as any)?.full_name || 'Desarrolladora verificada'}
               </span>
             </div>
           </div>
@@ -239,7 +240,7 @@ export default function ProjectDetailPage() {
           <div className="rounded-3xl border border-white/10 bg-white/[0.065] p-5 backdrop-blur-xl">
             <div className="mb-4 flex items-center justify-between">
               <div>
-                <p className="text-xs uppercase tracking-[0.16em] text-white/40">Funding</p>
+                <p className="text-xs uppercase tracking-[0.16em] text-white/40">Financiación</p>
                 <p className="mt-1 font-display text-3xl font-bold">{metrics.progress}%</p>
               </div>
               <div className="rounded-2xl border border-emerald-300/20 bg-emerald-300/10 p-3">
@@ -268,6 +269,26 @@ export default function ProjectDetailPage() {
         <StatCard title="Disponibles" value={`${metrics.availableTokens}`} change={`${project.total_tokens} tokens totales`} icon={Building2} />
       </div>
 
+      <div className="card border-brand-500/15 bg-brand-500/5">
+        <div className="mb-5 flex items-center gap-3">
+          <div className="rounded-2xl bg-brand-500/10 p-3">
+            <Sparkles className="h-5 w-5 text-brand-500" />
+          </div>
+          <div>
+            <h2 className="font-display text-xl font-bold text-surface-900">Proyecto explicado fácil</h2>
+            <p className="text-sm text-surface-500">Resumen rápido para entender antes de invertir.</p>
+          </div>
+        </div>
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+          <EasyPoint title="Qué es" text={project.description || 'Proyecto inmobiliario fraccionado disponible en Suelo.'} />
+          <EasyPoint title="Cómo gana el inversor" text={`Participás proporcionalmente y el retorno objetivo es ${project.expected_return}% en ${project.return_period_months} meses.`} />
+          <EasyPoint title="Qué puede salir mal" text="Puede haber demoras, menor demanda, cambios de costos o menor liquidez para vender antes del plazo." />
+          <EasyPoint title="Entrada mínima" text={`Desde ${formatCurrency(Number(project.min_investment))}, sujeto a disponibilidad de tokens.`} />
+          <EasyPoint title="Documentos" text={project.documents_url ? 'Documentación disponible para revisión.' : 'Documentación en revisión o pendiente de carga.'} />
+          <EasyPoint title="Verificación" text="El contrato puede quedar asociado a un hash público para comprobar integridad." />
+        </div>
+      </div>
+
       <div className="grid gap-6 lg:grid-cols-[1fr_380px]">
         <div className="space-y-6">
           <div className="card">
@@ -277,13 +298,13 @@ export default function ProjectDetailPage() {
               </div>
               <div>
                 <h2 className="font-display text-lg font-bold text-surface-900">Centro de confianza</h2>
-                <p className="text-sm text-surface-500">Tu participacion, tus documentos, tu trazabilidad.</p>
+                <p className="text-sm text-surface-500">Tu participación, tus documentos, tu trazabilidad.</p>
               </div>
             </div>
             <div className="grid gap-3 md:grid-cols-3">
               {[
-                ['Developer', 'Verificado'],
-                ['Contrato', 'SHA-256 publico'],
+                ['Desarrolladora', 'Verificada'],
+                ['Contrato', 'SHA-256 público'],
                 ['Documentación', project.documents_url ? 'Disponible' : 'En revisión'],
               ].map(([label, value]) => (
                 <div key={label} className="rounded-2xl border border-surface-200 bg-surface-50 p-4">
@@ -296,12 +317,12 @@ export default function ProjectDetailPage() {
 
           <div className="card">
             <h2 className="font-display text-lg font-bold text-surface-900">Escenarios de retorno</h2>
-            <p className="mt-1 text-sm text-surface-500">Simulacion sobre el monto seleccionado.</p>
+            <p className="mt-1 text-sm text-surface-500">Simulación sobre el monto seleccionado.</p>
             <div className="mt-5 grid gap-3 md:grid-cols-3">
               {[
                 ['Conservador', metrics.conservative, 'Ritmo menor al objetivo'],
                 ['Medio', metrics.balanced, 'Retorno esperado del proyecto'],
-                ['Optimista', metrics.optimistic, 'Mayor plusvalia estimada'],
+                ['Optimista', metrics.optimistic, 'Mayor plusvalía estimada'],
               ].map(([label, value, note], index) => (
                 <div
                   key={label as string}
@@ -410,10 +431,10 @@ export default function ProjectDetailPage() {
                 <div className="mt-4 rounded-2xl border border-brand-500/20 bg-brand-500/10 p-4">
                   <div className="flex items-center gap-2 text-sm font-semibold text-brand-500">
                     <CheckCircle2 className="h-4 w-4" />
-                    Inversion confirmada
+                    Inversión confirmada
                   </div>
                   <p className="mt-2 text-xs leading-relaxed text-surface-500">
-                    El contrato se descargo y tu hash publico ya esta disponible.
+                    El contrato se descargó y tu hash público ya está disponible.
                   </p>
                   {lastInvestment.contract_hash && (
                     <Link href={`/verify/${lastInvestment.contract_hash}`} className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-brand-500">
@@ -424,11 +445,11 @@ export default function ProjectDetailPage() {
               )}
 
               <Button onClick={handleInvest} loading={investing} disabled={!hasEnoughBalance || investing} className="mt-4 w-full" icon={ShieldCheck}>
-                Confirmar inversion
+                Confirmar inversión
               </Button>
 
               <p className="mt-3 text-center text-xs leading-relaxed text-surface-500">
-                Se debita tu wallet, se confirma la participacion y se genera un contrato PDF verificable.
+                Se debita tu wallet, se confirma la participación y se genera un contrato PDF verificable.
               </p>
             </div>
           ) : (
@@ -451,6 +472,15 @@ function InvestmentRow({ label, value, strong = false }: { label: string; value:
     <div className="flex items-center justify-between gap-3 text-sm">
       <span className={strong ? 'font-semibold text-surface-900' : 'text-surface-500'}>{label}</span>
       <span className={strong ? 'font-display text-lg font-bold text-brand-500' : 'font-mono font-semibold text-surface-900'}>{value}</span>
+    </div>
+  );
+}
+
+function EasyPoint({ title, text }: { title: string; text: string }) {
+  return (
+    <div className="rounded-2xl border border-surface-200 bg-surface-100 p-4">
+      <p className="font-semibold text-surface-900">{title}</p>
+      <p className="mt-2 text-sm leading-relaxed text-surface-600">{text}</p>
     </div>
   );
 }

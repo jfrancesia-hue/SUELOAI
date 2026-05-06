@@ -137,7 +137,7 @@ export default function WalletPage() {
 
   useEffect(() => {
     loadWallet();
-    const status = searchParams.get('status');
+    const status = searchParams?.get('status');
     if (status === 'success') setMessage({ type: 'success', text: 'Pago aprobado. El saldo se acreditará cuando Mercado Pago confirme el webhook.' });
     if (status === 'pending') setMessage({ type: 'info', text: 'Pago pendiente. Te avisamos apenas se acredite.' });
     if (status === 'failure') setMessage({ type: 'error', text: 'El pago no se pudo completar.' });

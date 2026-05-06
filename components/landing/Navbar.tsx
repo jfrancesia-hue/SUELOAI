@@ -6,7 +6,8 @@ import { Menu, Sparkles, Wallet, X } from 'lucide-react';
 
 const navItems = [
   { label: 'Proyectos', href: '#proyectos' },
-  { label: 'Confianza', href: '#confianza' },
+  { label: 'Confianza', href: '/trust' },
+  { label: 'Developers', href: '/developers' },
   { label: 'Cómo funciona', href: '#como-funciona' },
   { label: 'Analista IA', href: '#analista-ia' },
   { label: 'Simulador', href: '#simulador' },

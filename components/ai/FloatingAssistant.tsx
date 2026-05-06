@@ -5,6 +5,7 @@ import Link from 'next/link';
 import {
   ArrowRight,
   Bot,
+  Building2,
   Calculator,
   ExternalLink,
   Home,
@@ -24,10 +25,18 @@ interface Message {
 }
 
 const quickPrompts = [
+  { icon: Home, label: 'Quiero invertir', text: 'Quiero invertir. Estoy entre Paraguay y Bolivia. Ayudame a elegir el primer paso.' },
+  { icon: Building2, label: 'Presentar proyecto', text: 'Soy desarrollador y quiero presentar un proyecto para captar inversores. ¿Qué necesito preparar?' },
   { icon: Home, label: 'Invertir USD 500', text: 'Tengo USD 500. ¿Qué proyecto me recomendarías y por qué?' },
   { icon: WalletCards, label: 'Revisar billetera', text: 'Ayudame a entender mi billetera y cómo cargar saldo para invertir.' },
   { icon: Calculator, label: 'Simular retorno', text: 'Simulá una inversión de USD 1.000 con perfil balanceado.' },
   { icon: Sparkles, label: 'Explicar riesgo', text: 'Explicame el riesgo de invertir en proyectos inmobiliarios fraccionados.' },
+];
+
+const whatsappIntents = [
+  'Quiero invertir',
+  'Quiero presentar un proyecto',
+  'Quiero hablar con un asesor',
 ];
 
 function getWhatsAppHref(message: string) {
@@ -43,7 +52,7 @@ export function FloatingAssistant() {
     {
       role: 'assistant',
       content:
-        'Hola, soy tu Asesor IA de Suelo. Puedo ayudarte a elegir proyectos, simular retornos, entender riesgos, cargar saldo o avanzar paso a paso con una inversión.',
+        'Hola, soy tu Asesor IA de Suelo. Puedo ayudarte a invertir, presentar un proyecto, entender riesgos o hablar con un asesor humano por WhatsApp.',
       timestamp: new Date(),
     },
   ]);
@@ -60,8 +69,8 @@ export function FloatingAssistant() {
     const lastUserMessage = [...messages].reverse().find((message) => message.role === 'user')?.content;
     const context = typeof window !== 'undefined' ? window.location.pathname : '/';
     return [
-      'Hola Suelo, quiero hablar con el Asesor IA.',
-      lastUserMessage ? `Mi consulta: ${lastUserMessage}` : 'Quiero asesoramiento para invertir en proyectos inmobiliarios desde USD 100.',
+      'Hola Suelo, quiero hablar con un asesor.',
+      lastUserMessage ? `Mi consulta: ${lastUserMessage}` : 'Quiero asesoramiento para invertir o presentar un proyecto inmobiliario.',
       `Estoy viendo: ${context}`,
     ].join('\n');
   }, [messages]);
@@ -92,7 +101,7 @@ export function FloatingAssistant() {
           {
             role: 'assistant',
             content:
-              'Para asesorarte con datos de tu cartera necesito que inicies sesion. Tambien podes tocar WhatsApp y seguimos con un asesor de Suelo con tu consulta ya prellenada.',
+              'Para asesorarte con datos de tu cartera necesito que inicies sesión. También podés tocar WhatsApp y seguimos con un asesor de Suelo con tu consulta ya prellenada.',
             timestamp: new Date(),
           },
         ]);
@@ -164,7 +173,7 @@ export function FloatingAssistant() {
                 </div>
                 <div>
                   <p className="text-sm font-bold text-white">Asesor IA Suelo</p>
-                  <p className="text-xs text-white/45">Inversión, wallet, riesgo y proyectos</p>
+                  <p className="text-xs text-white/45">Inversión, proyectos, wallet y riesgo</p>
                 </div>
               </div>
               <button
@@ -200,6 +209,22 @@ export function FloatingAssistant() {
                 </div>
               )}
             </div>
+
+            {whatsappHref && (
+              <div className="relative mt-3 flex flex-wrap gap-2">
+                {whatsappIntents.map((intent) => (
+                  <a
+                    key={intent}
+                    href={getWhatsAppHref(`Hola Suelo, ${intent.toLowerCase()}. Estoy viendo la plataforma.`) || whatsappHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-semibold text-white/76 hover:bg-white/[0.09]"
+                  >
+                    {intent}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
 
           <div ref={messagesRef} className="flex-1 space-y-3 overflow-y-auto p-4 scrollbar-thin">

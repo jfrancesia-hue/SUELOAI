@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase-server';
 import { formatCurrency, getProgressPercent } from '@/utils/helpers';
 import { Badge, ProgressBar, EmptyState } from '@/components/ui';
-import { Building2, MapPin, TrendingUp, ArrowRight, Sparkles } from 'lucide-react';
+import { Building2, MapPin, TrendingUp, ArrowRight, Sparkles, ShieldCheck, FileCheck2 } from 'lucide-react';
 import Link from 'next/link';
 
 /** Color del badge según rating IA (A+ = verde, D = rojo). */
@@ -98,6 +98,15 @@ export default async function MarketplacePage() {
                       por {(project.developer as any).company_name || (project.developer as any).full_name}
                     </p>
                   )}
+
+                  <div className="flex flex-wrap gap-2">
+                    <span className="inline-flex items-center gap-1 rounded-lg bg-brand-500/10 px-2 py-1 text-xs font-semibold text-brand-500">
+                      <ShieldCheck className="h-3 w-3" /> Verificado
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded-lg bg-surface-200 px-2 py-1 text-xs font-semibold text-surface-700">
+                      <FileCheck2 className="h-3 w-3" /> Docs
+                    </span>
+                  </div>
 
                   <div className="grid grid-cols-3 gap-2 py-3 border-y border-surface-200">
                     <div>

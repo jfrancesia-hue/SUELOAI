@@ -41,6 +41,7 @@ export async function middleware(request: NextRequest) {
 
   const protectedRoutes = [
     '/investor',
+    '/onboarding',
     '/developer',
     '/projects',
     '/marketplace',

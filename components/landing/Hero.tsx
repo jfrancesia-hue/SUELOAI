@@ -1,20 +1,11 @@
 'use client';
 
-import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Building2, CircleDollarSign, ShieldCheck, Sparkles, TrendingUp } from 'lucide-react';
 import { ActivityTicker } from '@/components/ui/activity-ticker';
 import { MetricCard } from '@/components/ui/metric-card';
 import { PremiumCta } from '@/components/ui/premium-cta';
-
-const LatamInvestmentMap = dynamic(() => import('@/components/3d/latam-investment-map'), {
-  ssr: false,
-  loading: () => (
-    <div className="min-h-[460px] rounded-[32px] border border-white/10 bg-[#07111F]/65 shadow-[0_30px_100px_-42px_rgba(16,185,129,0.38)]">
-      <div className="h-full min-h-[460px] animate-pulse rounded-[32px] bg-[radial-gradient(circle_at_50%_35%,rgba(16,185,129,0.24),transparent_34%),radial-gradient(circle_at_72%_62%,rgba(6,182,212,0.2),transparent_28%)]" />
-    </div>
-  ),
-});
 
 const activity = [
   'Una inversora sumó USD 500 en Asunción',
@@ -111,7 +102,7 @@ export function Hero() {
           className="relative"
         >
           <div className="absolute -inset-6 rounded-[40px] bg-[radial-gradient(circle_at_35%_10%,rgba(16,185,129,0.25),transparent_38%),radial-gradient(circle_at_80%_55%,rgba(6,182,212,0.18),transparent_34%)] blur-2xl" />
-          <LatamInvestmentMap />
+          <ConstructionHeroVisual />
         </motion.div>
       </div>
 
@@ -136,5 +127,40 @@ export function Hero() {
         Invertí con datos claros, no con promesas.
       </div>
     </section>
+  );
+}
+
+function ConstructionHeroVisual() {
+  const stages = ['Cimientos', 'Estructura', 'Fachada', 'Entrega'];
+
+  return (
+    <div className="relative min-h-[460px] overflow-hidden rounded-[32px] border border-white/10 bg-[#07111F]/55 shadow-[0_30px_100px_-42px_rgba(16,185,129,0.45)] backdrop-blur-2xl">
+      <Image
+        src="/images/hero-construction-stages.png"
+        alt="Edificio 3D avanzando desde cimientos hasta obra terminada"
+        fill
+        priority
+        sizes="(min-width: 1024px) 54vw, 100vw"
+        className="object-cover"
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.04)_0%,rgba(7,17,31,0.14)_48%,rgba(7,17,31,0.72)_100%)]" />
+      <div className="absolute left-5 top-5 rounded-2xl border border-emerald-300/20 bg-black/28 px-4 py-3 text-sm font-semibold text-white/90 backdrop-blur-xl">
+        Obra real, etapa por etapa
+        <p className="mt-1 text-xs font-normal text-white/58">De cimientos a entrega final</p>
+      </div>
+      <div className="absolute bottom-5 left-5 right-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
+        {stages.map((stage, index) => (
+          <div key={stage} className="rounded-2xl border border-white/10 bg-black/25 p-3 backdrop-blur-xl">
+            <div className="mb-2 h-1.5 overflow-hidden rounded-full bg-white/10">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-emerald-300 to-cyan-300"
+                style={{ width: `${(index + 1) * 25}%` }}
+              />
+            </div>
+            <p className="text-xs font-semibold text-white">{stage}</p>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
