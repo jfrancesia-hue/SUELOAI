@@ -7,6 +7,7 @@
  */
 
 import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { demoProfiles, isDemoMode } from '@/lib/demo';
 import { createClient } from '@/lib/supabase-server';
@@ -19,12 +20,18 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  if (isDemoMode()) {
+  const cookieStore = cookies();
+  const publicDemoEnabled = process.env.NEXT_PUBLIC_ENABLE_PUBLIC_DEMO_ACCESS !== 'false';
+  const publicDemo = publicDemoEnabled && cookieStore.get('suelo_public_demo')?.value === '1';
+  const publicRole = cookieStore.get('suelo_public_demo_role')?.value as keyof typeof demoProfiles | undefined;
+
+  if (isDemoMode() || publicDemo) {
+    const demoProfile = demoProfiles[publicRole || 'admin'] || demoProfiles.admin;
     return (
       <div className="relative min-h-screen overflow-hidden bg-[#06101D]">
         <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_22%_12%,rgba(16,185,129,0.16),transparent_32%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.11),transparent_30%),linear-gradient(180deg,#06101D_0%,#08111F_48%,#05080D_100%)]" />
         <div className="pointer-events-none fixed inset-0 bg-grid-pattern bg-grid opacity-[0.05]" />
-        <Sidebar profile={demoProfiles.admin} />
+        <Sidebar profile={demoProfile} />
         <main className="relative px-4 pb-10 pt-20 sm:px-6 lg:ml-64 lg:px-8 lg:pt-8">
           {children}
         </main>

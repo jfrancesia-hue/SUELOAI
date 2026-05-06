@@ -2,12 +2,14 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
+  const publicDemoEnabled = process.env.NEXT_PUBLIC_ENABLE_PUBLIC_DEMO_ACCESS !== 'false';
+  const publicDemoCookie = request.cookies.get('suelo_public_demo')?.value === '1';
   const demoMode =
     process.env.NEXT_PUBLIC_DEMO_MODE === 'true' ||
     !process.env.NEXT_PUBLIC_SUPABASE_URL ||
     process.env.NEXT_PUBLIC_SUPABASE_URL.includes('placeholder.supabase.co');
 
-  if (demoMode) {
+  if (demoMode || (publicDemoEnabled && publicDemoCookie)) {
     return NextResponse.next();
   }
 
