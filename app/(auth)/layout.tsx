@@ -1,5 +1,6 @@
-import { ArrowLeft, Shield } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { SueloLogo } from '@/components/branding/SueloLogo';
 
 // Páginas de auth dependen de cookies de sesión: nunca prerenderables.
 export const dynamic = 'force-dynamic';
@@ -13,12 +14,13 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-brand-500/8 rounded-full blur-[100px]" />
 
         <div className="relative max-w-md text-center">
-          <div className="w-16 h-16 rounded-2xl bg-brand-500 flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-brand-500/30">
-            <Shield className="w-8 h-8 text-white" />
-          </div>
-          <h1 className="font-display text-4xl font-bold text-surface-900 mb-4">
-            Su<span className="text-brand-500">elo</span>
-          </h1>
+          <SueloLogo
+            className="mx-auto mb-8 justify-center"
+            iconClassName="h-16 w-16 rounded-[24px]"
+            textClassName="text-4xl"
+            dark
+            showTagline
+          />
           <p className="text-surface-600 text-lg leading-relaxed">
             Inversión inmobiliaria fraccionada para Paraguay y Bolivia, con contratos verificables y seguimiento claro.
           </p>
@@ -50,13 +52,8 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           </Link>
 
           {/* Mobile logo */}
-          <Link href="/" className="mb-8 flex items-center gap-2.5 lg:hidden">
-            <div className="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center">
-              <Shield className="w-4.5 h-4.5 text-white" />
-            </div>
-            <span className="font-display font-bold text-lg text-surface-900">
-              Su<span className="text-brand-500">elo</span>
-            </span>
+          <Link href="/" className="mb-8 flex lg:hidden">
+            <SueloLogo iconClassName="h-10 w-10 rounded-[15px]" textClassName="text-2xl" dark />
           </Link>
 
           {children}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Menu, Sparkles, Wallet, X } from 'lucide-react';
+import { SueloLogo } from '@/components/branding/SueloLogo';
 
 const navItems = [
   { label: 'Proyectos', href: '#proyectos' },
@@ -34,13 +35,8 @@ export function Navbar() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="group flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-300 to-emerald-500 shadow-[0_0_0_1px_rgba(16,185,129,0.4),0_8px_20px_-4px_rgba(16,185,129,0.4)] transition-shadow group-hover:shadow-[0_0_0_1px_rgba(16,185,129,0.6),0_10px_24px_-4px_rgba(16,185,129,0.55)]">
-              <span className="text-base font-bold text-[#03130D]">S</span>
-            </div>
-            <span className="font-display text-[19px] font-semibold tracking-[-0.01em] text-white">
-              Suelo<span className="text-emerald-300">.ai</span>
-            </span>
+          <Link href="/" className="group">
+            <SueloLogo iconClassName="h-10 w-10 rounded-[15px]" textClassName="text-[21px]" />
           </Link>
 
           <div className="hidden items-center gap-0.5 md:flex">
