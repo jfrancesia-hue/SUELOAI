@@ -137,6 +137,9 @@ function AdminView({
           </div>
           <div className="mt-5 grid gap-2">
             {[
+              ['/admin/production', 'Checklist producción'],
+              ['/admin/crypto-withdrawals', 'Aprobar retiros crypto'],
+              ['/admin/audit', 'Ver auditoría'],
               ['/crm/leads', 'Revisar leads'],
               ['/projects', 'Gestionar proyectos'],
               ['/invoicing', 'Ver facturación'],

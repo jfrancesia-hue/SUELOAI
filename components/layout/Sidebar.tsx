@@ -10,7 +10,7 @@ import {
   Sprout, LayoutDashboard, Building2, Wallet, Store, FileCheck,
   LogOut, Menu, X, ChevronRight, User, Bitcoin, Users, Receipt,
   RefreshCcw, Sparkles, Bell, Gift, Settings, MessageCircle, ShieldCheck,
-  Scale, Network,
+  Scale, Network, Activity,
 } from 'lucide-react';
 
 interface SidebarProps { profile: Profile; }
@@ -62,6 +62,7 @@ export function Sidebar({ profile }: SidebarProps) {
 
   const adminLinks = [
     { href: '/admin', label: 'Admin', icon: ShieldCheck, badge: 'OPS', highlight: true },
+    { href: '/admin/production', label: 'Producción', icon: Settings, badge: 'CHECK' },
     { href: '/developer', label: 'Dashboard developer', icon: LayoutDashboard },
     { href: '/investor', label: 'Dashboard inversor', icon: User },
     { section: 'Operación' },
@@ -70,6 +71,8 @@ export function Sidebar({ profile }: SidebarProps) {
     { href: '/crm', label: 'CRM', icon: Users },
     { href: '/wallet', label: 'Billetera', icon: Wallet },
     { href: '/blockchain', label: 'Blockchain', icon: Network, badge: 'SETUP' },
+    { href: '/admin/crypto-withdrawals', label: 'Retiros crypto', icon: Bitcoin, badge: 'OPS' },
+    { href: '/admin/audit', label: 'Auditoría', icon: Activity },
     { href: '/invoicing', label: 'Fiscal', icon: Receipt },
     { href: '/verify', label: 'Verificar', icon: FileCheck },
     { href: '/settings', label: 'Ajustes', icon: Settings },
