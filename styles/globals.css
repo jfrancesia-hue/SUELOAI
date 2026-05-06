@@ -192,6 +192,59 @@
   .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 999px; }
 }
 
+/* Legibilidad global: evita letras demasiado chicas o de bajo contraste.
+   Esto mejora landing, formularios, tablas, badges y textos de ayuda sin rediseñar cada componente. */
+@layer utilities {
+  .text-\[9px\] {
+    font-size: 0.72rem;
+    line-height: 1.05rem;
+  }
+
+  .text-\[10px\],
+  .text-\[11px\],
+  .text-xs {
+    font-size: 0.8125rem;
+    line-height: 1.28rem;
+  }
+
+  .leading-tight {
+    line-height: 1.32;
+  }
+
+  .text-white\/40,
+  .text-white\/42,
+  .text-white\/45,
+  .text-white\/46,
+  .text-white\/48,
+  .text-white\/50 {
+    color: rgba(255, 255, 255, 0.66);
+  }
+
+  .text-white\/58,
+  .text-white\/60,
+  .text-white\/62 {
+    color: rgba(255, 255, 255, 0.74);
+  }
+
+  .text-surface-400 {
+    color: #747474;
+  }
+
+  .text-surface-500 {
+    color: #858585;
+  }
+
+  .text-surface-600 {
+    color: #9a9a9a;
+  }
+
+  .input-field {
+    min-height: 48px;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
 @keyframes marquee {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
