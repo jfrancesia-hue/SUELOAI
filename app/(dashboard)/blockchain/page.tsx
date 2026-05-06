@@ -118,35 +118,37 @@ export default function BlockchainPage() {
 
   return (
     <div className="mx-auto max-w-7xl space-y-8">
-      <section className="relative overflow-hidden rounded-3xl border border-surface-200 bg-gradient-to-br from-surface-50 via-white to-brand-500/10 p-6 sm:p-8">
-        <div className="absolute right-8 top-8 hidden h-40 w-40 rounded-full bg-brand-500/10 blur-3xl lg:block" />
+      <section className="relative overflow-hidden rounded-3xl border border-amber-300/30 bg-[linear-gradient(135deg,#3A2508_0%,#9A640F_42%,#F5C542_100%)] p-6 shadow-[0_28px_90px_-54px_rgba(245,197,66,0.95)] sm:p-8">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(255,255,255,0.28),transparent_28%),radial-gradient(circle_at_82%_12%,rgba(255,243,190,0.24),transparent_34%),linear-gradient(180deg,rgba(58,37,8,0.10)_0%,rgba(58,37,8,0.28)_100%)]" />
+        <div className="absolute right-8 top-8 hidden h-48 w-48 rounded-full bg-white/25 blur-3xl lg:block" />
+        <div className="absolute -bottom-24 -left-16 h-56 w-56 rounded-full bg-amber-900/35 blur-3xl" />
         <div className="relative grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-500/20 bg-brand-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand-500">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/18 px-3 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-sm backdrop-blur-xl">
               <Network className="h-3.5 w-3.5" />
               Blockchain setup
             </div>
-            <h1 className="font-display text-3xl font-bold text-surface-900 sm:text-4xl">
+            <h1 className="max-w-3xl font-display text-3xl font-bold tracking-[-0.03em] text-white drop-shadow-[0_2px_18px_rgba(58,37,8,0.45)] sm:text-5xl">
               Centro de conexión blockchain para Suelo
             </h1>
-            <p className="mt-4 max-w-2xl text-base text-surface-600">
+            <p className="mt-4 max-w-2xl text-base font-medium leading-relaxed text-white/88">
               Panel para preparar la conexión real: hashes documentales, wallets, depósitos USDT,
               retiros controlados y una ruta segura hacia tokenización futura en Paraguay y Bolivia.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link href="/wallet/crypto" className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-4 py-2 text-sm font-semibold text-white hover:bg-brand-600">
+              <Link href="/wallet/crypto" className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-bold text-amber-900 shadow-lg shadow-amber-950/15 hover:bg-amber-50">
                 Abrir wallet crypto <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link href="/api/blockchain/status" className="inline-flex items-center gap-2 rounded-xl border border-surface-300 bg-white px-4 py-2 text-sm font-semibold text-surface-800 hover:bg-surface-100">
+              <Link href="/api/blockchain/status" className="inline-flex items-center gap-2 rounded-xl border border-white/25 bg-black/16 px-4 py-2 text-sm font-bold text-white backdrop-blur-xl hover:bg-black/24">
                 Ver API status <RadioTower className="h-4 w-4" />
               </Link>
-              <Link href="/api/readiness" className="inline-flex items-center gap-2 rounded-xl border border-surface-300 bg-white px-4 py-2 text-sm font-semibold text-surface-800 hover:bg-surface-100">
+              <Link href="/api/readiness" className="inline-flex items-center gap-2 rounded-xl border border-white/25 bg-black/16 px-4 py-2 text-sm font-bold text-white backdrop-blur-xl hover:bg-black/24">
                 Readiness prod <DatabaseZap className="h-4 w-4" />
               </Link>
             </div>
           </div>
 
-          <div className="rounded-3xl border border-surface-200 bg-white/90 p-5 shadow-xl shadow-surface-900/5">
+          <div className="rounded-3xl border border-white/25 bg-white/92 p-5 shadow-2xl shadow-amber-950/20 backdrop-blur-xl">
             <div className={`mb-4 flex items-center justify-between rounded-2xl border px-4 py-3 ${readinessClass}`}>
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wider">Estado</p>
