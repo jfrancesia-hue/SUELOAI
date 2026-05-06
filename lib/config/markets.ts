@@ -1,4 +1,4 @@
-﻿export type MarketCountry = 'PY' | 'BO';
+export type MarketCountry = 'PY' | 'BO';
 export type MarketCurrency = 'USD' | 'USDT' | 'PYG' | 'BOB';
 
 export type MarketConfig = {

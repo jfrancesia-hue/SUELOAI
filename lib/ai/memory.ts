@@ -1,12 +1,12 @@
 /**
- * AI Memory Manager — memoria persistente del analyst entre sesiones.
+ * AI Memory Manager  memoria persistente del analyst entre sesiones.
  *
  * Flujo:
  *  1. Antes de cada conversación, el analyst recupera top N memorias activas
  *     (por importancia + frescura) y las inyecta en su system prompt.
  *  2. Durante la conversación, el analyst puede llamar al tool `save_memory`
  *     para persistir nuevo contexto relevante.
- *  3. Las memorias se auto-priorizan por `accessed_count` — cuanto más
+ *  3. Las memorias se auto-priorizan por `accessed_count`  cuanto más
  *     se usan, más alta su utilidad real.
  */
 
@@ -77,12 +77,12 @@ export async function buildMemoryContext(
   for (const m of memories) groups[m.memory_type]?.push(m);
 
   const labels: Record<MemoryType, string> = {
-    user_preference: '🎯 Preferencias',
-    goal: '🏁 Objetivos',
+    user_preference: ' Preferencias',
+    goal: ' Objetivos',
     concern: '⚠️ Preocupaciones',
-    important_fact: '📌 Hechos clave',
-    decision: '✅ Decisiones pasadas',
-    context: '📋 Contexto',
+    important_fact: ' Hechos clave',
+    decision: ' Decisiones pasadas',
+    context: ' Contexto',
   };
 
   const sections: string[] = [];
@@ -98,7 +98,7 @@ export async function buildMemoryContext(
 ${sections.join('\n\n')}
 
 Usá esta memoria para personalizar tu respuesta sin mencionarla explícitamente
-(ej: no digas "veo que tu preferencia es..." — solo actuá acorde).`;
+(ej: no digas "veo que tu preferencia es..."  solo actuá acorde).`;
 }
 
 /**
@@ -164,7 +164,7 @@ export async function saveMemory(
 }
 
 /**
- * Marca memorias como accedidas (incrementa counter) — útil para analytics
+ * Marca memorias como accedidas (incrementa counter)  útil para analytics
  * y para priorizar memorias frecuentemente útiles.
  */
 export async function touchMemories(

@@ -114,7 +114,7 @@ export async function checkRateLimit(
   return { ...memory, backend: 'memory' };
 }
 
-/** Obtener IP del request — maneja proxies Vercel/Cloudflare. */
+/** Obtener IP del request  maneja proxies Vercel/Cloudflare. */
 export function getClientIp(request: NextRequest): string {
   const xff = request.headers.get('x-forwarded-for');
   if (xff) return xff.split(',')[0]!.trim();
@@ -169,7 +169,7 @@ export async function limitByIp(
   return { success: true, remaining: check.remaining, reset: check.reset };
 }
 
-/** Limita por user_id (para rutas autenticadas — más justo que IP cuando hay NAT). */
+/** Limita por user_id (para rutas autenticadas  más justo que IP cuando hay NAT). */
 export async function limitByUser(
   userId: string,
   prefix: string,

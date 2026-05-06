@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Sales playbook for Suelo AI.
  *
  * Objetivo: asesor comercial senior, consultivo, cálido y orientado a conversión.

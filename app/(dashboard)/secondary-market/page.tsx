@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { TrendingUp, MapPin, DollarSign, ShoppingCart } from 'lucide-react';
 import { Button, Input, Badge, EmptyState, LoadingSpinner } from '@/components/ui';
 
@@ -33,18 +33,18 @@ export default function SecondaryMarketPage() {
     tokens: '',
   });
 
-  const fetchListings = async () => {
+  const fetchListings = useCallback(async () => {
     setLoading(true);
     const url = tab === 'mine' ? '/api/secondary/listings?mine=true' : '/api/secondary/listings';
     const res = await fetch(url);
     const data = await res.json();
     setListings(data.data || []);
     setLoading(false);
-  };
+  }, [tab]);
 
   useEffect(() => {
     fetchListings();
-  }, [tab]);
+  }, [fetchListings]);
 
   const handleBuy = async (listingId: string) => {
     const tokens = Number(buyForm.tokens);
@@ -59,7 +59,7 @@ export default function SecondaryMarketPage() {
     });
     const body = await res.json();
     if (res.ok) {
-      alert('✅ Compra ejecutada. Los tokens ya están en tu cartera.');
+      alert(' Compra ejecutada. Los tokens ya están en tu cartera.');
       setBuyForm({ listingId: null, tokens: '' });
       fetchListings();
     } else {
@@ -91,7 +91,7 @@ export default function SecondaryMarketPage() {
               : 'bg-surface-200 text-surface-700 hover:bg-surface-300'
           }`}
         >
-          🛒 Ofertas disponibles
+          ?? Ofertas disponibles
         </button>
         <button
           onClick={() => setTab('mine')}
@@ -101,7 +101,7 @@ export default function SecondaryMarketPage() {
               : 'bg-surface-200 text-surface-700 hover:bg-surface-300'
           }`}
         >
-          📋 Mis listings
+          Mis publicaciones
         </button>
       </div>
 
@@ -190,7 +190,7 @@ export default function SecondaryMarketPage() {
                         variant="ghost"
                         onClick={() => setBuyForm({ listingId: null, tokens: '' })}
                       >
-                        ✕
+                        
                       </Button>
                     </div>
                   ) : (

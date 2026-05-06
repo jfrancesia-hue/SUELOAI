@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase-server';
+﻿import { createClient } from '@/lib/supabase-server';
 import { formatCurrency, getProgressPercent } from '@/utils/helpers';
 import { Badge, ProgressBar, EmptyState } from '@/components/ui';
 import { Building2, MapPin, TrendingUp, ArrowRight, Sparkles, ShieldCheck, FileCheck2 } from 'lucide-react';
@@ -149,3 +149,4 @@ export default async function MarketplacePage() {
     </div>
   );
 }
+

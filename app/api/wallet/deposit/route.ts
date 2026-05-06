@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient, createClient } from '@/lib/supabase-server';
 import { createDepositIntent } from '@/lib/payments/providers';
 import { ensureWallet, normalizeAmount, walletNumber } from '@/lib/wallet/server';

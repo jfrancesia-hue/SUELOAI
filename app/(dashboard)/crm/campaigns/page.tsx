@@ -141,7 +141,7 @@ export default function CampaignsPage() {
             />
           </div>
           <Input
-            label="Tags destinatarios (separados por coma — vacío = todos los contactos con teléfono)"
+            label="Tags destinatarios (separados por coma  vacío = todos los contactos con teléfono)"
             value={form.tags}
             onChange={(e) => setForm({ ...form, tags: e.target.value })}
             placeholder="inversor, vip"
@@ -205,8 +205,8 @@ export default function CampaignsPage() {
               </div>
               {c.stats && (c.stats.sent || c.stats.failed) ? (
                 <div className="flex gap-4 text-xs text-surface-600">
-                  <span>✅ {c.stats.sent || 0} enviados</span>
-                  <span>❌ {c.stats.failed || 0} fallaron</span>
+                  <span> {c.stats.sent || 0} enviados</span>
+                  <span>L {c.stats.failed || 0} fallaron</span>
                 </div>
               ) : null}
             </div>

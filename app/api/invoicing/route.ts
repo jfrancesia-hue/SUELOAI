@@ -1,4 +1,4 @@
-﻿/**
+/**
  * /api/invoicing
  *
  * GET    -> lista facturas del issuer (con filtros)

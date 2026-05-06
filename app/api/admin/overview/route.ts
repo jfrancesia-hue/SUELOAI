@@ -1,4 +1,4 @@
-﻿import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { requireAdminProfile } from '@/lib/auth/server';
 import { features } from '@/lib/config/features';
 import { markets } from '@/lib/config/markets';

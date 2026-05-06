@@ -118,7 +118,7 @@ export function SocialProof() {
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.12)_0%,rgba(7,17,31,0.82)_100%)]" />
               </div>
               <div className="p-6">
-                <p className="text-sm leading-relaxed text-white/72">“{testimonial.text}”</p>
+                <p className="text-sm leading-relaxed text-white/72">{testimonial.text}</p>
                 <div className="mt-5 border-t border-white/10 pt-4">
                   <p className="text-sm font-semibold text-white">{testimonial.name}</p>
                   <p className="mt-1 text-xs text-white/42">{testimonial.role}</p>

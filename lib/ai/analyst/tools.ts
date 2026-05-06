@@ -328,7 +328,7 @@ export async function getPortfolioStats(supabase: SupabaseClient, userId: string
   const alerts: string[] = [];
   if (maxLocationPct > 50) alerts.push(`⚠️ Alta concentración geográfica: ${maxLocationPct.toFixed(0)}%`);
   if (maxTypePct > 60) alerts.push(`⚠️ Alta concentración por tipo: ${maxTypePct.toFixed(0)}%`);
-  if (investments.length < 3) alerts.push('💡 Considerá diversificar con más proyectos');
+  if (investments.length < 3) alerts.push(' Considerá diversificar con más proyectos');
 
   return {
     total_invested_usd: total,

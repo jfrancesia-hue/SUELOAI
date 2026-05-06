@@ -1,4 +1,4 @@
-﻿import { features } from '@/lib/config/features';
+import { features } from '@/lib/config/features';
 import { isSupportedCurrency } from '@/lib/config/markets';
 import { createDepositPreference } from '@/lib/mercadopago/client';
 

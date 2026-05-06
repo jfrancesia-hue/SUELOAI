@@ -1,4 +1,4 @@
-﻿import { features } from '@/lib/config/features';
+import { features } from '@/lib/config/features';
 import { getMarket, type MarketCountry } from '@/lib/config/markets';
 
 export type FiscalDocumentInput = {

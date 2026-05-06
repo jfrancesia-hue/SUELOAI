@@ -2,7 +2,7 @@
  * HD Wallet Manager
  *
  * Genera addresses determinísticas por usuario a partir de un xpub maestro.
- * NUNCA guardamos la private key en el servidor — solo derivamos addresses públicas.
+ * NUNCA guardamos la private key en el servidor  solo derivamos addresses públicas.
  *
  * La master seed debe estar en un HSM / vault externo, o usamos provider custodial
  * (Circle, BitGo, Fireblocks) para no manejar keys directamente.

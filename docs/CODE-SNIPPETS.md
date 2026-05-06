@@ -1,10 +1,10 @@
-# 📋 Suelo v2 — Code Snippets Library
+#  Suelo v2  Code Snippets Library
 
 Snippets listos para copiar en Claude Code. Cada uno contiene código production-ready.
 
 ---
 
-## 🎨 SNIPPET 1: Hero rediseñado con imagen real
+##  SNIPPET 1: Hero rediseñado con imagen real
 
 **File:** `components/landing/Hero.tsx`
 
@@ -124,7 +124,7 @@ export function Hero() {
 
 ---
 
-## 🎨 SNIPPET 2: ProjectCard rediseñada
+##  SNIPPET 2: ProjectCard rediseñada
 
 **File:** `components/marketplace/ProjectCard.tsx`
 
@@ -267,7 +267,7 @@ export function ProjectCard({ project, index = 0 }: Props) {
 
 ---
 
-## 🎨 SNIPPET 3: ScoreBadge con ramp de colores
+##  SNIPPET 3: ScoreBadge con ramp de colores
 
 **File:** `components/scoring/ScoreBadge.tsx`
 
@@ -321,7 +321,7 @@ export function ScoreBadge({ rating, size = 'md', showIcon = true, className }: 
 
 ---
 
-## 🎨 SNIPPET 4: ScoreDetail con Radar Chart
+##  SNIPPET 4: ScoreDetail con Radar Chart
 
 **File:** `components/scoring/ScoreDetail.tsx`
 
@@ -422,7 +422,7 @@ export function ScoreDetail({ score }: Props) {
             <ul className="space-y-1.5">
               {risks.map((risk, i) => (
                 <li key={i} className="flex items-start gap-2 text-xs text-surface-600">
-                  <span className="text-red-400 mt-0.5">•</span>
+                  <span className="text-red-400 mt-0.5">"</span>
                   {risk}
                 </li>
               ))}
@@ -439,7 +439,7 @@ export function ScoreDetail({ score }: Props) {
             <ul className="space-y-1.5">
               {opportunities.map((opp, i) => (
                 <li key={i} className="flex items-start gap-2 text-xs text-surface-600">
-                  <span className="text-brand-500 mt-0.5">•</span>
+                  <span className="text-brand-500 mt-0.5">"</span>
                   {opp}
                 </li>
               ))}
@@ -454,7 +454,7 @@ export function ScoreDetail({ score }: Props) {
 
 ---
 
-## 🎨 SNIPPET 5: CRM Pipeline Kanban
+##  SNIPPET 5: CRM Pipeline Kanban
 
 **File:** `components/crm/PipelineBoard.tsx`
 
@@ -546,7 +546,7 @@ export function PipelineBoard({ leads, onUpdateStatus }: Props) {
 
 ---
 
-## 🎨 SNIPPET 6: API route para Scoring IA
+##  SNIPPET 6: API route para Scoring IA
 
 **File:** `app/api/scoring/analyze/route.ts`
 
@@ -628,7 +628,7 @@ export async function POST(request: NextRequest) {
 
 ---
 
-## 🎨 SNIPPET 7: Asistente Fiscal IA flotante
+##  SNIPPET 7: Asistente Fiscal IA flotante
 
 **File:** `components/invoicing/FiscalAssistant.tsx`
 
@@ -796,7 +796,7 @@ export function FiscalAssistant() {
 
 ---
 
-## 🎨 SNIPPET 8: Hook useNotifications con Realtime
+##  SNIPPET 8: Hook useNotifications con Realtime
 
 **File:** `hooks/useNotifications.ts`
 
@@ -879,7 +879,7 @@ export function useNotifications(userId: string) {
 
 ---
 
-## 🛠️ Setup inicial comandos
+## =?? Setup inicial comandos
 
 ```bash
 # Instalar nuevas dependencies
@@ -898,7 +898,7 @@ npm run dev
 
 ---
 
-## 📝 Order recomendado para implementar
+##  Order recomendado para implementar
 
 1. Setup dependencies + env vars + migraciones
 2. Rediseño Landing (Hero, Features, How It Works, Footer)

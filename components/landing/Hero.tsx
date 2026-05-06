@@ -136,7 +136,7 @@ function ConstructionHeroVisual() {
   return (
     <div className="relative min-h-[460px] overflow-hidden rounded-[32px] border border-white/10 bg-[#07111F]/55 shadow-[0_30px_100px_-42px_rgba(16,185,129,0.45)] backdrop-blur-2xl">
       <Image
-        src="/images/hero-construction-stages.png"
+        src="/images/hero-construction-stages.jpg"
         alt="Edificio 3D avanzando desde cimientos hasta obra terminada"
         fill
         priority
@@ -164,3 +164,4 @@ function ConstructionHeroVisual() {
     </div>
   );
 }
+

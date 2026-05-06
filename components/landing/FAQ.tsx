@@ -35,7 +35,7 @@ const faqs = [
   },
   {
     q: '¿Qué hace exactamente el Analista IA?',
-    a: 'Analiza tu perfil de riesgo, tu portafolio actual y las condiciones del mercado para sugerir acciones: diversificar, rebalancear, salir de una posición, o aprovechar un proyecto nuevo que encaje con tus objetivos. Tiene memoria persistente — aprende de tus decisiones previas.',
+    a: 'Analiza tu perfil de riesgo, tu portafolio actual y las condiciones del mercado para sugerir acciones: diversificar, rebalancear, salir de una posición, o aprovechar un proyecto nuevo que encaje con tus objetivos. Tiene memoria persistente  aprende de tus decisiones previas.',
   },
 ];
 

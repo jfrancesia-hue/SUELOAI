@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase-browser';
 import { Button, Input, Textarea, Select, EmptyState } from '@/components/ui';
@@ -12,7 +12,7 @@ import Link from 'next/link';
 export default function ProjectsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
   const [projects, setProjects] = useState<Project[]>([]);
   const [showForm, setShowForm] = useState(searchParams?.get('new') === 'true');
   const [loading, setLoading] = useState(false);
@@ -32,11 +32,7 @@ export default function ProjectsPage() {
     return_period_months: 12,
   });
 
-  useEffect(() => {
-    loadProjects();
-  }, []);
-
-  async function loadProjects() {
+  const loadProjects = useCallback(async () => {
     setLoading(true);
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
@@ -49,7 +45,11 @@ export default function ProjectsPage() {
 
     setProjects(data || []);
     setLoading(false);
-  }
+  }, [supabase]);
+
+  useEffect(() => {
+    loadProjects();
+  }, [loadProjects]);
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();

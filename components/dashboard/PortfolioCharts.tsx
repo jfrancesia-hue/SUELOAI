@@ -92,7 +92,7 @@ export function ProjectsBreakdown({ data }: { data: InvestmentSlice[] }) {
               width={120}
               stroke="#64748b"
               fontSize={11}
-              tickFormatter={(v) => (v.length > 18 ? `${v.slice(0, 18)}…` : v)}
+              tickFormatter={(v) => (v.length > 18 ? `${v.slice(0, 18)}&` : v)}
             />
             <Tooltip
               contentStyle={{

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase-browser';
 import { formatCurrency, formatDate } from '@/utils/helpers';
@@ -24,10 +25,12 @@ export default function CryptoWalletPage() {
 
   useEffect(() => {
     loadTransactions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     generateAddress();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedNetwork, selectedToken]);
 
   async function loadTransactions() {
@@ -227,7 +230,7 @@ export default function CryptoWalletPage() {
               <div className="card text-center">
                 {qrUrl && (
                   <div className="bg-white p-4 rounded-xl inline-block mb-4">
-                    <img src={qrUrl} alt="QR Code" className="w-48 h-48" />
+                    <Image src={qrUrl} alt="Código QR de depósito" width={192} height={192} unoptimized className="h-48 w-48" />
                   </div>
                 )}
 
@@ -380,6 +383,7 @@ function WithdrawForm() {
       setKycStatus(data?.kyc_status || 'not_started');
     }
     loadKyc();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function handleSubmit(e: React.FormEvent) {

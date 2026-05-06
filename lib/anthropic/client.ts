@@ -1,7 +1,7 @@
 /**
  * Anthropic Claude Client
  *
- * Reemplaza lib/openai/client.ts — toda la IA de Suelo corre sobre Claude:
+ * Reemplaza lib/openai/client.ts  toda la IA de Suelo corre sobre Claude:
  *   - Scoring de proyectos → Opus 4.7 (estructurado, JSON schema)
  *   - Extracción de facturas (Vision) → Opus 4.7 (mejor OCR / comprensión visual)
  *   - Asistente fiscal → Sonnet 4.6 (balance velocidad/calidad)
@@ -20,13 +20,13 @@ export const anthropic = new Anthropic({
 // MODELOS - configurables via env
 // ============================================
 export const CLAUDE_MODELS = {
-  /** Opus 4.7 — scoring profundo, análisis complejo. $5/$25 por 1M tokens. */
+  /** Opus 4.7  scoring profundo, análisis complejo. $5/$25 por 1M tokens. */
   scoring: (process.env.ANTHROPIC_MODEL_SCORING || 'claude-opus-4-7') as 'claude-opus-4-7',
-  /** Sonnet 4.6 — chat analyst, fiscal, reportes. $3/$15 por 1M tokens. */
+  /** Sonnet 4.6  chat analyst, fiscal, reportes. $3/$15 por 1M tokens. */
   analyst: (process.env.ANTHROPIC_MODEL_ANALYST || 'claude-sonnet-4-6') as 'claude-sonnet-4-6',
-  /** Haiku 4.5 — clasificación simple, onboarding. $1/$5 por 1M tokens. */
+  /** Haiku 4.5  clasificación simple, onboarding. $1/$5 por 1M tokens. */
   fast: (process.env.ANTHROPIC_MODEL_FAST || 'claude-haiku-4-5') as 'claude-haiku-4-5',
-  /** Vision (OCR de facturas) — Opus 4.7 es el mejor en high-res vision. */
+  /** Vision (OCR de facturas)  Opus 4.7 es el mejor en high-res vision. */
   vision: (process.env.ANTHROPIC_MODEL_SCORING || 'claude-opus-4-7') as 'claude-opus-4-7',
 } as const;
 

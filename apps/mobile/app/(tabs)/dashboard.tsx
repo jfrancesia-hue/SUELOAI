@@ -21,7 +21,7 @@ export default function Dashboard() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.greeting}>
-        Hola, {profile?.full_name?.split(' ')[0] || 'Inversor'} 👋
+        Hola, {profile?.full_name?.split(' ')[0] || 'Inversor'} =K
       </Text>
       <Text style={styles.sub}>Resumen de tu portafolio</Text>
 
@@ -31,7 +31,7 @@ export default function Dashboard() {
       </View>
 
       <View style={styles.soon}>
-        <Text style={styles.soonText}>Más features mobile próximamente 🚀</Text>
+        <Text style={styles.soonText}>Más features mobile próximamente </Text>
       </View>
     </ScrollView>
   );

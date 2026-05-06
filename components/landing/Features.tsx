@@ -54,22 +54,22 @@ export function Features() {
 
         {/* BENTO GRID */}
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4 auto-rows-[minmax(200px,auto)]">
-          {/* 1 — HERO CELL */}
+          {/* 1  HERO CELL */}
           <BentoCellHero />
 
-          {/* 2 — Contratos Verificables */}
+          {/* 2  Contratos Verificables */}
           <BentoCellHash />
 
-          {/* 3 — Retornos Transparentes */}
+          {/* 3  Retornos Transparentes */}
           <BentoCellChart />
 
-          {/* 4 — Activos Reales */}
+          {/* 4  Activos Reales */}
           <BentoCellBuilding />
 
-          {/* 5 — Acceso Global */}
+          {/* 5  Acceso Global */}
           <BentoCellGlobal />
 
-          {/* 6 — Gestión Simple */}
+          {/* 6  Gestión Simple */}
           <BentoCellDashboard />
         </div>
       </div>
@@ -78,7 +78,7 @@ export function Features() {
 }
 
 // ============================================
-// CELDAS — cada una con su animación propia
+// CELDAS  cada una con su animación propia
 // ============================================
 
 function BentoCellHero() {

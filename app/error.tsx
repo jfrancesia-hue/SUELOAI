@@ -18,7 +18,7 @@ export default function GlobalError({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Log estructurado — se captura en Vercel Runtime Logs
+    // Log estructurado  se captura en Vercel Runtime Logs
     console.error('[app/error] unhandled:', {
       message: error.message,
       digest: error.digest,

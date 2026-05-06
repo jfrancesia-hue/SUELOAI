@@ -83,7 +83,7 @@ export function Security() {
           </p>
         </div>
 
-        {/* SHA-256 live demo — centro visual */}
+        {/* SHA-256 live demo  centro visual */}
         <div data-reveal className="max-w-3xl mx-auto mb-16">
           <div className="relative rounded-[24px] bg-surface-100/80 border border-surface-200 backdrop-blur-sm p-6 md:p-8 overflow-hidden">
             {/* Corner glow */}

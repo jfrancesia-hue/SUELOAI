@@ -1,4 +1,4 @@
-﻿import { test, expect } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
 test.describe('Landing page', () => {
   test('carga y muestra el hero de inversión inmobiliaria real', async ({ page }) => {

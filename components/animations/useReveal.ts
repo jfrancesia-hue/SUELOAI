@@ -6,7 +6,7 @@
  * - useReveal: anima al montar (Hero, páginas de destino)
  * - useRevealOnScroll: anima cuando entra al viewport (cards, features)
  *
- * Ambos respetan `prefers-reduced-motion: reduce` — si el usuario lo activa,
+ * Ambos respetan `prefers-reduced-motion: reduce`  si el usuario lo activa,
  * los elementos aparecen inmediatamente sin animación.
  */
 

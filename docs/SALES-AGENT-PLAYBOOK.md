@@ -1,4 +1,4 @@
-﻿# Sales Agent Playbook — Asesor Suelo
+# Sales Agent Playbook  Asesor Suelo
 
 Este documento define cómo debe comportarse el agente comercial de Suelo.
 

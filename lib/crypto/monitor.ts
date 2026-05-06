@@ -4,8 +4,8 @@
  * Monitorea depósitos on-chain en las addresses de los usuarios.
  * Funciona con dos estrategias:
  *
- * 1. POLLING — query periódico a APIs de explorers (TronGrid, Etherscan, Polygonscan)
- * 2. WEBHOOKS — usar Alchemy Notify o Helius para eventos push
+ * 1. POLLING  query periódico a APIs de explorers (TronGrid, Etherscan, Polygonscan)
+ * 2. WEBHOOKS  usar Alchemy Notify o Helius para eventos push
  *
  * En producción recomendamos Alchemy Notify para EVM (gratuito hasta cierto volumen).
  * Para Tron: TronGrid + polling cada 30s.
@@ -210,7 +210,7 @@ export async function processCryptoDeposit(params: {
     return { success: false, message: 'Address no registrada en el sistema' };
   }
 
-  // Obtener rate de conversión (stablecoin ≈ 1:1 USD)
+  // Obtener rate de conversión (stablecoin H 1:1 USD)
   const rate = await getExchangeRate(token, 'USD', supabaseClient);
   const amountCrypto = (txData as any).amount || 0;
   const amountUsd = amountCrypto * rate;

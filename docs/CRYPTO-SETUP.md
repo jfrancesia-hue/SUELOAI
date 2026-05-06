@@ -1,21 +1,21 @@
-# 🔐 Suelo v3 — Crypto Setup Guide
+# = Suelo v3  Crypto Setup Guide
 
 Guía paso a paso para deploy del smart contract y configuración del módulo crypto.
 
 ---
 
-## 📋 Resumen
+##  Resumen
 
 Suelo v3 agrega dos capas crypto:
 
-1. **Payment Rail** — USDT/USDC como método de depósito/retiro en wallet
-2. **Blockchain Anchoring** — Hashes SHA-256 de contratos registrados on-chain en Polygon para verificación pública
+1. **Payment Rail**  USDT/USDC como método de depósito/retiro en wallet
+2. **Blockchain Anchoring**  Hashes SHA-256 de contratos registrados on-chain en Polygon para verificación pública
 
 Ambas son **opcionales y no-breaking**: si no configurás las env vars, el sistema funciona 100% como estaba sin crypto.
 
 ---
 
-## 🏗️ PARTE 1: Deploy del Smart Contract Anchor
+## <?? PARTE 1: Deploy del Smart Contract Anchor
 
 ### Costos estimados
 
@@ -134,7 +134,7 @@ Para testing sin gastar MATIC real:
 
 ---
 
-## 💰 PARTE 2: Wallet HD para Depósitos Crypto
+##  PARTE 2: Wallet HD para Depósitos Crypto
 
 Tenés **3 opciones** según nivel de sofisticación:
 
@@ -160,7 +160,7 @@ Pros: Fuerte en LATAM, Paraguay/Argentina/México, bajo costo
 Contras: Onboarding lento (~2 semanas)
 
 1. Aplicar en [bitso.com/business](https://bitso.com/business)
-2. Cuentas ≥ $10k USD/mes de volumen
+2. Cuentas e $10k USD/mes de volumen
 3. API de creación de addresses por usuario
 
 **Fireblocks (institutional)**
@@ -202,7 +202,7 @@ Contra: requiere que usuarios copien el memo correctamente
 
 ---
 
-## 📡 PARTE 3: Monitoreo de Transacciones On-Chain
+##  PARTE 3: Monitoreo de Transacciones On-Chain
 
 Cuando un usuario deposita crypto, necesitamos detectarlo. Dos enfoques:
 
@@ -245,14 +245,14 @@ O externo: [cron-job.org](https://cron-job.org) gratis.
 
 ---
 
-## 🔑 PARTE 4: API Keys de Explorers
+## = PARTE 4: API Keys de Explorers
 
 Necesitás API keys para verificar transacciones on-chain:
 
-- **Polygonscan**: [polygonscan.com/apis](https://polygonscan.com/apis) — gratis 5 req/s
-- **Etherscan**: [etherscan.io/apis](https://etherscan.io/apis) — gratis 5 req/s
-- **BSCScan**: [bscscan.com/apis](https://bscscan.com/apis) — gratis
-- **TronGrid**: [trongrid.io](https://www.trongrid.io) — gratis con registro
+- **Polygonscan**: [polygonscan.com/apis](https://polygonscan.com/apis)  gratis 5 req/s
+- **Etherscan**: [etherscan.io/apis](https://etherscan.io/apis)  gratis 5 req/s
+- **BSCScan**: [bscscan.com/apis](https://bscscan.com/apis)  gratis
+- **TronGrid**: [trongrid.io](https://www.trongrid.io)  gratis con registro
 
 ```env
 POLYGONSCAN_API_KEY=
@@ -282,7 +282,7 @@ La migración 003 crea:
 
 ---
 
-## 🧪 PARTE 6: Testing
+##  PARTE 6: Testing
 
 ### Test 1: Anchor de hash
 
@@ -316,7 +316,7 @@ curl "http://localhost:3000/api/crypto/webhook?tx_hash=0x...&network=polygon&tok
 
 ---
 
-## 🚨 CHECKLIST DE SEGURIDAD
+##  CHECKLIST DE SEGURIDAD
 
 Antes de deploy a producción:
 
@@ -335,7 +335,7 @@ Antes de deploy a producción:
 
 ---
 
-## 💡 Tips de producción
+##  Tips de producción
 
 **Optimización de gas:**
 - Usar `batchAnchor()` si tenés múltiples hashes (ej: fin de día)
@@ -357,7 +357,7 @@ Antes de deploy a producción:
 
 ---
 
-## 📞 Soporte
+##  Soporte
 
 Si algo no funciona:
 
@@ -370,4 +370,4 @@ Si algo no funciona:
 ---
 
 **Última actualización:** Abril 2026
-**Autor:** Jorge Eduardo Francesia — Nativos Consultora Digital
+**Autor:** Jorge Eduardo Francesia  Nativos Consultora Digital

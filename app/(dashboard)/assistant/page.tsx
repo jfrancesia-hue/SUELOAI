@@ -234,7 +234,7 @@ export default function AssistantPage() {
             </Button>
           </div>
           <p className="text-xs text-surface-500 mt-2">
-            💡 Tu analista tiene acceso a tu portfolio, proyectos del marketplace y datos de mercado en tiempo real.
+            Tu analista tiene acceso a tu portfolio, proyectos del marketplace y datos de mercado en tiempo real.
           </p>
         </div>
       </div>

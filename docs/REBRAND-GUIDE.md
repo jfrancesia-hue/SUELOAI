@@ -1,14 +1,14 @@
-# 🎨 Suelo — Rebrand Guide
+#  Suelo  Rebrand Guide
 
 Guía completa del rebrand de Suelo a **Suelo.ai**.
 
 ---
 
-## 🌱 Nuevo Brand
+## <1 Nuevo Brand
 
 ### Nombre
 
-**Suelo** — la palabra latina que captura todo lo que hace la plataforma.
+**Suelo**  la palabra latina que captura todo lo que hace la plataforma.
 
 - En español: suelo = tierra/piso/base
 - Funciona en todo LATAM sin traducción
@@ -18,7 +18,7 @@ Guía completa del rebrand de Suelo a **Suelo.ai**.
 
 ### Dominio principal
 
-**suelo.ai** — el `.ai` refuerza que somos AI-native
+**suelo.ai**  el `.ai` refuerza que somos AI-native
 
 ### Dominios secundarios (registrar)
 
@@ -30,7 +30,7 @@ Guía completa del rebrand de Suelo a **Suelo.ai**.
 
 ---
 
-## 📣 Positioning
+##  Positioning
 
 ### Tagline principal
 
@@ -49,19 +49,19 @@ Guía completa del rebrand de Suelo a **Suelo.ai**.
 ### Diferenciación
 
 **No somos:**
-- ❌ Otra fintech de inversión genérica
-- ❌ Otro proyecto crypto especulativo
-- ❌ Una proptech tradicional
+- L Otra fintech de inversión genérica
+- L Otro proyecto crypto especulativo
+- L Una proptech tradicional
 
 **Somos:**
-- ✅ Plataforma AI-native de inversión en activos reales
-- ✅ LATAM-first (no un producto europeo traducido)
-- ✅ Fiat + Crypto como iguales
-- ✅ Compliance-friendly para gobiernos
+-  Plataforma AI-native de inversión en activos reales
+-  LATAM-first (no un producto europeo traducido)
+-  Fiat + Crypto como iguales
+-  Compliance-friendly para gobiernos
 
 ---
 
-## 🎨 Sistema Visual
+##  Sistema Visual
 
 ### Paleta de colores
 
@@ -122,15 +122,15 @@ Guía completa del rebrand de Suelo a **Suelo.ai**.
 
 ---
 
-## ✍️ Copy Guidelines
+##  Copy Guidelines
 
 ### Tone of voice
 
-- **Profesional pero cercano** — tratamos de "vos"
-- **Claro y directo** — evitamos jerga innecesaria
-- **Empático con LATAM** — entendemos inflación, cepos, dolarización
-- **Honesto sobre riesgos** — nunca prometemos retornos garantizados
-- **Optimista pero realista** — construir patrimonio es maratón, no sprint
+- **Profesional pero cercano**  tratamos de "vos"
+- **Claro y directo**  evitamos jerga innecesaria
+- **Empático con LATAM**  entendemos inflación, cepos, dolarización
+- **Honesto sobre riesgos**  nunca prometemos retornos garantizados
+- **Optimista pero realista**  construir patrimonio es maratón, no sprint
 
 ### Do's
 
@@ -150,19 +150,19 @@ Guía completa del rebrand de Suelo a **Suelo.ai**.
 
 ### Emojis permitidos (sparingly)
 
-- 🏗️ Construcción/proyectos
-- 💰 Finanzas/retornos
-- 📊 Datos/análisis
-- ✅ Confirmación
+- <?? Construcción/proyectos
+-  Finanzas/retornos
+-  Datos/análisis
+-  Confirmación
 - ⚠️ Alertas
-- 🌱 Crecimiento/brote (brand-aligned)
-- ✨ IA/inteligencia
+- <1 Crecimiento/brote (brand-aligned)
+- ( IA/inteligencia
 
-Prohibidos: 🚀 (cringe), 💎 (crypto-bro), 🔥 (FOMO)
+Prohibidos:  (cringe),  (crypto-bro), =% (FOMO)
 
 ---
 
-## 🔄 Checklist de Rebrand Técnico
+## = Checklist de Rebrand Técnico
 
 Todo este checklist ya fue aplicado vía sed:
 
@@ -187,7 +187,7 @@ Todo este checklist ya fue aplicado vía sed:
 
 ---
 
-## 📱 Assets necesarios
+##  Assets necesarios
 
 ### Mínimos para launch
 
@@ -216,32 +216,32 @@ Todo este checklist ya fue aplicado vía sed:
 
 ---
 
-## 🌍 Adaptación por mercado
+## < Adaptación por mercado
 
-### Argentina 🇦🇷
+### Argentina 
 - Moneda default: ARS + USD
 - Mensaje: "Refugiate de la inflación con activos reales"
 - Testimoniales argentinos
 - Contador como target secundario
 
-### Paraguay 🇵🇾
+### Paraguay 
 - Moneda default: USD (mercado dolarizado)
 - Mensaje: "Participá en el boom inmobiliario paraguayo"
 - Integración SIFEN prominente
 - Diáspora argentina/brasileña como inversores
 
-### Uruguay 🇺🇾 (futuro)
+### Uruguay  (futuro)
 - Mensaje: "Inversión premium con protección jurídica"
 - Target: clase alta uruguaya + extranjeros
 
-### Brasil 🇧🇷 (futuro)
+### Brasil  (futuro)
 - Traducción ES → PT completa
 - Mensaje adaptado: "Invista no que você pisa"
 - Integración Pix + USDT
 
 ---
 
-## 📈 Marketing Campaign Ideas
+##  Marketing Campaign Ideas
 
 ### Lanzamiento
 
@@ -267,12 +267,12 @@ Todo este checklist ya fue aplicado vía sed:
 
 ---
 
-## 🎯 Métricas de éxito del rebrand
+##  Métricas de éxito del rebrand
 
 ### Short-term (primeros 3 meses)
 
 - Awareness: 100k impresiones orgánicas
-- Consideration: 5k visitantes web únicos
+- Consideration: 5k visitantes web Únicos
 - Conversion: 500 registros
 - Activation: 200 con primera inversión
 
@@ -292,7 +292,7 @@ Todo este checklist ya fue aplicado vía sed:
 
 ---
 
-## 🚀 Launch Checklist
+##  Launch Checklist
 
 ### Pre-launch (1 semana antes)
 
@@ -318,11 +318,11 @@ Todo este checklist ya fue aplicado vía sed:
 - [ ] Daily stand-ups reviewing metrics
 - [ ] Soporte 24/7 activo
 - [ ] Iteración rápida sobre feedback
-- [ ] Celebrar primer usuario activo 🎉
+- [ ] Celebrar primer usuario activo 
 
 ---
 
-## 💬 FAQ para el Rebrand
+##  FAQ para el Rebrand
 
 ### Para el equipo interno
 
@@ -346,4 +346,4 @@ R: Absolutamente. Los hashes SHA-256 se mantienen intactos. La verificación pú
 ---
 
 **Última actualización:** Abril 2026
-**Autor:** Jorge Eduardo Francesia — Nativos Consultora Digital
+**Autor:** Jorge Eduardo Francesia  Nativos Consultora Digital

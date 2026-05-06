@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Plus, FileText, Trash2, Send, DollarSign, Calendar } from 'lucide-react';
 import {
   Button,
@@ -60,7 +60,7 @@ export default function InvoicingPage() {
     notes: '',
   });
 
-  const fetchInvoices = async () => {
+  const fetchInvoices = useCallback(async () => {
     setLoading(true);
     const url = filter === 'all' ? '/api/invoicing' : `/api/invoicing?status=${filter}`;
     const res = await fetch(url);
@@ -68,11 +68,11 @@ export default function InvoicingPage() {
     setInvoices(data.data || []);
     setStats(data.stats || { count: 0, total: 0, tax: 0 });
     setLoading(false);
-  };
+  }, [filter]);
 
   useEffect(() => {
     fetchInvoices();
-  }, [filter]);
+  }, [fetchInvoices]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

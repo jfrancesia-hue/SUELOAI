@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -49,6 +50,7 @@ export default function ProjectDetailPage() {
 
   useEffect(() => {
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
 
   async function loadData() {
@@ -197,7 +199,7 @@ export default function ProjectDetailPage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(16,185,129,0.22),transparent_34%),radial-gradient(circle_at_80%_10%,rgba(6,182,212,0.16),transparent_30%),linear-gradient(135deg,#07111F,#111827_64%,#07111F)]" />
         {heroImage && (
           <div className="absolute inset-y-0 right-0 hidden w-[46%] opacity-42 lg:block">
-            <img src={heroImage} alt={project.title} className="h-full w-full object-cover" />
+            <Image src={heroImage} alt={project.title} fill sizes="100vw" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#07111F] via-[#07111F]/35 to-transparent" />
           </div>
         )}

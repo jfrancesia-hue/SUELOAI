@@ -28,7 +28,7 @@ interface ConversationContext {
 }
 
 // ============================================
-// TOOLS (Anthropic format) — acciones del asistente
+// TOOLS (Anthropic format)  acciones del asistente
 // ============================================
 const ANALYST_FUNCTIONS: Anthropic.Tool[] = [
   {
@@ -99,7 +99,7 @@ const ANALYST_FUNCTIONS: Anthropic.Tool[] = [
 ];
 
 // ============================================
-// MAIN — Enviar mensaje y recibir respuesta
+// MAIN  Enviar mensaje y recibir respuesta
 // ============================================
 export async function sendMessage(params: {
   conversationId: string;

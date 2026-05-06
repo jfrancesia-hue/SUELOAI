@@ -30,7 +30,7 @@ async function sendWhatsAppMessage(to: string, body: string): Promise<boolean> {
   const from = process.env.TWILIO_WHATSAPP_FROM;
 
   if (!accountSid || !authToken || !from) {
-    console.warn('[campaigns] Twilio no configurado — mensaje simulado');
+    console.warn('[campaigns] Twilio no configurado  mensaje simulado');
     return false;
   }
 
@@ -109,7 +109,7 @@ export async function PATCH(request: NextRequest) {
   const body = await request.json();
   if (!body.id) return NextResponse.json({ error: 'id requerido' }, { status: 400 });
 
-  // Acción: enviar ahora — rate limit muy agresivo (protege contra spam masivo WhatsApp)
+  // Acción: enviar ahora  rate limit muy agresivo (protege contra spam masivo WhatsApp)
   if (body.action === 'send_now') {
     const rl = await limitByIp(request, 'crm-send', { requests: 3, window: 3600 });
     if (!rl.success) return rl.response;

@@ -11,7 +11,7 @@
  * sino entra en modo manual (crea KYC request pending para revisión admin).
  */
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Shield, X, CheckCircle2, Clock, AlertCircle, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui';
 
@@ -35,18 +35,18 @@ export function KycModal({
   const [starting, setStarting] = useState(false);
   const [verificationUrl, setVerificationUrl] = useState<string | null>(null);
 
-  const fetchState = async () => {
+  const fetchState = useCallback(async () => {
     setLoading(true);
     const res = await fetch('/api/kyc');
     const data = await res.json();
     setState(data);
     setLoading(false);
     if (data.verified) onVerified?.();
-  };
+  }, [onVerified]);
 
   useEffect(() => {
     if (open) fetchState();
-  }, [open]);
+  }, [fetchState, open]);
 
   const handleStart = async () => {
     setStarting(true);

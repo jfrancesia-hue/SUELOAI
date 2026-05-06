@@ -1,5 +1,5 @@
 // ============================================
-// Suelo v3 — Crypto Types
+// Suelo v3  Crypto Types
 // ============================================
 
 export type CryptoNetwork =

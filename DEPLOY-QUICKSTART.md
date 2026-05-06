@@ -1,4 +1,4 @@
-# 🚀 Deploy Quickstart — 15 minutos
+#  Deploy Quickstart  15 minutos
 
 Guía rápida para deployar Suelo v4.2 a producción.
 Ideal si ya leíste `DEPLOY.md` y querés los comandos al grano.
@@ -56,7 +56,7 @@ O **más fácil**: crearlo en https://supabase.com/dashboard/new con:
 
 ## 3. Ejecutar las 7 migraciones (3 min)
 
-Opción A — Supabase CLI:
+Opción A  Supabase CLI:
 ```bash
 cd E:/Usuario/suelo-v4/suelo
 supabase login --token $SUPABASE_ACCESS_TOKEN
@@ -64,7 +64,7 @@ supabase link --project-ref $SUELO_REF
 supabase db push
 ```
 
-Opción B — Dashboard SQL Editor (copy/paste en orden):
+Opción B  Dashboard SQL Editor (copy/paste en orden):
 1. `supabase/migrations/001_initial_schema.sql`
 2. `supabase/migrations/002_extensions.sql`
 3. `supabase/migrations/003_crypto.sql`
@@ -80,9 +80,9 @@ WHERE schemaname = 'public' ORDER BY tablename;
 ```
 
 Obtener credenciales (Supabase Dashboard → Project Settings → API):
-- `NEXT_PUBLIC_SUPABASE_URL` — Project URL
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY` — anon/public key
-- `SUPABASE_SERVICE_ROLE_KEY` — service_role key (⚠️ mantener secret)
+- `NEXT_PUBLIC_SUPABASE_URL`  Project URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`  anon/public key
+- `SUPABASE_SERVICE_ROLE_KEY`  service_role key (⚠️ mantener secret)
 
 ---
 
@@ -239,4 +239,4 @@ Después de eso, cada PR va a tener un deploy preview automático comentado en e
 - Verificá en Vercel → Deployments → Runtime Logs
 
 ### Tests E2E fallan contra producción
-- El rate-limit test necesita ~40 requests secuenciales — si hay CDN/edge cache podría dar false positives. Skippealo en CI: `npx playwright test --grep-invert "rate limit"`
+- El rate-limit test necesita ~40 requests secuenciales  si hay CDN/edge cache podría dar false positives. Skippealo en CI: `npx playwright test --grep-invert "rate limit"`
