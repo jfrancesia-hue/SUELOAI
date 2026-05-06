@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { ArrowRight, Building2, DollarSign, FolderPlus, TrendingUp, Users } from 'lucide-react';
-import type { ComponentType, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import { DashboardHero, MiniBuildingVisual, VisualActionCard, VisualMetricCard } from '@/components/dashboard/visual-shell';
 import { Badge, ProgressBar } from '@/components/ui';
 import { createClient } from '@/lib/supabase-server';
 import { formatCurrency, formatDate, getProgressPercent, getStatusLabel } from '@/utils/helpers';
@@ -77,23 +78,33 @@ function DeveloperDashboardView({
 
   return (
     <div className="mx-auto max-w-7xl space-y-8">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <h1 className="font-display text-2xl font-bold text-surface-900">Panel de Desarrollador</h1>
-          <p className="mt-1 text-surface-500">Gestiona proyectos, inversores y funding en tiempo real.</p>
-        </div>
+      <DashboardHero
+        eyebrow="Panel desarrollador"
+        title="Convertí tu obra en una oportunidad clara para inversores."
+        description="Gestioná proyectos, documentación, leads, funding y seguimiento comercial con una presentación visual lista para Paraguay y Bolivia."
+        visual={<MiniBuildingVisual label="Proyecto presentado al inversor" />}
+      >
         <Link href="/projects?new=true" className="btn-primary">
           <FolderPlus className="h-4 w-4" />
           Nuevo Proyecto
         </Link>
-      </div>
+        <Link href="/crm" className="btn-secondary">
+          Ver CRM <ArrowRight className="h-4 w-4" />
+        </Link>
+      </DashboardHero>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <ServerStatCard title="Total Recaudado" value={formatCurrency(totalRaised)} icon={DollarSign} />
-        <ServerStatCard title="Proyectos Activos" value={String(activeProjects.length)} icon={Building2} />
-        <ServerStatCard title="Total Proyectos" value={String(projects.length)} icon={TrendingUp} />
-        <ServerStatCard title="Inversores Unicos" value={String(uniqueInvestors.size)} icon={Users} />
+        <VisualMetricCard title="Total recaudado" value={formatCurrency(totalRaised)} icon={DollarSign} hint="Capital confirmado" tone="emerald" />
+        <VisualMetricCard title="Proyectos activos" value={String(activeProjects.length)} icon={Building2} hint="En funding u obra" tone="cyan" />
+        <VisualMetricCard title="Total proyectos" value={String(projects.length)} icon={TrendingUp} hint="Histórico" tone="gold" />
+        <VisualMetricCard title="Inversores únicos" value={String(uniqueInvestors.size)} icon={Users} hint="Base interesada" tone="violet" />
       </div>
+
+      <VisualActionCard
+        title="Ruta visual para publicar un proyecto"
+        description="La plataforma guía al desarrollador para no dejar información crítica afuera."
+        items={['Ficha comercial clara', 'Documentos y permisos cargados', 'Scoring y riesgos explicados', 'Campañas y leads en CRM']}
+      />
 
       <div>
         <div className="mb-4 flex items-center justify-between">
@@ -182,30 +193,6 @@ function DeveloperDashboardView({
           </div>
         </div>
       )}
-    </div>
-  );
-}
-
-function ServerStatCard({
-  title,
-  value,
-  icon: Icon,
-}: {
-  title: string;
-  value: string;
-  icon: ComponentType<{ className?: string }>;
-}) {
-  return (
-    <div className="card">
-      <div className="flex items-start justify-between gap-4">
-        <div className="space-y-2">
-          <p className="text-sm text-surface-600">{title}</p>
-          <p className="font-display text-2xl font-bold text-surface-900">{value}</p>
-        </div>
-        <div className="rounded-xl bg-brand-500/10 p-3">
-          <Icon className="h-5 w-5 text-brand-500" />
-        </div>
-      </div>
     </div>
   );
 }

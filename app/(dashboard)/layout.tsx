@@ -34,9 +34,11 @@ export default async function DashboardLayout({
   if (!profile) redirect('/login');
 
   return (
-    <div className="min-h-screen bg-surface-50">
+    <div className="relative min-h-screen overflow-hidden bg-[#06101D]">
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_22%_12%,rgba(16,185,129,0.16),transparent_32%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.11),transparent_30%),linear-gradient(180deg,#06101D_0%,#08111F_48%,#05080D_100%)]" />
+      <div className="pointer-events-none fixed inset-0 bg-grid-pattern bg-grid opacity-[0.05]" />
       <Sidebar profile={profile} />
-      <main className="px-4 pb-10 pt-20 sm:px-6 lg:ml-64 lg:px-8 lg:pt-8">
+      <main className="relative px-4 pb-10 pt-20 sm:px-6 lg:ml-64 lg:px-8 lg:pt-8">
         {children}
       </main>
     </div>

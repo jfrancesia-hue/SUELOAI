@@ -1,6 +1,7 @@
 ﻿import { createClient } from '@/lib/supabase-server';
 import { formatCurrency, getProgressPercent } from '@/utils/helpers';
 import { Badge, ProgressBar, EmptyState } from '@/components/ui';
+import { DashboardHero, MiniBuildingVisual } from '@/components/dashboard/visual-shell';
 import { Building2, MapPin, TrendingUp, ArrowRight, Sparkles, ShieldCheck, FileCheck2 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -36,11 +37,12 @@ export default async function MarketplacePage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-8">
-      {/* Header */}
-      <div>
-        <h1 className="font-display text-2xl font-bold text-surface-900">Marketplace</h1>
-        <p className="text-surface-500 mt-1">Explorá proyectos inmobiliarios disponibles para inversión</p>
-      </div>
+      <DashboardHero
+        eyebrow="Marketplace"
+        title="Elegí proyectos mirando datos, avance y riesgo."
+        description="Una vista visual para comparar oportunidades inmobiliarias en Paraguay y Bolivia con documentación, scoring IA y explicación simple."
+        visual={<MiniBuildingVisual label="Oportunidades disponibles" />}
+      />
 
       {/* Projects grid */}
       {!projects || projects.length === 0 ? (

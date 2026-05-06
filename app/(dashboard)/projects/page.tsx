@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase-browser';
 import { Button, Input, Textarea, Select, EmptyState } from '@/components/ui';
+import { DashboardHero, MiniBuildingVisual, VisualActionCard } from '@/components/dashboard/visual-shell';
 import { slugify, formatCurrency, getStatusLabel, getProgressPercent } from '@/utils/helpers';
 import type { Project, CreateProjectInput } from '@/types';
 import { Building2, FolderPlus, Save, X, ArrowRight } from 'lucide-react';
@@ -102,18 +103,26 @@ export default function ProjectsPage() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-8">
-      {/* Header */}
-      <div className="flex items-start justify-between">
-        <div>
-          <h1 className="font-display text-2xl font-bold text-surface-900">Mis Proyectos</h1>
-          <p className="text-surface-500 mt-1">Gestioná tus proyectos inmobiliarios</p>
-        </div>
+      <DashboardHero
+        eyebrow="Mis proyectos"
+        title="Armá una ficha que venda confianza, no solo metros cuadrados."
+        description="Cargá datos, ubicación, números, riesgos y documentación para que el inversor entienda rápido qué está mirando."
+        visual={<MiniBuildingVisual label="Ficha visual del proyecto" />}
+      >
         {!showForm && (
           <Button onClick={() => setShowForm(true)} icon={FolderPlus}>
             Nuevo Proyecto
           </Button>
         )}
-      </div>
+      </DashboardHero>
+
+      {showForm && (
+        <VisualActionCard
+          title="Información que más convence a un inversor"
+          description="Mientras cargás el proyecto, mantené estos puntos completos y simples."
+          items={['Ubicación y etapa de obra', 'Uso exacto del capital', 'Documentos disponibles', 'Riesgos y salida esperada']}
+        />
+      )}
 
       {/* Create form */}
       {showForm && (

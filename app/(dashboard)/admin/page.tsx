@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { AlertTriangle, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { AlertTriangle, ArrowRight, Bot, Building2, CheckCircle2, FileText, Flag, Receipt, ShieldCheck, Users, Wallet } from 'lucide-react';
+import { DashboardHero, MiniBuildingVisual, VisualMetricCard } from '@/components/dashboard/visual-shell';
 import { features } from '@/lib/config/features';
 import { markets } from '@/lib/config/markets';
 import { requireAdminProfile } from '@/lib/auth/server';
@@ -10,16 +11,6 @@ async function count(admin: any, table: string, filter?: (q: any) => any) {
   if (filter) query = filter(query);
   const { count } = await query;
   return count || 0;
-}
-
-function Card({ title, value, hint }: { title: string; value: string | number; hint?: string }) {
-  return (
-    <div className="card">
-      <p className="text-sm text-surface-500">{title}</p>
-      <p className="mt-2 font-display text-3xl font-bold text-surface-900">{value}</p>
-      {hint && <p className="mt-1 text-xs text-surface-500">{hint}</p>}
-    </div>
-  );
 }
 
 export default async function AdminPage() {
@@ -50,24 +41,23 @@ export default async function AdminPage() {
 
   return (
     <div className="mx-auto max-w-7xl space-y-8">
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-500">Operación</p>
-        <h1 className="mt-2 font-display text-3xl font-bold text-surface-900">Admin Suelo</h1>
-        <p className="mt-2 max-w-3xl text-surface-500">
-          Centro operativo para Paraguay y Bolivia: usuarios, proyectos, KYC, billetera, fiscal y feature flags.
-        </p>
-      </div>
+      <DashboardHero
+        eyebrow="Operación"
+        title="Admin Suelo"
+        description="Centro operativo para Paraguay y Bolivia: usuarios, proyectos, KYC, billetera, fiscal, leads, conversaciones IA y feature flags."
+        visual={<MiniBuildingVisual label="Control operativo" />}
+      />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <Card title="Usuarios" value={users} />
-        <Card title="Proyectos" value={projects} hint={`${fundingProjects} en funding`} />
-        <Card title="KYC pendientes" value={pendingKyc} />
-        <Card title="Movimientos pendientes" value={pendingWallet} hint="Depósitos/retiros por validar" />
-        <Card title="Facturas" value={invoices} />
-        <Card title="Mercados activos" value="PY + BO" hint="USD, USDT, PYG, BOB" />
-        <Card title="Leads CRM" value={leads} hint={`${contacts} contactos`} />
-        <Card title="Conversaciones IA" value={conversations} hint="Actividad del agente" />
-        <Card title="Inversiones confirmadas" value={investments} />
+        <VisualMetricCard title="Usuarios" value={String(users)} icon={Users} hint="Cuentas registradas" tone="emerald" />
+        <VisualMetricCard title="Proyectos" value={String(projects)} icon={Building2} hint={`${fundingProjects} en funding`} tone="cyan" />
+        <VisualMetricCard title="KYC pendientes" value={String(pendingKyc)} icon={ShieldCheck} hint="Revisión requerida" tone="gold" />
+        <VisualMetricCard title="Movimientos pendientes" value={String(pendingWallet)} icon={Wallet} hint="Depósitos/retiros" tone="violet" />
+        <VisualMetricCard title="Facturas" value={String(invoices)} icon={Receipt} hint="Fiscal" tone="cyan" />
+        <VisualMetricCard title="Mercados activos" value="PY + BO" icon={Flag} hint="USD, USDT, PYG, BOB" tone="emerald" />
+        <VisualMetricCard title="Leads CRM" value={String(leads)} icon={Users} hint={`${contacts} contactos`} tone="gold" />
+        <VisualMetricCard title="Conversaciones IA" value={String(conversations)} icon={Bot} hint="Actividad del agente" tone="violet" />
+        <VisualMetricCard title="Inversiones confirmadas" value={String(investments)} icon={FileText} hint="Operaciones válidas" tone="emerald" />
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">

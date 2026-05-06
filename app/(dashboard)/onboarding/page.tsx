@@ -4,6 +4,7 @@ import { useMemo, useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, Building2, CheckCircle2, CircleDollarSign, MapPin, ShieldCheck, Target } from 'lucide-react';
 import { Button } from '@/components/ui';
+import { DashboardHero, MiniBuildingVisual } from '@/components/dashboard/visual-shell';
 import { createClient } from '@/lib/supabase-browser';
 
 const countries = [
@@ -95,13 +96,12 @@ export default function OnboardingPage() {
 
   return (
     <div className="mx-auto max-w-5xl space-y-8">
-      <div>
-        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-brand-500">Onboarding</p>
-        <h1 className="mt-2 font-display text-3xl font-bold text-surface-900">Configuremos tu perfil en 2 minutos</h1>
-        <p className="mt-2 max-w-2xl text-surface-500">
-          No es un test financiero. Es una guía inicial para que la plataforma y el agente entiendan mejor qué buscás.
-        </p>
-      </div>
+      <DashboardHero
+        eyebrow="Onboarding"
+        title="Configuremos tu perfil en 2 minutos"
+        description="No es un test financiero. Es una guía inicial para que la plataforma y el agente entiendan país, objetivo, riesgo y monto estimado."
+        visual={<MiniBuildingVisual label="Perfil para recomendar mejor" />}
+      />
 
       <form onSubmit={handleSubmit} className="grid gap-5 lg:grid-cols-[1fr_320px]">
         <div className="space-y-5">

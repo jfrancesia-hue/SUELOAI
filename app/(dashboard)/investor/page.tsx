@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { ArrowRight, Building2, FileText, TrendingUp, Wallet } from 'lucide-react';
-import type { ComponentType, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { PortfolioCharts } from '@/components/dashboard/PortfolioCharts';
+import { DashboardHero, MiniBuildingVisual, VisualMetricCard } from '@/components/dashboard/visual-shell';
 import { Badge, ProgressBar } from '@/components/ui';
 import { createClient } from '@/lib/supabase-server';
 import { formatCurrency, formatDate, getStatusLabel } from '@/utils/helpers';
@@ -89,24 +90,26 @@ function InvestorDashboardView({
 
   return (
     <div className="mx-auto max-w-7xl space-y-8">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h1 className="font-display text-2xl font-bold text-surface-900">
-            Hola, {profile.full_name?.split(' ')[0] || 'Inversor'}
-          </h1>
-          <p className="mt-1 text-surface-500">Resumen de tu portafolio de inversiones</p>
-        </div>
+      <DashboardHero
+        eyebrow="Panel inversor"
+        title={`Hola, ${profile.full_name?.split(' ')[0] || 'Inversor'}`}
+        description="Tu portafolio visual: capital invertido, proyectos activos, retornos, riesgos y próximos pasos explicados de forma simple."
+        visual={<MiniBuildingVisual label="Tu patrimonio inmobiliario" />}
+      >
         <Link href="/wallet" className="btn-primary">
           <Wallet className="h-4 w-4" />
           Ir a mi billetera
         </Link>
-      </div>
+        <Link href="/marketplace" className="btn-secondary">
+          Ver oportunidades <ArrowRight className="h-4 w-4" />
+        </Link>
+      </DashboardHero>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <ServerStatCard title="Total Invertido" value={formatCurrency(Number(profile.total_invested || 0))} icon={Wallet} change="+2.3% este mes" changeType="positive" />
-        <ServerStatCard title="Retornos" value={formatCurrency(Number(profile.total_returns || 0))} icon={TrendingUp} change="Acumulado" />
-        <ServerStatCard title="Proyectos Activos" value={String(projectIds.length)} icon={Building2} />
-        <ServerStatCard title="Inversiones" value={String(activeInvestments.length)} icon={FileText} />
+        <VisualMetricCard title="Total invertido" value={formatCurrency(Number(profile.total_invested || 0))} icon={Wallet} hint="+2.3% este mes" tone="emerald" />
+        <VisualMetricCard title="Retornos" value={formatCurrency(Number(profile.total_returns || 0))} icon={TrendingUp} hint="Acumulado" tone="gold" />
+        <VisualMetricCard title="Proyectos activos" value={String(projectIds.length)} icon={Building2} hint="PY + BO" tone="cyan" />
+        <VisualMetricCard title="Inversiones" value={String(activeInvestments.length)} icon={FileText} hint="Participaciones" tone="violet" />
       </div>
 
       {byLocation.length > 0 && <PortfolioCharts byLocation={byLocation} byProject={byProject} />}
@@ -191,35 +194,6 @@ function InvestorDashboardView({
           </div>
         </div>
       )}
-    </div>
-  );
-}
-
-function ServerStatCard({
-  title,
-  value,
-  icon: Icon,
-  change,
-  changeType = 'neutral',
-}: {
-  title: string;
-  value: string;
-  icon: ComponentType<{ className?: string }>;
-  change?: string;
-  changeType?: 'positive' | 'neutral';
-}) {
-  return (
-    <div className="card">
-      <div className="flex items-start justify-between gap-4">
-        <div className="space-y-2">
-          <p className="text-sm text-surface-600">{title}</p>
-          <p className="font-display text-2xl font-bold text-surface-900">{value}</p>
-          {change && <p className={changeType === 'positive' ? 'text-xs font-medium text-brand-500' : 'text-xs font-medium text-surface-500'}>{change}</p>}
-        </div>
-        <div className="rounded-xl bg-brand-500/10 p-3">
-          <Icon className="h-5 w-5 text-brand-500" />
-        </div>
-      </div>
     </div>
   );
 }
