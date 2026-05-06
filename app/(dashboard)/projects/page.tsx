@@ -1,10 +1,11 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase-browser';
 import { Button, Input, Textarea, Select, EmptyState } from '@/components/ui';
-import { DashboardHero, MiniBuildingVisual, VisualActionCard } from '@/components/dashboard/visual-shell';
+import { DashboardHero, MiniBuildingVisual, PhotoStrip, VisualActionCard } from '@/components/dashboard/visual-shell';
 import { demoProjects, isDemoMode } from '@/lib/demo';
 import { slugify, formatCurrency, getStatusLabel, getProgressPercent } from '@/utils/helpers';
 import type { Project, CreateProjectInput } from '@/types';
@@ -149,6 +150,8 @@ export default function ProjectsPage() {
           </Button>
         )}
       </DashboardHero>
+
+      <PhotoStrip />
 
       {showForm && (
         <VisualActionCard
@@ -304,32 +307,42 @@ export default function ProjectsPage() {
             <Link
               key={project.id}
               href={`/projects/${project.id}`}
-              className="card-interactive"
+              className="card-interactive overflow-hidden p-0"
             >
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="font-display font-semibold text-surface-900">{project.title}</h3>
-                <span className={`badge ${
-                  project.status === 'funding' ? 'bg-brand-500/15 text-brand-400' :
-                  project.status === 'draft' ? 'bg-surface-300 text-surface-700' :
-                  'bg-amber-500/15 text-amber-400'
-                }`}>
-                  {getStatusLabel(project.status)}
-                </span>
+              <div className="relative h-44 bg-surface-200">
+                {project.image_url ? (
+                  <Image src={project.image_url} alt={project.title} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+                ) : (
+                  <div className="flex h-full items-center justify-center"><Building2 className="h-9 w-9 text-surface-500" /></div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-surface-100 via-transparent to-black/20" />
               </div>
-              <p className="text-xs text-surface-500 mb-3">{project.location}</p>
-              <div className="flex items-center justify-between text-sm mb-2">
-                <span className="text-surface-600">
-                  {formatCurrency(project.sold_tokens * project.token_price)} / {formatCurrency(project.total_value)}
-                </span>
-                <span className="font-mono text-surface-500">
-                  {getProgressPercent(project.sold_tokens, project.total_tokens)}%
-                </span>
-              </div>
-              <div className="w-full bg-surface-200 rounded-full h-1.5">
-                <div
-                  className="h-full bg-brand-500 rounded-full transition-all"
-                  style={{ width: `${getProgressPercent(project.sold_tokens, project.total_tokens)}%` }}
-                />
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="font-display font-semibold text-surface-900">{project.title}</h3>
+                  <span className={`badge ${
+                    project.status === 'funding' ? 'bg-brand-500/15 text-brand-400' :
+                    project.status === 'draft' ? 'bg-surface-300 text-surface-700' :
+                    'bg-amber-500/15 text-amber-400'
+                  }`}>
+                    {getStatusLabel(project.status)}
+                  </span>
+                </div>
+                <p className="text-xs text-surface-500 mb-3">{project.location}</p>
+                <div className="flex items-center justify-between text-sm mb-2">
+                  <span className="text-surface-600">
+                    {formatCurrency(project.sold_tokens * project.token_price)} / {formatCurrency(project.total_value)}
+                  </span>
+                  <span className="font-mono text-surface-500">
+                    {getProgressPercent(project.sold_tokens, project.total_tokens)}%
+                  </span>
+                </div>
+                <div className="w-full bg-surface-200 rounded-full h-1.5">
+                  <div
+                    className="h-full bg-brand-500 rounded-full transition-all"
+                    style={{ width: `${getProgressPercent(project.sold_tokens, project.total_tokens)}%` }}
+                  />
+                </div>
               </div>
             </Link>
           ))}

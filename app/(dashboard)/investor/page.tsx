@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { ArrowRight, Building2, FileText, TrendingUp, Wallet } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { PortfolioCharts } from '@/components/dashboard/PortfolioCharts';
-import { DashboardHero, MiniBuildingVisual, VisualMetricCard } from '@/components/dashboard/visual-shell';
+import { DashboardHero, MiniBuildingVisual, PhotoStrip, VisualMetricCard } from '@/components/dashboard/visual-shell';
 import { Badge, ProgressBar } from '@/components/ui';
 import { demoInvestments, demoProfiles, demoTransactions, isDemoMode } from '@/lib/demo';
 import { createClient } from '@/lib/supabase-server';
@@ -115,6 +115,8 @@ function InvestorDashboardView({
           Ver oportunidades <ArrowRight className="h-4 w-4" />
         </Link>
       </DashboardHero>
+
+      <PhotoStrip />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <VisualMetricCard title="Total invertido" value={formatCurrency(Number(profile.total_invested || 0))} icon={Wallet} hint="+2.3% este mes" tone="emerald" />

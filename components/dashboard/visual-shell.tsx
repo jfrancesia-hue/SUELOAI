@@ -1,6 +1,14 @@
 ﻿import type { ComponentType, ReactNode } from 'react';
+import Image from 'next/image';
 import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 import { cn } from '@/utils/helpers';
+
+const defaultRealEstatePhotos = [
+  'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=85&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=85&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=85&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=85&auto=format&fit=crop',
+];
 
 export function DashboardHero({
   eyebrow,
@@ -98,27 +106,64 @@ export function VisualActionCard({
   );
 }
 
-export function MiniBuildingVisual({ label = 'Proyecto en obra' }: { label?: string }) {
+export function MiniBuildingVisual({
+  label = 'Proyecto en obra',
+  imageUrl = defaultRealEstatePhotos[0],
+}: {
+  label?: string;
+  imageUrl?: string;
+}) {
   return (
-    <div className="overflow-hidden rounded-[28px] border border-white/10 bg-[#07111F]/70 p-5 shadow-[0_22px_70px_-48px_rgba(16,185,129,0.9)]">
-      <div className="mb-4 flex items-center justify-between">
-        <div>
-          <p className="text-sm font-bold text-white">{label}</p>
-          <p className="text-xs text-white/44">Cimientos → estructura → renta</p>
-        </div>
-        <span className="rounded-full bg-emerald-300 px-3 py-1 text-xs font-bold text-[#03130D]">PY + BO</span>
-      </div>
-      <div className="flex h-48 items-end justify-center gap-2 rounded-3xl bg-[radial-gradient(circle_at_50%_20%,rgba(16,185,129,0.18),transparent_38%),linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] p-5">
-        {[44, 72, 108, 138, 92, 58].map((height, index) => (
-          <div key={height + index} className="w-9 rounded-t-xl border border-white/10 bg-gradient-to-b from-white/28 to-white/[0.06]" style={{ height }}>
-            <div className="grid grid-cols-2 gap-1 p-1.5">
-              {Array.from({ length: Math.max(2, Math.floor(height / 24)) }).map((_, windowIndex) => (
-                <span key={windowIndex} className="h-2 rounded-sm bg-emerald-200/45" />
-              ))}
-            </div>
+    <div className="overflow-hidden rounded-[28px] border border-white/10 bg-[#07111F]/70 shadow-[0_22px_70px_-48px_rgba(16,185,129,0.9)]">
+      <div className="relative h-64">
+        <Image
+          src={imageUrl}
+          alt={label}
+          fill
+          sizes="(min-width: 1024px) 360px, 100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.12)_0%,rgba(7,17,31,0.25)_42%,rgba(7,17,31,0.88)_100%)]" />
+        <div className="absolute left-4 right-4 top-4 flex items-center justify-between gap-3">
+          <div className="rounded-2xl border border-white/10 bg-black/32 px-4 py-3 backdrop-blur-xl">
+            <p className="text-sm font-bold text-white">{label}</p>
+            <p className="text-xs text-white/58">Fotos reales + datos claros</p>
           </div>
-        ))}
+          <span className="rounded-full bg-emerald-300 px-3 py-1 text-xs font-bold text-[#03130D]">PY + BO</span>
+        </div>
+
+        <div className="absolute bottom-4 left-4 right-4 grid grid-cols-3 gap-2">
+          {[
+            ['Avance', '72%'],
+            ['Ticket', 'USD 100'],
+            ['Docs', 'OK'],
+          ].map(([title, value]) => (
+            <div key={title} className="rounded-2xl border border-white/10 bg-black/34 p-3 backdrop-blur-xl">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-white/42">{title}</p>
+              <p className="mt-1 font-display text-lg font-bold text-white">{value}</p>
+            </div>
+          ))}
+        </div>
       </div>
+    </div>
+  );
+}
+
+export function PhotoStrip({ photos = defaultRealEstatePhotos }: { photos?: string[] }) {
+  return (
+    <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+      {photos.map((photo, index) => (
+        <div key={photo} className="relative h-32 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04]">
+          <Image
+            src={photo}
+            alt={`Foto real inmobiliaria ${index + 1}`}
+            fill
+            sizes="(min-width: 768px) 25vw, 50vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#07111F]/70 to-transparent" />
+        </div>
+      ))}
     </div>
   );
 }

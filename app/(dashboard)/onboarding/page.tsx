@@ -4,7 +4,7 @@ import { useMemo, useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, Building2, CheckCircle2, CircleDollarSign, MapPin, ShieldCheck, Target } from 'lucide-react';
 import { Button } from '@/components/ui';
-import { DashboardHero, MiniBuildingVisual } from '@/components/dashboard/visual-shell';
+import { DashboardHero, MiniBuildingVisual, PhotoStrip } from '@/components/dashboard/visual-shell';
 import { createClient } from '@/lib/supabase-browser';
 import { isDemoMode } from '@/lib/demo';
 
@@ -104,6 +104,8 @@ export default function OnboardingPage() {
         description="No es un test financiero. Es una guía inicial para que la plataforma y el agente entiendan país, objetivo, riesgo y monto estimado."
         visual={<MiniBuildingVisual label="Perfil para recomendar mejor" />}
       />
+
+      <PhotoStrip />
 
       <form onSubmit={handleSubmit} className="grid gap-5 lg:grid-cols-[1fr_320px]">
         <div className="space-y-5">

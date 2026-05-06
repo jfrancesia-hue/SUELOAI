@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { AlertTriangle, ArrowRight, Bot, Building2, CheckCircle2, FileText, Flag, Receipt, ShieldCheck, Users, Wallet } from 'lucide-react';
-import { DashboardHero, MiniBuildingVisual, VisualMetricCard } from '@/components/dashboard/visual-shell';
+import { DashboardHero, MiniBuildingVisual, PhotoStrip, VisualMetricCard } from '@/components/dashboard/visual-shell';
 import { features } from '@/lib/config/features';
 import { markets } from '@/lib/config/markets';
 import { isDemoMode } from '@/lib/demo';
@@ -104,6 +104,8 @@ function AdminView({
         description="Centro operativo para Paraguay y Bolivia: usuarios, proyectos, KYC, billetera, fiscal, leads, conversaciones IA y feature flags."
         visual={<MiniBuildingVisual label="Control operativo" />}
       />
+
+      <PhotoStrip />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <VisualMetricCard title="Usuarios" value={String(users)} icon={Users} hint="Cuentas registradas" tone="emerald" />

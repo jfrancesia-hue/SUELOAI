@@ -1,7 +1,8 @@
 ﻿import { createClient } from '@/lib/supabase-server';
+import Image from 'next/image';
 import { formatCurrency, getProgressPercent } from '@/utils/helpers';
 import { Badge, ProgressBar, EmptyState } from '@/components/ui';
-import { DashboardHero, MiniBuildingVisual } from '@/components/dashboard/visual-shell';
+import { DashboardHero, MiniBuildingVisual, PhotoStrip } from '@/components/dashboard/visual-shell';
 import { demoProjects, isDemoMode } from '@/lib/demo';
 import { Building2, MapPin, TrendingUp, ArrowRight, Sparkles, ShieldCheck, FileCheck2 } from 'lucide-react';
 import Link from 'next/link';
@@ -56,6 +57,8 @@ function MarketplaceView({ projects }: { projects: any[] }) {
         visual={<MiniBuildingVisual label="Oportunidades disponibles" />}
       />
 
+      <PhotoStrip />
+
       {/* Projects grid */}
       {!projects || projects.length === 0 ? (
         <EmptyState
@@ -91,9 +94,21 @@ function MarketplaceView({ projects }: { projects: any[] }) {
                   {project.featured && <Badge variant="success">Destacado</Badge>}
                 </div>
 
-                {/* Project image placeholder */}
-                <div className="h-40 -mx-6 -mt-6 mb-4 bg-gradient-to-br from-surface-200 to-surface-300 flex items-center justify-center">
-                  <Building2 className="w-10 h-10 text-surface-400" />
+                <div className="relative -mx-6 -mt-6 mb-4 h-44 overflow-hidden bg-gradient-to-br from-surface-200 to-surface-300">
+                  {project.image_url ? (
+                    <Image
+                      src={project.image_url}
+                      alt={project.title}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center">
+                      <Building2 className="w-10 h-10 text-surface-400" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface-100 via-transparent to-black/18" />
                 </div>
 
                 <div className="space-y-3">
