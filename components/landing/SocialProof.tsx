@@ -89,8 +89,36 @@ export function SocialProof() {
             </p>
           </div>
 
-          <div data-reveal className="rounded-[26px] border border-white/10 bg-white/[0.055] p-4 backdrop-blur-xl">
-            <ActivityTicker items={activity} />
+          <div data-reveal className="overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.055] shadow-[0_28px_90px_-46px_rgba(16,185,129,0.55)] backdrop-blur-xl">
+            <div className="relative h-72">
+              <Image
+                src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1400&q=85&auto=format&fit=crop"
+                alt="Obra inmobiliaria real con desarrolladoras trabajando"
+                fill
+                sizes="(min-width: 1024px) 58vw, 100vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.10)_0%,rgba(7,17,31,0.28)_45%,rgba(7,17,31,0.88)_100%)]" />
+              <div className="absolute left-5 top-5 rounded-2xl border border-white/10 bg-black/35 px-4 py-3 backdrop-blur-xl">
+                <p className="text-sm font-bold text-white">Obras y capital en movimiento</p>
+                <p className="mt-1 text-xs text-white/58">Paraguay + Bolivia · proyectos verificables</p>
+              </div>
+              <div className="absolute bottom-5 left-5 right-5 grid grid-cols-3 gap-2">
+                {[
+                  ['72%', 'Funding'],
+                  ['27', 'Developers'],
+                  ['98%', 'Contratos'],
+                ].map(([value, label]) => (
+                  <div key={label} className="rounded-2xl border border-white/10 bg-black/34 p-3 backdrop-blur-xl">
+                    <p className="font-display text-xl font-bold text-white">{value}</p>
+                    <p className="mt-1 text-[10px] uppercase tracking-[0.12em] text-white/45">{label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="border-t border-white/10 p-4">
+              <ActivityTicker items={activity} />
+            </div>
           </div>
         </div>
 
