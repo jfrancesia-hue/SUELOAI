@@ -63,6 +63,7 @@ export function TrustExperience() {
             src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1400&q=85&auto=format&fit=crop"
             alt="Documentación y revisión profesional de proyectos inmobiliarios"
             fill
+            quality={76}
             sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover opacity-[0.42]"
           />

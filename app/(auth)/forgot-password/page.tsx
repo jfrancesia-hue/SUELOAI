@@ -4,6 +4,7 @@ import { useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, MailCheck, RotateCcw } from 'lucide-react';
 import { Button, Input } from '@/components/ui';
+import { isDemoMode } from '@/lib/demo';
 import { createClient } from '@/lib/supabase-browser';
 
 export default function ForgotPasswordPage() {
@@ -17,6 +18,12 @@ export default function ForgotPasswordPage() {
     event.preventDefault();
     setLoading(true);
     setError('');
+
+    if (isDemoMode()) {
+      setSent(true);
+      setLoading(false);
+      return;
+    }
 
     const redirectTo = `${window.location.origin}/api/auth/callback?next=/reset-password`;
     const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo });

@@ -37,12 +37,19 @@ const apiHeaders = [
 ];
 
 const nextConfig = {
+  poweredByHeader: false,
+  compress: true,
   experimental: {
+    optimizePackageImports: ['lucide-react', 'framer-motion', 'recharts'],
     serverActions: {
       bodySizeLimit: '5mb',
     },
   },
   images: {
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 60 * 60 * 24 * 30,
+    deviceSizes: [360, 420, 640, 768, 1024, 1280, 1536],
+    imageSizes: [32, 44, 64, 96, 160, 240, 320, 480],
     remotePatterns: [
       {
         protocol: 'https',

@@ -311,7 +311,7 @@ export default function ProjectsPage() {
             >
               <div className="relative h-44 bg-surface-200">
                 {project.image_url ? (
-                  <Image src={project.image_url} alt={project.title} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+                  <Image src={project.image_url} alt={project.title} fill quality={74} sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
                 ) : (
                   <div className="flex h-full items-center justify-center"><Building2 className="h-9 w-9 text-surface-500" /></div>
                 )}

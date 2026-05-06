@@ -12,6 +12,7 @@
     "test:e2e:install": "playwright install --with-deps chromium",
     "typecheck": "tsc --noEmit --pretty false",
     "audit": "npm audit --omit=dev",
+    "production:check": "node scripts/production-check.mjs",
     "verify": "npm run typecheck && npm run lint && npm run build && npm run test:e2e"
   },
   "dependencies": {

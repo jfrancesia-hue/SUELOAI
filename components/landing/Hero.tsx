@@ -157,6 +157,7 @@ function ConstructionHeroVisual() {
         alt="Edificio 3D avanzando desde cimientos hasta obra terminada"
         fill
         priority
+        quality={82}
         sizes="(min-width: 1024px) 54vw, 100vw"
         className="object-cover"
       />

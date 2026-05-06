@@ -49,7 +49,7 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
           return (
             <article key={project.id} className="overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.055] backdrop-blur-xl">
               <div className="relative h-52 bg-surface-200">
-                {project.image_url && <Image src={project.image_url} alt={project.title} fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover" />}
+                {project.image_url && <Image src={project.image_url} alt={project.title} fill quality={74} sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover" />}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#07111F] via-transparent to-black/10" />
                 <div className="absolute bottom-4 left-4 right-4">
                   <h2 className="font-display text-2xl font-bold text-white">{project.title}</h2>

@@ -120,6 +120,7 @@ export function MiniBuildingVisual({
           src={imageUrl}
           alt={label}
           fill
+          quality={76}
           sizes="(min-width: 1024px) 360px, 100vw"
           className="object-cover"
         />
@@ -158,6 +159,7 @@ export function PhotoStrip({ photos = defaultRealEstatePhotos }: { photos?: stri
             src={photo}
             alt={`Foto real inmobiliaria ${index + 1}`}
             fill
+            quality={72}
             sizes="(min-width: 768px) 25vw, 50vw"
             className="object-cover"
           />

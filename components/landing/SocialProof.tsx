@@ -98,6 +98,7 @@ export function SocialProof() {
                 src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1400&q=85&auto=format&fit=crop"
                 alt="Obra inmobiliaria real con desarrolladoras trabajando"
                 fill
+                quality={76}
                 sizes="(min-width: 1024px) 58vw, 100vw"
                 className="object-cover"
               />
@@ -143,6 +144,7 @@ export function SocialProof() {
                   src={testimonial.coverImage}
                   alt={`Contexto inmobiliario de ${testimonial.role}`}
                   fill
+                  quality={74}
                   sizes="(min-width: 768px) 33vw, 100vw"
                   className="object-cover"
                 />
@@ -165,6 +167,7 @@ export function SocialProof() {
                       src={testimonial.avatarImage}
                       alt={testimonial.name}
                       fill
+                      quality={70}
                       sizes="44px"
                       className="object-cover"
                     />

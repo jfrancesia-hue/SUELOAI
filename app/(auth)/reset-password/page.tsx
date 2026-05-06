@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { CheckCircle2, KeyRound } from 'lucide-react';
 import { Button } from '@/components/ui';
 import { PasswordField } from '@/components/ui/password-field';
+import { isDemoMode } from '@/lib/demo';
 import { createClient } from '@/lib/supabase-browser';
 
 export default function ResetPasswordPage() {
@@ -29,6 +30,12 @@ export default function ResetPasswordPage() {
     }
 
     setLoading(true);
+    if (isDemoMode()) {
+      setSuccess(true);
+      setLoading(false);
+      return;
+    }
+
     const { error: updateError } = await supabase.auth.updateUser({ password });
     if (updateError) {
       setError(updateError.message);
