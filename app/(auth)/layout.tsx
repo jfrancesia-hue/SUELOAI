@@ -1,7 +1,7 @@
 import { Shield } from 'lucide-react';
 import Link from 'next/link';
 
-// Páginas de auth dependen de cookies de sesión — nunca prerenderables.
+// Páginas de auth dependen de cookies de sesión: nunca prerenderables.
 export const dynamic = 'force-dynamic';
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
@@ -20,14 +20,14 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             Su<span className="text-brand-500">elo</span>
           </h1>
           <p className="text-surface-600 text-lg leading-relaxed">
-            Inversión inmobiliaria fraccionada con trazabilidad criptográfica y contratos verificables.
+            Inversión inmobiliaria fraccionada para Paraguay y Bolivia, con contratos verificables y seguimiento claro.
           </p>
 
           <div className="mt-12 grid grid-cols-3 gap-4">
             {[
-              { value: '14.5%', label: 'Retorno promedio' },
-              { value: 'USD 100', label: 'Inversión mínima' },
-              { value: '500+', label: 'Contratos' },
+              { value: 'PY + BO', label: 'Foco inicial' },
+              { value: 'USD 100', label: 'Entrada mínima' },
+              { value: 'Hash', label: 'Contratos verificables' },
             ].map(({ value, label }) => (
               <div key={label} className="p-4 rounded-xl bg-surface-100/50 border border-surface-200/50">
                 <p className="font-display font-bold text-lg text-brand-500">{value}</p>

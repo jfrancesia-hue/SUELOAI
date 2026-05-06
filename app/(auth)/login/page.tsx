@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { LogIn } from 'lucide-react';
+import { HelpCircle, LogIn, ShieldCheck } from 'lucide-react';
 import { Button, Input } from '@/components/ui';
+import { PasswordField } from '@/components/ui/password-field';
 import { createClient } from '@/lib/supabase-browser';
 
 export default function LoginPage() {
@@ -45,7 +46,7 @@ export default function LoginPage() {
   return (
     <div>
       <h2 className="font-display text-2xl font-bold text-surface-900">Bienvenido de vuelta</h2>
-      <p className="mt-2 text-surface-500">Ingresá a tu cuenta para continuar</p>
+      <p className="mt-2 text-surface-500">Ingresá con el email y la contraseña que usaste al registrarte.</p>
 
       <form onSubmit={handleLogin} className="mt-8 space-y-5">
         <Input
@@ -53,20 +54,34 @@ export default function LoginPage() {
           label="Email"
           type="email"
           placeholder="tu@email.com"
+          autoComplete="email"
+          hint="Usá el mismo email con el que creaste tu cuenta."
           value={form.email}
           onChange={(event) => setForm({ ...form, email: event.target.value })}
           required
         />
 
-        <Input
+        <PasswordField
           id="password"
           label="Contraseña"
-          type="password"
-          placeholder="Mínimo 6 caracteres"
+          placeholder="Escribí tu contraseña"
+          autoComplete="current-password"
+          hint="Podés tocar el ícono del ojo para revisar lo que escribiste antes de entrar."
           value={form.password}
           onChange={(event) => setForm({ ...form, password: event.target.value })}
           required
         />
+
+        <div className="grid gap-3 rounded-2xl border border-surface-200 bg-surface-100/70 p-4 text-sm text-surface-600">
+          <div className="flex gap-3">
+            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" />
+            <p>Tu sesión se valida con Supabase Auth y cookies seguras.</p>
+          </div>
+          <div className="flex gap-3">
+            <HelpCircle className="mt-0.5 h-4 w-4 shrink-0 text-surface-500" />
+            <p>Si no recordás la contraseña, el siguiente paso recomendado es habilitar recuperación por email.</p>
+          </div>
+        </div>
 
         {error && (
           <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-3">
