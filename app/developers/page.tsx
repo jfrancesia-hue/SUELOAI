@@ -10,6 +10,15 @@ const benefits = [
   ['Confianza para inversores', 'Sellos, scoring IA y centro de confianza para reducir dudas antes de invertir.'],
 ];
 
+const requiredDocuments = [
+  'Título, boleto o derecho verificable sobre el terreno o activo',
+  'Permisos municipales, planos y documentación técnica disponible',
+  'Presupuesto de obra, cronograma, hitos y uso del capital',
+  'Datos legales de la desarrolladora y responsables del proyecto',
+  'Fotos, avance de obra, ubicación y evidencia comercial',
+  'Riesgos principales, plan de salida y contrato modelo',
+];
+
 export default function DevelopersLandingPage() {
   return (
     <main className="min-h-screen bg-[#07111F] text-white">
@@ -56,6 +65,28 @@ export default function DevelopersLandingPage() {
             </div>
           );
         })}
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pb-24 sm:px-6 lg:px-8">
+        <div className="grid gap-6 rounded-[32px] border border-white/10 bg-white/[0.055] p-6 backdrop-blur-xl md:p-8 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-emerald-300">Checklist para publicar</p>
+            <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.02em]">
+              Qué debe preparar una desarrolladora antes de salir a captar capital.
+            </h2>
+            <p className="mt-4 leading-relaxed text-white/66">
+              La idea es reducir preguntas repetidas, acelerar la revisión y mostrarle al inversor información clara sin prometer retornos garantizados.
+            </p>
+          </div>
+          <div className="grid gap-3">
+            {requiredDocuments.map((item) => (
+              <div key={item} className="flex gap-3 rounded-2xl bg-[#07111F]/65 p-4">
+                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-300" />
+                <span className="leading-relaxed text-white/78">{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
       <Footer />
     </main>

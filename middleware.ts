@@ -53,7 +53,7 @@ export async function middleware(request: NextRequest) {
     '/secondary-market',
     '/admin',
   ];
-  const isProtected = protectedRoutes.some((route) => pathname.startsWith(route));
+  const isProtected = protectedRoutes.some((route) => pathname === route || pathname.startsWith(`${route}/`));
 
   if (!user && isProtected) {
     const loginUrl = new URL('/login', request.url);

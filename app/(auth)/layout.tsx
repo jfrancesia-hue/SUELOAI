@@ -1,4 +1,4 @@
-import { Shield } from 'lucide-react';
+import { ArrowLeft, Shield } from 'lucide-react';
 import Link from 'next/link';
 
 // Páginas de auth dependen de cookies de sesión: nunca prerenderables.
@@ -41,8 +41,16 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       {/* Right panel - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12">
         <div className="w-full max-w-md">
+          <Link
+            href="/"
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-surface-200 bg-surface-100/70 px-4 py-2 text-sm font-medium text-surface-600 transition-colors hover:border-brand-500/30 hover:text-brand-500"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Volver al inicio
+          </Link>
+
           {/* Mobile logo */}
-          <Link href="/" className="flex items-center gap-2.5 mb-10 lg:hidden">
+          <Link href="/" className="mb-8 flex items-center gap-2.5 lg:hidden">
             <div className="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center">
               <Shield className="w-4.5 h-4.5 text-white" />
             </div>

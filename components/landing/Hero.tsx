@@ -24,12 +24,12 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-[#07111F] pt-24 text-white">
+    <section className="relative min-h-screen overflow-hidden bg-[#07111F] pt-20 text-white sm:pt-24">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(16,185,129,0.20),transparent_28%),radial-gradient(circle_at_78%_18%,rgba(6,182,212,0.16),transparent_32%),radial-gradient(circle_at_58%_78%,rgba(139,92,246,0.14),transparent_34%),linear-gradient(180deg,#07111F_0%,#111827_56%,#07111F_100%)]" />
       <div className="absolute inset-0 bg-grid-pattern bg-grid opacity-[0.08]" />
       <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 pb-20 pt-10 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-8 lg:pb-24 lg:pt-16">
+      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 pb-20 pt-2 sm:px-6 sm:pt-10 lg:grid-cols-[0.92fr_1.08fr] lg:px-8 lg:pb-24 lg:pt-16">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -67,7 +67,7 @@ export function Hero() {
 
           <motion.div variants={fadeUp} className="mt-10 flex flex-col gap-3 sm:flex-row">
             <PremiumCta href="/register">Empezar a invertir</PremiumCta>
-            <PremiumCta href="/marketplace" variant="secondary">Ver proyectos</PremiumCta>
+            <PremiumCta href="#proyectos" variant="secondary">Ver proyectos</PremiumCta>
           </motion.div>
 
           <motion.div variants={fadeUp} className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3">

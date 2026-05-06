@@ -26,7 +26,7 @@ export function Navbar() {
 
   return (
     <nav
-      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
+      className={`fixed left-0 top-0 z-50 w-[100dvw] max-w-full transition-all duration-300 ${
         scrolled
           ? 'border-b border-white/[0.06] bg-[#07111F]/72 shadow-[0_1px_0_rgba(255,255,255,0.04)_inset] backdrop-blur-xl'
           : 'border-b border-transparent bg-transparent'
@@ -75,7 +75,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setIsOpen((value) => !value)}
-            className="rounded-lg p-2 text-white/70 transition-colors hover:bg-white/[0.05] hover:text-white md:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.07] text-white shadow-[0_10px_24px_-18px_rgba(0,0,0,0.9)] transition-colors hover:bg-white/[0.11] md:hidden"
             aria-label="Menú"
           >
             {isOpen ? <X className="h-5 w-5" strokeWidth={1.75} /> : <Menu className="h-5 w-5" strokeWidth={1.75} />}

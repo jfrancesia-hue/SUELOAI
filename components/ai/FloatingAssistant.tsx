@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   ArrowRight,
   Bot,
@@ -47,6 +48,7 @@ function getWhatsAppHref(message: string) {
 }
 
 export function FloatingAssistant() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -76,6 +78,11 @@ export function FloatingAssistant() {
   }, [messages]);
 
   const whatsappHref = getWhatsAppHref(whatsappMessage);
+  const isAuthPage = ['/login', '/register', '/forgot-password', '/reset-password'].some(
+    (route) => pathname === route || pathname?.startsWith(`${route}/`)
+  );
+
+  if (isAuthPage) return null;
 
   async function send(text = input) {
     const content = text.trim();
@@ -133,7 +140,7 @@ export function FloatingAssistant() {
   return (
     <>
       {!open && (
-        <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">
+        <div className="fixed bottom-4 left-[calc(100dvw-5rem)] z-50 flex flex-col items-end gap-3 sm:bottom-5 sm:left-auto sm:right-5">
           {whatsappHref && (
             <a
               href={whatsappHref}
@@ -163,7 +170,7 @@ export function FloatingAssistant() {
       )}
 
       {open && (
-        <div className="fixed bottom-5 right-5 z-50 flex h-[680px] max-h-[calc(100vh-2.5rem)] w-[430px] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-[28px] border border-white/10 bg-[#07111F] shadow-[0_28px_90px_-38px_rgba(0,0,0,1)]">
+        <div className="fixed bottom-4 left-4 z-50 flex h-[680px] max-h-[calc(100dvh-2rem)] w-[calc(100dvw-2rem)] flex-col overflow-hidden rounded-[28px] border border-white/10 bg-[#07111F] shadow-[0_28px_90px_-38px_rgba(0,0,0,1)] sm:bottom-5 sm:left-auto sm:right-5 sm:max-h-[calc(100vh-2.5rem)] sm:w-[430px] sm:max-w-[calc(100vw-2rem)]">
           <div className="relative border-b border-white/10 p-4">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(16,185,129,0.22),transparent_34%),radial-gradient(circle_at_84%_30%,rgba(6,182,212,0.16),transparent_32%)]" />
             <div className="relative flex items-center justify-between gap-3">
