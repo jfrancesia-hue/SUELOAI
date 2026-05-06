@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
   const { data, error } = await query.limit(200);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-  // Agregados: totales del perÃ­odo
+  // Agregados: totales del período
   const stats = (data || []).reduce(
     (acc, inv) => {
       acc.count += 1;
@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
 
   const pointOfSale = body.point_of_sale || 1;
 
-  // Buscar Ãºltimo nÃºmero emitido en ese punto de venta
+  // Buscar último número emitido en ese punto de venta
   const { data: last } = await supabase
     .from('invoices')
     .select('invoice_number')
@@ -245,7 +245,7 @@ export async function DELETE(request: NextRequest) {
   const id = searchParams.get('id');
   if (!id) return NextResponse.json({ error: 'id requerido' }, { status: 400 });
 
-  // Solo draft pueden borrarse; issued/paid van a status=cancelled (nota de crÃ©dito en un futuro)
+  // Solo draft pueden borrarse; issued/paid van a status=cancelled (nota de crédito en un futuro)
   const { data: invoice } = await supabase
     .from('invoices')
     .select('status')

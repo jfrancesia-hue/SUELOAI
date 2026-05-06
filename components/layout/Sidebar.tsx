@@ -49,7 +49,7 @@ export function Sidebar({ profile }: SidebarProps) {
     { section: 'Finanzas' },
     { href: '/wallet', label: 'Billetera', icon: Wallet },
     { href: '/wallet/crypto', label: 'Crypto', icon: Bitcoin, badge: 'NEW' },
-    { href: '/invoicing', label: 'FacturaciÃ³n', icon: Receipt },
+  { href: '/invoicing', label: 'Facturación', icon: Receipt },
     { section: 'Cuenta' },
     { href: '/verify', label: 'Verificar', icon: FileCheck },
     { href: '/notifications', label: 'Notificaciones', icon: Bell },
@@ -90,7 +90,7 @@ export function Sidebar({ profile }: SidebarProps) {
               Suelo
             </span>
             <span className="text-[10px] text-surface-500 leading-tight">
-              InversiÃ³n inteligente
+              Inversión inteligente
             </span>
           </div>
         </Link>
@@ -177,7 +177,7 @@ export function Sidebar({ profile }: SidebarProps) {
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-surface-500 hover:text-red-400 hover:bg-red-500/5 w-full transition-colors"
         >
           <LogOut className="w-4 h-4" />
-          Cerrar SesiÃ³n
+          Cerrar sesión
         </button>
       </div>
     </div>

@@ -17,7 +17,7 @@ import { useRevealOnScroll } from '@/components/animations/useReveal';
 
 const quickActions = [
   { icon: Radar, label: 'Analizar mi cartera' },
-  { icon: Sparkles, label: 'Recomendar inversiÃ³n' },
+  { icon: Sparkles, label: 'Sugerir inversión' },
   { icon: ShieldAlert, label: 'Explicar riesgo' },
   { icon: GitCompareArrows, label: 'Comparar proyectos' },
   { icon: WalletCards, label: 'Simular USD 1.000' },
@@ -26,22 +26,22 @@ const quickActions = [
 const recommendations = [
   {
     type: 'Oportunidad sugerida',
-    title: 'Torre AsunciÃ³n Eje',
-    detail: 'Encaja con tu perfil balanceado y mejora exposiciÃ³n a Paraguay.',
+    title: 'Torre Asunción Eje',
+    detail: 'Coincide con un perfil balanceado y suma exposición a Paraguay sin concentrar toda la cartera.',
     score: '94',
     tone: 'emerald',
   },
   {
     type: 'Riesgo detectado',
-    title: 'Alta concentraciÃ³n PY',
-    detail: 'TenÃ©s 62% de cartera en Paraguay. Conviene diversificar entre Bolivia, USD y USDT.',
+    title: 'Alta concentración PY',
+    detail: 'Tenés 62% de tu cartera en Paraguay. Podría convenir sumar Bolivia y mantener parte en USD o USDT.',
     score: 'Medio',
     tone: 'gold',
   },
   {
     type: 'Rebalanceo recomendado',
     title: '+15% renta mensual',
-    detail: 'PodÃ©s sumar activos estabilizados sin subir demasiado el riesgo.',
+    detail: 'Podés sumar proyectos con renta mensual para buscar ingresos sin aumentar demasiado el riesgo.',
     score: '+11%',
     tone: 'cyan',
   },
@@ -61,7 +61,7 @@ function HolographicAvatar() {
         { label: 'Riesgo', x: '8%', y: '20%' },
         { label: 'Renta', x: '72%', y: '18%' },
         { label: 'Score', x: '76%', y: '72%' },
-        { label: 'PaÃ­s', x: '10%', y: '76%' },
+        { label: 'País', x: '10%', y: '76%' },
       ].map((node) => (
         <div
           key={node.label}
@@ -114,11 +114,11 @@ export function AIAnalystDemo() {
             <h2 data-reveal className="font-display text-3xl font-bold leading-[1.05] tracking-[-0.02em] text-white md:text-5xl">
               Tu analista personal de{' '}
               <span className="font-serif italic font-[400] text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-cyan-300 to-violet-300">
-                inversiÃ³n inmobiliaria.
+                inversión inmobiliaria.
               </span>
             </h2>
             <p data-reveal className="mt-5 max-w-xl text-base leading-relaxed text-white/62 md:text-lg">
-              La IA te ayuda a invertir segÃºn tu perfil, no segÃºn moda. Compara proyectos, explica riesgos y simula escenarios antes de mover capital.
+              El analista IA te ayuda a entender proyectos, comparar riesgos y simular escenarios. La idea es que inviertas según tu perfil, no por impulso.
             </p>
 
             <div data-reveal className="mt-8 flex flex-wrap gap-2">
@@ -185,7 +185,7 @@ export function AIAnalystDemo() {
                     </div>
                   </div>
                   <div className="rounded-2xl border border-white/10 bg-white/[0.055] p-4 text-sm leading-relaxed text-white/72">
-                    <TypedLine text="Con USD 1.000, te conviene diversificar entre renta mensual y obra avanzada. EvitarÃ­a concentrar todo en un solo paÃ­s hasta balancear riesgo Paraguay/Bolivia." />
+                    <TypedLine text="Con USD 1.000, conviene dividir entre un proyecto con renta mensual y otro de obra avanzada. Evitaría poner todo en un solo país hasta equilibrar Paraguay y Bolivia." />
                   </div>
                 </div>
 
@@ -219,7 +219,7 @@ export function AIAnalystDemo() {
                   <div className="rounded-2xl border border-white/10 bg-white/[0.055] p-4">
                     <Building2 className="mb-3 h-4 w-4 text-cyan-300" strokeWidth={1.8} />
                     <p className="text-2xl font-bold text-white">3</p>
-                    <p className="text-xs text-white/45">paÃ­ses sugeridos</p>
+                    <p className="text-xs text-white/45">mercados sugeridos</p>
                   </div>
                 </div>
               </div>

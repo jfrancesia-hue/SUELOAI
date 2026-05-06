@@ -67,3 +67,6 @@ marketing/*.mov
 marketing/*.webm
 marketing/**/renders/
 marketing/**/node_modules/
+
+# Local video review artifacts
+video-frames/
