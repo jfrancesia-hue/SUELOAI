@@ -6,6 +6,7 @@ import { ArrowRight, Building2, CheckCircle2, CircleDollarSign, MapPin, ShieldCh
 import { Button } from '@/components/ui';
 import { DashboardHero, MiniBuildingVisual } from '@/components/dashboard/visual-shell';
 import { createClient } from '@/lib/supabase-browser';
+import { isDemoMode } from '@/lib/demo';
 
 const countries = [
   { code: 'PY', label: 'Paraguay', currency: 'PYG / USD / USDT' },
@@ -29,6 +30,7 @@ type FormState = {
 export default function OnboardingPage() {
   const router = useRouter();
   const supabase = createClient();
+  const demoMode = isDemoMode();
   const [saving, setSaving] = useState(false);
   const [done, setDone] = useState(false);
   const [form, setForm] = useState<FormState>({
@@ -57,8 +59,8 @@ export default function OnboardingPage() {
     };
     localStorage.setItem('suelo_onboarding', JSON.stringify(payload));
 
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
+    const { data: { user } } = demoMode ? { data: { user: null } } : await supabase.auth.getUser();
+    if (user && !demoMode) {
       await supabase.from('ai_user_profiles').upsert({
         user_id: user.id,
         risk_profile: form.risk,

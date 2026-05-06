@@ -4,6 +4,7 @@ import { AlertTriangle, ArrowRight, Bot, Building2, CheckCircle2, FileText, Flag
 import { DashboardHero, MiniBuildingVisual, VisualMetricCard } from '@/components/dashboard/visual-shell';
 import { features } from '@/lib/config/features';
 import { markets } from '@/lib/config/markets';
+import { isDemoMode } from '@/lib/demo';
 import { requireAdminProfile } from '@/lib/auth/server';
 
 async function count(admin: any, table: string, filter?: (q: any) => any) {
@@ -15,6 +16,23 @@ async function count(admin: any, table: string, filter?: (q: any) => any) {
 
 export default async function AdminPage() {
   if (!features.admin) redirect('/');
+
+  if (isDemoMode()) {
+    return (
+      <AdminView
+        users={28}
+        projects={6}
+        fundingProjects={3}
+        pendingKyc={4}
+        pendingWallet={2}
+        invoices={12}
+        leads={41}
+        contacts={96}
+        conversations={138}
+        investments={23}
+      />
+    );
+  }
 
   const auth = await requireAdminProfile();
   if ('error' in auth) redirect('/investor');
@@ -33,6 +51,45 @@ export default async function AdminPage() {
     count(admin, 'investments', (q) => q.eq('status', 'confirmed')),
   ]);
 
+  return (
+    <AdminView
+      users={users}
+      projects={projects}
+      fundingProjects={fundingProjects}
+      pendingKyc={pendingKyc}
+      pendingWallet={pendingWallet}
+      invoices={invoices}
+      leads={leads}
+      contacts={contacts}
+      conversations={conversations}
+      investments={investments}
+    />
+  );
+}
+
+function AdminView({
+  users,
+  projects,
+  fundingProjects,
+  pendingKyc,
+  pendingWallet,
+  invoices,
+  leads,
+  contacts,
+  conversations,
+  investments,
+}: {
+  users: number;
+  projects: number;
+  fundingProjects: number;
+  pendingKyc: number;
+  pendingWallet: number;
+  invoices: number;
+  leads: number;
+  contacts: number;
+  conversations: number;
+  investments: number;
+}) {
   const alerts = [
     pendingKyc > 0 ? `${pendingKyc} KYC pendientes de revisión` : null,
     pendingWallet > 0 ? `${pendingWallet} movimientos de billetera pendientes` : null,

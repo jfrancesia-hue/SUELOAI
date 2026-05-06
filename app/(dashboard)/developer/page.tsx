@@ -4,6 +4,7 @@ import { ArrowRight, Building2, DollarSign, FolderPlus, TrendingUp, Users } from
 import type { ReactNode } from 'react';
 import { DashboardHero, MiniBuildingVisual, VisualActionCard, VisualMetricCard } from '@/components/dashboard/visual-shell';
 import { Badge, ProgressBar } from '@/components/ui';
+import { demoDeveloperInvestments, demoProjects, isDemoMode } from '@/lib/demo';
 import { createClient } from '@/lib/supabase-server';
 import { formatCurrency, formatDate, getProgressPercent, getStatusLabel } from '@/utils/helpers';
 
@@ -30,6 +31,15 @@ type DeveloperInvestment = {
 };
 
 export default async function DeveloperDashboard() {
+  if (isDemoMode()) {
+    return (
+      <DeveloperDashboardView
+        projects={demoProjects as DeveloperProject[]}
+        investments={demoDeveloperInvestments as DeveloperInvestment[]}
+      />
+    );
+  }
+
   const supabase = createClient();
   const {
     data: { user },

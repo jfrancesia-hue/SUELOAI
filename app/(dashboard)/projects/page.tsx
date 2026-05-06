@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase-browser';
 import { Button, Input, Textarea, Select, EmptyState } from '@/components/ui';
 import { DashboardHero, MiniBuildingVisual, VisualActionCard } from '@/components/dashboard/visual-shell';
+import { demoProjects, isDemoMode } from '@/lib/demo';
 import { slugify, formatCurrency, getStatusLabel, getProgressPercent } from '@/utils/helpers';
 import type { Project, CreateProjectInput } from '@/types';
 import { Building2, FolderPlus, Save, X, ArrowRight } from 'lucide-react';
@@ -13,6 +14,7 @@ import Link from 'next/link';
 export default function ProjectsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const demoMode = isDemoMode();
   const supabase = useMemo(() => createClient(), []);
   const [projects, setProjects] = useState<Project[]>([]);
   const [showForm, setShowForm] = useState(searchParams?.get('new') === 'true');
@@ -34,6 +36,12 @@ export default function ProjectsPage() {
   });
 
   const loadProjects = useCallback(async () => {
+    if (demoMode) {
+      setProjects(demoProjects);
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
@@ -46,7 +54,7 @@ export default function ProjectsPage() {
 
     setProjects(data || []);
     setLoading(false);
-  }, [supabase]);
+  }, [demoMode, supabase]);
 
   useEffect(() => {
     loadProjects();
@@ -56,6 +64,32 @@ export default function ProjectsPage() {
     e.preventDefault();
     setSaving(true);
     setError('');
+
+    if (demoMode) {
+      const newProject = {
+        id: `demo-${Date.now()}`,
+        developer_id: 'demo-developer',
+        slug: slugify(form.title) + '-' + Date.now().toString(36),
+        status: 'draft',
+        sold_tokens: 0,
+        image_url: null,
+        gallery_urls: [],
+        documents_url: null,
+        featured: false,
+        latitude: null,
+        longitude: null,
+        start_date: null,
+        end_date: null,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        address: form.address || null,
+        ...form,
+      } as Project;
+      setProjects((prev) => [newProject, ...prev]);
+      setShowForm(false);
+      setSaving(false);
+      return;
+    }
 
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {

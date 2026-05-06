@@ -2,6 +2,7 @@
 import { formatCurrency, getProgressPercent } from '@/utils/helpers';
 import { Badge, ProgressBar, EmptyState } from '@/components/ui';
 import { DashboardHero, MiniBuildingVisual } from '@/components/dashboard/visual-shell';
+import { demoProjects, isDemoMode } from '@/lib/demo';
 import { Building2, MapPin, TrendingUp, ArrowRight, Sparkles, ShieldCheck, FileCheck2 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -22,6 +23,13 @@ function ratingLabel(rating: string | null): string {
 }
 
 export default async function MarketplacePage() {
+  if (isDemoMode()) {
+    return <MarketplaceView projects={demoProjects.map((project, index) => ({
+      ...project,
+      score: { rating: index === 0 ? 'A_plus' : index === 1 ? 'A' : 'B', overall_score: index === 0 ? 94 : index === 1 ? 88 : 81, ai_analysis: null },
+    })) as any[]} />;
+  }
+
   const supabase = createClient();
 
   const { data: projects } = await supabase
@@ -35,6 +43,10 @@ export default async function MarketplacePage() {
     .order('featured', { ascending: false })
     .order('created_at', { ascending: false });
 
+  return <MarketplaceView projects={(projects || []) as any[]} />;
+}
+
+function MarketplaceView({ projects }: { projects: any[] }) {
   return (
     <div className="max-w-7xl mx-auto space-y-8">
       <DashboardHero

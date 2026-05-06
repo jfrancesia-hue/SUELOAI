@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import { PortfolioCharts } from '@/components/dashboard/PortfolioCharts';
 import { DashboardHero, MiniBuildingVisual, VisualMetricCard } from '@/components/dashboard/visual-shell';
 import { Badge, ProgressBar } from '@/components/ui';
+import { demoInvestments, demoProfiles, demoTransactions, isDemoMode } from '@/lib/demo';
 import { createClient } from '@/lib/supabase-server';
 import { formatCurrency, formatDate, getStatusLabel } from '@/utils/helpers';
 
@@ -28,6 +29,16 @@ type DashboardTransaction = {
 };
 
 export default async function InvestorDashboard() {
+  if (isDemoMode()) {
+    return (
+      <InvestorDashboardView
+        profile={demoProfiles.investor}
+        investments={demoInvestments as DashboardInvestment[]}
+        transactions={demoTransactions as DashboardTransaction[]}
+      />
+    );
+  }
+
   const supabase = createClient();
   const {
     data: { user },
