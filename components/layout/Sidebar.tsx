@@ -10,7 +10,7 @@ import {
   Sprout, LayoutDashboard, Building2, Wallet, Store, FileCheck,
   LogOut, Menu, X, ChevronRight, User, Bitcoin, Users, Receipt,
   RefreshCcw, Sparkles, Bell, Gift, Settings, MessageCircle, ShieldCheck,
-  Scale,
+  Scale, Network,
 } from 'lucide-react';
 
 interface SidebarProps { profile: Profile; }
@@ -52,7 +52,8 @@ export function Sidebar({ profile }: SidebarProps) {
     { section: 'Finanzas' },
     { href: '/wallet', label: 'Billetera', icon: Wallet },
     { href: '/wallet/crypto', label: 'Crypto', icon: Bitcoin, badge: 'NEW' },
-  { href: '/invoicing', label: 'Facturación', icon: Receipt },
+    { href: '/blockchain', label: 'Blockchain', icon: Network, badge: 'SETUP' },
+    { href: '/invoicing', label: 'Facturación', icon: Receipt },
     { section: 'Cuenta' },
     { href: '/verify', label: 'Verificar', icon: FileCheck },
     { href: '/notifications', label: 'Notificaciones', icon: Bell },
@@ -68,6 +69,7 @@ export function Sidebar({ profile }: SidebarProps) {
     { href: '/compare', label: 'Comparador', icon: Scale },
     { href: '/crm', label: 'CRM', icon: Users },
     { href: '/wallet', label: 'Billetera', icon: Wallet },
+    { href: '/blockchain', label: 'Blockchain', icon: Network, badge: 'SETUP' },
     { href: '/invoicing', label: 'Fiscal', icon: Receipt },
     { href: '/verify', label: 'Verificar', icon: FileCheck },
     { href: '/settings', label: 'Ajustes', icon: Settings },

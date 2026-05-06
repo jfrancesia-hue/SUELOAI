@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase-browser';
+import { isDemoMode } from '@/lib/demo';
 import { formatCurrency, formatDate } from '@/utils/helpers';
 import { Button, Select, Badge, EmptyState, LoadingSpinner } from '@/components/ui';
 import { NETWORKS, type CryptoNetwork, type CryptoToken, type CryptoTransaction } from '@/types/crypto';
@@ -10,6 +11,72 @@ import {
   Bitcoin, Copy, CheckCircle2, ArrowDownToLine, ArrowUpFromLine,
   ExternalLink, AlertCircle, QrCode, Sparkles, Shield,
 } from 'lucide-react';
+
+const DEMO_MODE = isDemoMode();
+
+const DEMO_CRYPTO_TRANSACTIONS: CryptoTransaction[] = [
+  {
+    id: 'demo-crypto-1',
+    user_id: 'demo-investor',
+    wallet_movement_id: null,
+    direction: 'inbound',
+    network: 'tron',
+    token: 'USDT',
+    tx_hash: '9b3a7d4e6f8c1a2b0d5e7f9a3c4b6d8e1f2a9b7c6d5e4f3a2b1c0d9e8f7a6b5c',
+    from_address: 'TQdemoInvestorSender1111111111111111111',
+    to_address: 'TQdemoSueloUSDT9xY8z7w6v5u4t3s2r1',
+    amount_crypto: 1250,
+    amount_usd: 1250,
+    exchange_rate: 1,
+    network_fee_crypto: 3.2,
+    network_fee_usd: 3.2,
+    platform_fee_usd: 6.25,
+    status: 'completed',
+    confirmations: 20,
+    required_confirmations: 20,
+    block_number: 61124589,
+    block_timestamp: new Date().toISOString(),
+    explorer_url: 'https://tronscan.org/#/transaction/9b3a7d4e6f8c1a2b0d5e7f9a3c4b6d8e1f2a9b7c6d5e4f3a2b1c0d9e8f7a6b5c',
+    raw_data: null,
+    confirmed_at: new Date().toISOString(),
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'demo-crypto-2',
+    user_id: 'demo-investor',
+    wallet_movement_id: null,
+    direction: 'outbound',
+    network: 'polygon',
+    token: 'USDC',
+    tx_hash: '0x4f2c3d7a8b9e1f0a6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3',
+    from_address: '0x6E0d45a31b1A8F9C2dA4E6F8C0b7D9a1F2E3C4B5',
+    to_address: '0x8A7b6C5d4E3f2A1b0C9D8e7F6A5b4C3d2E1f0A9b',
+    amount_crypto: 320,
+    amount_usd: 320,
+    exchange_rate: 1,
+    network_fee_crypto: 0.08,
+    network_fee_usd: 0.08,
+    platform_fee_usd: 3.2,
+    status: 'confirming',
+    confirmations: 18,
+    required_confirmations: 30,
+    block_number: 70124512,
+    block_timestamp: new Date().toISOString(),
+    explorer_url: 'https://polygonscan.com/tx/0x4f2c3d7a8b9e1f0a6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3',
+    raw_data: null,
+    confirmed_at: null,
+    created_at: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+];
+
+const DEMO_ADDRESSES: Partial<Record<CryptoNetwork, string>> = {
+  tron: 'TQdemoSueloUSDT9xY8z7w6v5u4t3s2r1',
+  polygon: '0x6E0d45a31b1A8F9C2dA4E6F8C0b7D9a1F2E3C4B5',
+  ethereum: '0x2C9B8a7F6E5d4C3b2A1f0E9d8C7b6A5F4e3D2c1B',
+  bsc: '0xB0A9f8E7d6C5b4A3f2E1d0C9b8A7F6e5D4c3B2a1',
+};
 
 export default function CryptoWalletPage() {
   const supabase = createClient();
@@ -35,8 +102,17 @@ export default function CryptoWalletPage() {
 
   async function loadTransactions() {
     setLoading(true);
+    if (DEMO_MODE) {
+      setTransactions(DEMO_CRYPTO_TRANSACTIONS);
+      setLoading(false);
+      return;
+    }
+
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
+    if (!user) {
+      setLoading(false);
+      return;
+    }
 
     const { data } = await supabase
       .from('crypto_transactions')
@@ -51,17 +127,30 @@ export default function CryptoWalletPage() {
 
   async function generateAddress() {
     setGenerating(true);
-    const res = await fetch('/api/crypto/deposit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ network: selectedNetwork, token: selectedToken }),
-    });
-    const data = await res.json();
-    if (data.address) {
-      setAddress(data.address);
-      setQrUrl(data.qr_code_url);
+    if (DEMO_MODE) {
+      setAddress(DEMO_ADDRESSES[selectedNetwork] || DEMO_ADDRESSES.polygon || '');
+      setQrUrl('');
+      setGenerating(false);
+      return;
     }
-    setGenerating(false);
+
+    try {
+      const res = await fetch('/api/crypto/deposit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ network: selectedNetwork, token: selectedToken }),
+      });
+      const data = await res.json();
+      if (data.address) {
+        setAddress(data.address);
+        setQrUrl(data.qr_code_url);
+      }
+    } catch {
+      setAddress('');
+      setQrUrl('');
+    } finally {
+      setGenerating(false);
+    }
   }
 
   function copyAddress() {
@@ -106,6 +195,11 @@ export default function CryptoWalletPage() {
               Depositá USDT o USDC y tu saldo se acredita en minutos.
               Sin bancos, sin barreras cambiarias.
             </p>
+            {DEMO_MODE && (
+              <p className="mt-2 inline-flex rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-700">
+                Demo visual: no envíes fondos reales a estas direcciones.
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -367,16 +461,18 @@ export default function CryptoWalletPage() {
 // ============================================
 function WithdrawForm() {
   const supabase = createClient();
+  const demoMode = DEMO_MODE;
   const [amount, setAmount] = useState('');
   const [network, setNetwork] = useState<CryptoNetwork>('polygon');
   const [token, setToken] = useState<CryptoToken>('USDT');
   const [address, setAddress] = useState('');
-  const [kycStatus, setKycStatus] = useState<string>('');
+  const [kycStatus, setKycStatus] = useState<string>(demoMode ? 'approved' : '');
   const [processing, setProcessing] = useState(false);
   const [result, setResult] = useState<{ ok: boolean; msg: string } | null>(null);
 
   useEffect(() => {
     async function loadKyc() {
+      if (demoMode) return;
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
       const { data } = await supabase.from('profiles').select('kyc_status').eq('id', user.id).single();
@@ -390,27 +486,46 @@ function WithdrawForm() {
     e.preventDefault();
     setProcessing(true);
 
-    const res = await fetch('/api/crypto/withdraw', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        amount_usd: Number(amount),
-        network, token,
-        destination_address: address,
-      }),
-    });
-    const data = await res.json();
-
-    setResult({
-      ok: res.ok,
-      msg: res.ok ? data.message : data.error,
-    });
-    setProcessing(false);
-
-    if (res.ok) {
+    if (demoMode) {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      setResult({
+        ok: true,
+        msg: 'Demo: solicitud creada. En producción se enviaría email, KYC y aprobación admin según umbral.',
+      });
+      setProcessing(false);
       setAmount('');
       setAddress('');
+      return;
     }
+
+    try {
+      const res = await fetch('/api/crypto/withdraw', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount_usd: Number(amount),
+          network, token,
+          destination_address: address,
+        }),
+      });
+      const data = await res.json();
+
+      setResult({
+        ok: res.ok,
+        msg: res.ok ? data.message : data.error,
+      });
+
+      if (res.ok) {
+        setAmount('');
+        setAddress('');
+      }
+    } catch {
+      setResult({
+        ok: false,
+        msg: 'No se pudo conectar con el servidor. Revisá Supabase/API y probá nuevamente.',
+      });
+    }
+    setProcessing(false);
   }
 
   if (kycStatus !== 'approved') {
