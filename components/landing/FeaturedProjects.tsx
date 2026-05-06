@@ -17,8 +17,8 @@ import { SueloScoreBadge } from '@/components/ui/suelo-score-badge';
 
 const projects = [
   {
-    title: 'Torre Asunci?n Eje',
-    location: 'Asunci?n, Paraguay',
+    title: 'Torre Asunción Eje',
+    location: 'Asunción, Paraguay',
     image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=85&auto=format&fit=crop',
     score: 'A+',
     scoreValue: 94,
@@ -27,9 +27,9 @@ const projects = [
     minTicket: '100 USDT',
     expectedReturn: '14.2%',
     stage: 'Obra avanzada',
-    developer: 'Alto Paran? Developments',
+    developer: 'Alto Paraná Developments',
     thesis: 'Zona corporativa con preventa validada y demanda de alquiler ejecutivo.',
-    metrics: ['USD 1.8M objetivo', '21 meses', 'Polygon hash ready'],
+    metrics: ['USD 1.8M objetivo', '21 meses', 'Hash Polygon listo'],
     accent: 'brand' as const,
   },
   {
@@ -60,7 +60,7 @@ const projects = [
     expectedReturn: '12.6%',
     stage: 'Preventa',
     developer: 'Altiplano Capital',
-    thesis: 'Ubicaci?n estrat?gica con upside comercial y salida flexible.',
+    thesis: 'Ubicación estratégica, potencial comercial y posibilidad de salida secundaria.',
     metrics: ['USD 2.4M objetivo', '30 meses', 'Salida secundaria'],
     accent: 'terra' as const,
   },
@@ -107,14 +107,14 @@ export function FeaturedProjects() {
             >
               Oportunidades listas para{' '}
               <span className="font-serif italic font-[400] text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-earth-300 to-terra-400">
-                mirar con lupa.
+                analizar con claridad.
               </span>
             </h2>
             <p
               data-reveal
               className="mt-5 text-surface-600 text-base md:text-lg leading-relaxed max-w-xl"
             >
-              Cada card combina activo real, avance de fondeo y scoring IA para decidir con contexto.
+              Cada tarjeta muestra activo, avance de financiación, retorno estimado, riesgo y explicación simple para comparar mejor.
             </p>
           </div>
 
@@ -173,7 +173,7 @@ export function FeaturedProjects() {
                   <div className="mb-5 flex items-start justify-between gap-4">
                     <div>
                       <p className="text-[10px] font-mono uppercase tracking-[0.15em] text-surface-500">
-                        Developer
+                        Desarrolladora
                       </p>
                       <p className="mt-1 text-sm font-[560] text-surface-900">
                         {project.developer}
@@ -236,10 +236,10 @@ export function FeaturedProjects() {
             </div>
             <div>
               <p className="text-sm font-[600] text-surface-900">
-                Scoring IA con trazabilidad
+                Scoring IA explicado
               </p>
               <p className="mt-1 text-[13px] leading-relaxed text-surface-600">
-                La calificación cruza ubicación, developer, documentación, finanzas y mercado. Siempre muestra riesgos, no solo upside.
+                La calificación cruza ubicación, desarrollador, documentación, finanzas y mercado. Siempre muestra riesgos, no solo potencial de ganancia.
               </p>
             </div>
           </div>

@@ -11,17 +11,17 @@ const stats = [
   { icon: CircleDollarSign, value: 2.4, suffix: 'M', prefix: 'USD ', decimals: 1, label: 'Monto financiado', tone: 'text-cyan-300' },
   { icon: Building2, value: 38, suffix: '', prefix: '', decimals: 0, label: 'Proyectos activos', tone: 'text-[#F5C542]' },
   { icon: HandCoins, value: 184, suffix: 'k', prefix: 'USD ', decimals: 0, label: 'Rentas distribuidas', tone: 'text-violet-300' },
-  { icon: ShieldCheck, value: 27, suffix: '', prefix: '', decimals: 0, label: 'Developers verificados', tone: 'text-emerald-300' },
+  { icon: ShieldCheck, value: 27, suffix: '', prefix: '', decimals: 0, label: 'Desarrolladoras verificadas', tone: 'text-emerald-300' },
   { icon: Award, value: 98.4, suffix: '%', prefix: '', decimals: 1, label: 'Contratos verificados', tone: 'text-cyan-300' },
 ];
 
 const activity = [
-  'María invirtió USD 500 en Asunción',
+  'Una inversora sumó USD 500 en Asunción',
   'Carlos recibió su primera renta mensual',
-  'Torre Horizonte alcanzó 72% de funding',
-  'Developer verificado en Santa Cruz',
+  'Torre Horizonte ya financió el 72%',
+  'Desarrolladora verificada en Santa Cruz',
   'Contrato #8472 registrado con hash público',
-  'Nueva oportunidad A+ en Paraguay',
+  'Nuevo proyecto A+ disponible en Paraguay',
 ];
 
 const testimonials = [
@@ -33,8 +33,8 @@ const testimonials = [
   },
   {
     name: 'Carlos Aguilera',
-    role: 'Developer, Santa Cruz',
-    text: 'Nos ayudó a ordenar la captación, documentación y seguimiento. Se siente mucho más serio que mandar PDFs por WhatsApp.',
+    role: 'Desarrollador, Santa Cruz',
+    text: 'Nos ayudó a presentar el proyecto con documentación, seguimiento y trazabilidad. Es mucho más claro que enviar archivos sueltos por WhatsApp.',
     image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80&auto=format&fit=crop',
   },
   {
@@ -85,7 +85,7 @@ export function SocialProof() {
               </span>
             </h2>
             <p data-reveal className="mt-5 max-w-xl text-base leading-relaxed text-white/58 md:text-lg">
-              La plataforma debe sentirse viva: inversiones, rentas, verificaciones y developers reales moviéndose en la misma infraestructura.
+              Mostramos inversiones, rentas, contratos verificados y desarrolladoras reales trabajando en una misma plataforma.
             </p>
           </div>
 

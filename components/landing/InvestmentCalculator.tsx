@@ -8,7 +8,7 @@ import { useRevealOnScroll } from '@/components/animations/useReveal';
 const profiles = [
   { label: 'Conservador', rate: 0.09, rent: 0.055, color: '#10B981', copy: 'Renta mensual + activos terminados' },
   { label: 'Balanceado', rate: 0.14, rent: 0.045, color: '#06B6D4', copy: 'Mix de renta y obra avanzada' },
-  { label: 'Crecimiento', rate: 0.2, rent: 0.025, color: '#F5C542', copy: 'Mayor plusvalía y plazo largo' },
+  { label: 'Crecimiento', rate: 0.2, rent: 0.025, color: '#F5C542', copy: 'Mayor potencial de valorización y plazo más largo' },
 ] as const;
 
 function money(value: number) {
@@ -90,13 +90,13 @@ export function InvestmentCalculator() {
             Simulador
           </p>
           <h2 data-reveal className="font-display text-3xl font-bold leading-[1.05] tracking-[-0.02em] text-white md:text-5xl">
-            Visualizá tu patrimonio{' '}
+            Simulá una inversión{' '}
             <span className="font-serif italic font-[400] text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-cyan-300 to-[#F5C542]">
-              creciendo.
+              antes de entrar.
             </span>
           </h2>
           <p data-reveal className="mt-5 text-base leading-relaxed text-white/58 md:text-lg">
-            Ajustá monto, plazo y perfil. La simulación muestra renta mensual, plusvalía y valor estimado.
+            Elegí monto, plazo y perfil de riesgo. El simulador estima renta mensual, valorización y resultado total. No es una garantía.
           </p>
         </div>
 
@@ -170,7 +170,7 @@ export function InvestmentCalculator() {
               {[
                 { icon: WalletCards, label: 'Valor estimado', value: `USD ${money(projection.final)}`, tone: 'text-emerald-300' },
                 { icon: Coins, label: 'Renta mensual', value: `USD ${money(projection.monthlyRent)}`, tone: 'text-cyan-300' },
-                { icon: TrendingUp, label: 'Plusvalía esperada', value: `USD ${money(Math.max(0, projection.appreciation))}`, tone: 'text-[#F5C542]' },
+                { icon: TrendingUp, label: 'Valorización esperada', value: `USD ${money(Math.max(0, projection.appreciation))}`, tone: 'text-[#F5C542]' },
                 { icon: Landmark, label: 'Ganancia total', value: `USD ${money(projection.gain)}`, tone: 'text-violet-300' },
               ].map(({ icon: Icon, label, value, tone }) => (
                 <div key={label} className="rounded-2xl border border-white/10 bg-[#07111F]/54 p-4">
@@ -190,7 +190,7 @@ export function InvestmentCalculator() {
 
             <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <p className="max-w-md text-xs leading-relaxed text-white/45">
-                Proyección estimada. Invertí con información, no con intuición. Las inversiones tienen riesgo.
+                Proyección estimada, no garantizada. Usala para comparar escenarios y entender el riesgo antes de invertir.
               </p>
               <Link
                 href="/register"

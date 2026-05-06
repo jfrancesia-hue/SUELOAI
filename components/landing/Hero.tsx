@@ -17,11 +17,11 @@ const LatamInvestmentMap = dynamic(() => import('@/components/3d/latam-investmen
 });
 
 const activity = [
-  'María invirtió USD 500 en Asunción',
-  'Torre Horizonte alcanzó 72% de funding',
-  'Carlos recibió su primera renta mensual',
-  'Nuevo hash público verificado en Polygon',
-  'Developer verificado en Santa Cruz',
+  'Una inversora sumó USD 500 en Asunción',
+  'Torre Horizonte ya financió el 72%',
+  'Un inversor recibió su primera renta mensual',
+  'Nuevo contrato verificado con hash público',
+  'Desarrolladora verificada en Santa Cruz',
 ];
 
 export function Hero() {
@@ -53,7 +53,7 @@ export function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300 opacity-60" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-300" />
             </span>
-            Fintech inmobiliaria PY + BO
+            Inversión inmobiliaria en Paraguay y Bolivia
           </motion.div>
 
           <motion.h1
@@ -71,7 +71,7 @@ export function Hero() {
             variants={fadeUp}
             className="mt-6 max-w-2xl text-base leading-[1.65] text-white/66 md:text-lg"
           >
-            Proyectos inmobiliarios curados, trazabilidad blockchain e inteligencia artificial para invertir con más confianza.
+            Invertí en proyectos inmobiliarios seleccionados, con documentos verificables, trazabilidad digital y un analista IA que te explica riesgos y oportunidades antes de decidir.
           </motion.p>
 
           <motion.div variants={fadeUp} className="mt-10 flex flex-col gap-3 sm:flex-row">
@@ -82,7 +82,7 @@ export function Hero() {
           <motion.div variants={fadeUp} className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3">
             <MetricCard
               icon={CircleDollarSign}
-              label="Ticket mínimo"
+              label="Entrada mínima"
               value="USD 100"
               detail="o 100 USDT"
               tone="emerald"
@@ -91,7 +91,7 @@ export function Hero() {
               icon={ShieldCheck}
               label="Trazabilidad"
               value="Hash público"
-              detail="Contrato verificable"
+              detail="Contrato y documentos verificables"
               tone="cyan"
             />
             <MetricCard
@@ -123,7 +123,7 @@ export function Hero() {
             </div>
             <div>
               <p className="text-sm font-semibold text-white">Actividad reciente</p>
-              <p className="text-xs text-white/45">Señales reales de confianza e inversión</p>
+              <p className="text-xs text-white/45">Movimientos y verificaciones de la plataforma</p>
             </div>
           </div>
           <ActivityTicker items={activity} />
@@ -133,7 +133,7 @@ export function Hero() {
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-[#0a0a0a]" />
       <div className="pointer-events-none absolute bottom-12 right-8 hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.045] px-3 py-2 text-xs text-white/50 backdrop-blur-xl lg:flex">
         <Sparkles className="h-3.5 w-3.5 text-emerald-300" strokeWidth={2} />
-        Invertí con información, no con intuición.
+        Invertí con datos claros, no con promesas.
       </div>
     </section>
   );

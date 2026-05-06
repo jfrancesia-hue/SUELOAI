@@ -61,7 +61,7 @@ export function FloatingAssistant() {
     const context = typeof window !== 'undefined' ? window.location.pathname : '/';
     return [
       'Hola Suelo, quiero hablar con el Asesor IA.',
-      lastUserMessage ? `Mi consulta: ${lastUserMessage}` : 'Quiero asesoramiento para invertir en ladrillo real desde USD 100.',
+      lastUserMessage ? `Mi consulta: ${lastUserMessage}` : 'Quiero asesoramiento para invertir en proyectos inmobiliarios desde USD 100.',
       `Estoy viendo: ${context}`,
     ].join('\n');
   }, [messages]);

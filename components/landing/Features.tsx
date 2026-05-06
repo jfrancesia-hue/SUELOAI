@@ -41,7 +41,7 @@ export function Features() {
           >
             Inversión inmobiliaria{' '}
             <span className="italic font-[600] text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-earth-300 to-terra-400 font-serif">
-              reimaginada
+              más simple
             </span>
           </h2>
           <p
@@ -131,7 +131,7 @@ function BentoCellHero() {
           podés pagar.
         </h3>
         <p className="mt-4 text-surface-600 text-sm md:text-base max-w-md leading-relaxed">
-          Participaciones reales en proyectos inmobiliarios tangibles. Sin capital grande, sin intermediarios infinitos.
+          Entrás con una participación proporcional del proyecto. Sin necesitar comprar una propiedad completa ni depender de procesos confusos.
         </p>
       </div>
       <div className="relative mt-8 md:mt-12 h-[180px] md:h-[220px] -mx-2">
@@ -284,7 +284,7 @@ function BentoCellChart() {
             Retornos transparentes
           </h3>
           <p className="mt-2 text-sm text-surface-600 leading-relaxed max-w-[28ch]">
-            Progreso y rendimiento sin letra chica.
+            Avance de financiación, rendimiento estimado y estado del proyecto en lenguaje claro.
           </p>
         </div>
 

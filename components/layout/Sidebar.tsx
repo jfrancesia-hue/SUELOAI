@@ -60,7 +60,7 @@ export function Sidebar({ profile }: SidebarProps) {
     { href: '/admin', label: 'Admin', icon: ShieldCheck, badge: 'OPS', highlight: true },
     { href: '/developer', label: 'Dashboard developer', icon: LayoutDashboard },
     { href: '/investor', label: 'Dashboard inversor', icon: User },
-    { section: 'Operaci?n' },
+    { section: 'Operación' },
     { href: '/projects', label: 'Proyectos', icon: Building2 },
     { href: '/crm', label: 'CRM', icon: Users },
     { href: '/wallet', label: 'Billetera', icon: Wallet },

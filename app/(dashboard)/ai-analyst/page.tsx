@@ -35,7 +35,7 @@ const EXAMPLE_PROMPTS = [
     icon: TrendingUp,
     title: 'Analizar mi portfolio',
     description: 'Evaluá el estado actual de tus inversiones',
-    prompt: '¿Cómo está distribuido mi portfolio y qué debería mejorar?',
+    prompt: '¿Cómo está distribuida mi cartera y qué debería mejorar?',
   },
   {
     icon: Building2,

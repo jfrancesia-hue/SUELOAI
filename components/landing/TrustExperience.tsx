@@ -7,7 +7,7 @@ import { useRevealOnScroll } from '@/components/animations/useReveal';
 const trustItems = [
   { icon: FileCheck2, label: 'Contrato', detail: 'PDF firmado' },
   { icon: Fingerprint, label: 'Hash', detail: 'SHA-256 público' },
-  { icon: ShieldCheck, label: 'Developer', detail: 'Verificado' },
+  { icon: ShieldCheck, label: 'Desarrolladora', detail: 'Verificado' },
   { icon: LockKeyhole, label: 'Documentos', detail: 'Permisos y auditoría' },
 ];
 

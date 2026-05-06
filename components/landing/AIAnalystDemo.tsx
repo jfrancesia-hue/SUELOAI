@@ -181,7 +181,7 @@ export function AIAnalystDemo() {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-white">Analista Suelo</p>
-                      <p className="text-xs text-white/45">Memoria, tools y scoring</p>
+                      <p className="text-xs text-white/45">Memoria, análisis y scoring</p>
                     </div>
                   </div>
                   <div className="rounded-2xl border border-white/10 bg-white/[0.055] p-4 text-sm leading-relaxed text-white/72">

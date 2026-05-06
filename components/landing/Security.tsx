@@ -32,7 +32,7 @@ const pillars = [
   {
     icon: Cpu,
     title: 'Rate limiting & DDoS',
-    description: 'Upstash Redis + fallback en memoria. Headers CSP estrictos. Sin huecos conocidos.',
+    description: 'Rate limiting, headers de seguridad y monitoreo para proteger la plataforma ante abuso.',
     accent: 'earth' as const,
   },
 ];
@@ -70,9 +70,9 @@ export function Security() {
             data-reveal
             className="font-display text-3xl md:text-5xl font-bold text-surface-900 tracking-[-0.02em] leading-[1.05]"
           >
-            Tu capital merece{' '}
+            Seguridad pensada{' '}
             <span className="font-serif italic font-[400] text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-earth-300">
-              paranoia ingenieril.
+              para operar en serio.
             </span>
           </h2>
           <p

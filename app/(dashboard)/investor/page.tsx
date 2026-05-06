@@ -74,7 +74,7 @@ function InvestorDashboardView({
   const byProjectMap = new Map<string, number>();
 
   for (const investment of activeInvestments) {
-    const location = investment.project?.location || 'Sin ubicacion';
+    const location = investment.project?.location || 'Sin ubicación';
     const title = investment.project?.title || 'Proyecto';
     const amount = Number(investment.amount) || 0;
     byLocationMap.set(location, (byLocationMap.get(location) ?? 0) + amount);
@@ -180,7 +180,7 @@ function InvestorDashboardView({
                     <td className="p-4 text-surface-900">{transaction.project?.title || '-'}</td>
                     <td className="p-4">
                       <Badge variant={transaction.type === 'return' ? 'success' : 'info'}>
-                        {transaction.type === 'investment' ? 'Inversion' : transaction.type === 'return' ? 'Retorno' : transaction.type}
+                        {transaction.type === 'investment' ? 'Inversión' : transaction.type === 'return' ? 'Retorno' : transaction.type}
                       </Badge>
                     </td>
                     <td className="p-4 text-right font-mono font-medium text-surface-900">{formatCurrency(Number(transaction.amount))}</td>

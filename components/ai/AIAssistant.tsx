@@ -16,7 +16,7 @@ interface Message {
 
 const QUICK_PROMPTS = [
   { icon: Search, text: 'Mostrame proyectos recomendados', category: 'discover' },
-  { icon: TrendingUp, text: '¿Cómo va mi portfolio?', category: 'portfolio' },
+  { icon: TrendingUp, text: '¿Cómo va mi cartera?', category: 'portfolio' },
   { icon: Building2, text: '¿Qué invertir con USD 500?', category: 'invest' },
   { icon: DollarSign, text: 'Explicame los retornos', category: 'learn' },
 ];
@@ -26,7 +26,7 @@ export function AIAssistant() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: '¡Hola! Soy tu analista personal de Suelo. Te puedo ayudar a entender proyectos, analizar tu portfolio, recomendarte inversiones o responder cualquier duda. ¿En qué te ayudo?',
+    content: '¡Hola! Soy tu analista personal de Suelo. Puedo ayudarte a entender proyectos, analizar tu cartera, comparar riesgos y simular inversiones. ¿Qué querés revisar?',
     },
   ]);
   const [input, setInput] = useState('');

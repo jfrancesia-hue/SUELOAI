@@ -25,7 +25,7 @@ export function Footer() {
           <div>
             <h4 className="text-sm font-semibold text-surface-800 mb-4">Plataforma</h4>
             <div className="space-y-2.5">
-              {['Marketplace', 'Cómo Funciona', 'Verificar Contrato', 'FAQ'].map((item) => (
+              {['Marketplace', 'Cómo Funciona', 'Verificar contrato', 'FAQ'].map((item) => (
                 <Link
                   key={item}
                   href="#"

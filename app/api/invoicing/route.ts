@@ -3,11 +3,11 @@
  *
  * GET    -> lista facturas del issuer (con filtros)
  * POST   -> crea factura en draft
- * PATCH  -> actualiza factura. La acci?n "issue" exige proveedor fiscal real.
+ * PATCH  -> actualiza factura. La acción "issue" exige proveedor fiscal real.
  * DELETE -> soft-cancel si status != issued/paid
  *
- * Producci?n Paraguay/Bolivia: no se emiten comprobantes mock.
- * Conectar SIFEN/DNIT (PY) o SIN (BO) antes de habilitar emisi?n fiscal.
+ * Producción Paraguay/Bolivia: no se emiten comprobantes mock.
+ * Conectar SIFEN/DNIT (PY) o SIN (BO) antes de habilitar emisión fiscal.
  */
 
 import { createClient } from '@/lib/supabase-server';
@@ -137,7 +137,7 @@ export async function PATCH(request: NextRequest) {
   const body = await request.json();
   if (!body.id) return NextResponse.json({ error: 'id requerido' }, { status: 400 });
 
-  // Acci?n: emitir. Se delega a proveedor fiscal real por pa?s; sin API configurada devuelve 501/503.
+  // Acción: emitir. Se delega a proveedor fiscal real por país; sin API configurada devuelve 501/503.
   if (body.action === 'issue') {
     const { data: invoice } = await supabase
       .from('invoices')
@@ -195,8 +195,8 @@ export async function PATCH(request: NextRequest) {
     } catch (err: any) {
       return NextResponse.json(
         {
-          error: err.message || 'Emisi?n fiscal no configurada para producci?n',
-          detail: 'Conect? SIFEN/DNIT para Paraguay o SIN para Bolivia en lib/fiscal/providers.ts.',
+          error: err.message || 'Emisión fiscal no configurada para producción',
+          detail: 'Conectá SIFEN/DNIT para Paraguay o SIN para Bolivia en lib/fiscal/providers.ts.',
         },
         { status: provider.isConfigured() ? 502 : 501 }
       );

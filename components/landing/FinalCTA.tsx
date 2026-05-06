@@ -66,7 +66,7 @@ export function FinalCTA() {
                        hover:shadow-[0_1px_0_rgba(255,255,255,0.25)_inset,0_0_0_1px_rgba(0,200,83,0.6),0_16px_40px_-6px_rgba(0,200,83,0.65)]
                        hover:-translate-y-px active:translate-y-0"
           >
-            Crear Cuenta Gratis
+            Crear cuenta gratis
             <ArrowRight
               className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5"
               strokeWidth={2}

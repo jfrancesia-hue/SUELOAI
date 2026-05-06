@@ -100,7 +100,7 @@ export default function InvoicingPage() {
         subtotal: '',
         tax_amount: '',
         total: '',
-        currency: 'ARS',
+        currency: 'USD',
         notes: '',
       });
       fetchInvoices();
@@ -108,7 +108,7 @@ export default function InvoicingPage() {
   };
 
   const handleIssue = async (id: string) => {
-    if (!confirm('¿Emitir factura (llama a AFIP)? No se puede revertir.')) return;
+    if (!confirm('¿Emitir comprobante fiscal con el proveedor configurado? No se puede revertir.')) return;
     const res = await fetch('/api/invoicing', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -116,7 +116,7 @@ export default function InvoicingPage() {
     });
     const body = await res.json();
     if (res.ok) {
-      alert(`Emitida. CAE: ${body.afip?.cae || '(stub)'}`);
+      alert(`Emitida. Código: ${body.fiscal?.code || body.invoice?.fiscal_code || 'emitido'}`);
       fetchInvoices();
     } else {
       alert(`Error: ${body.error}`);
@@ -135,7 +135,7 @@ export default function InvoicingPage() {
         <div>
           <h1 className="text-3xl font-display font-bold text-surface-900">Facturación</h1>
           <p className="text-surface-600 mt-1">
-            Emitir facturas electrónicas AFIP (Argentina) y SIFEN (Paraguay)
+            Emití comprobantes fiscales para Paraguay y Bolivia con proveedor real configurado.
           </p>
         </div>
         <Button icon={Plus} onClick={() => setShowForm((v) => !v)}>
@@ -146,7 +146,7 @@ export default function InvoicingPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <StatCard title="Facturas" value={String(stats.count)} icon={FileText} />
         <StatCard title="Total facturado" value={`$${stats.total.toLocaleString()}`} icon={DollarSign} />
-        <StatCard title="IVA del período" value={`$${stats.tax.toLocaleString()}`} icon={DollarSign} />
+        <StatCard title="Impuestos del período" value={`$${stats.tax.toLocaleString()}`} icon={DollarSign} />
       </div>
 
       <div className="flex gap-2 flex-wrap">
@@ -232,9 +232,9 @@ export default function InvoicingPage() {
               value={form.currency}
               onChange={(e) => setForm({ ...form, currency: e.target.value })}
               options={[
-                { value: 'ARS', label: 'ARS' },
                 { value: 'USD', label: 'USD' },
                 { value: 'PYG', label: 'PYG' },
+                { value: 'BOB', label: 'BOB' },
               ]}
             />
           </div>
@@ -258,7 +258,7 @@ export default function InvoicingPage() {
         <EmptyState
           icon={FileText}
           title="Sin facturas todavía"
-          description="Creá tu primera factura (queda en draft hasta que la emitas a AFIP/SIFEN)."
+          description="Creá tu primer comprobante. Queda en borrador hasta conectarlo con SIFEN/DNIT o SIN Bolivia."
         />
       ) : (
         <div className="card overflow-x-auto">

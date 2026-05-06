@@ -100,5 +100,5 @@ Prompt integrable: `lib/ai/analyst/sales-playbook.ts`
 Objetivo:
 - Calificar inversores y developers.
 - Resolver objeciones.
-- Recomendar pr?ximos pasos.
+- Recomendar próximos pasos.
 - Mantener transparencia: no fingir identidad humana.

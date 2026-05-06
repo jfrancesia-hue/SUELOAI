@@ -284,7 +284,7 @@ export default function ProjectDetailPage() {
               {[
                 ['Developer', 'Verificado'],
                 ['Contrato', 'SHA-256 publico'],
-                ['Documentacion', project.documents_url ? 'Disponible' : 'En revision'],
+                ['Documentación', project.documents_url ? 'Disponible' : 'En revisión'],
               ].map(([label, value]) => (
                 <div key={label} className="rounded-2xl border border-surface-200 bg-surface-50 p-4">
                   <p className="text-xs uppercase tracking-[0.14em] text-surface-500">{label}</p>
