@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import { ArrowRight, Building2, DollarSign, FolderPlus, TrendingUp, Users } from 'lucide-react';
 import type { ReactNode } from 'react';
@@ -19,6 +20,7 @@ type DeveloperProject = {
   sold_tokens: number;
   expected_return: number;
   created_at: string;
+  image_url?: string | null;
 };
 
 type DeveloperInvestment = {
@@ -139,7 +141,28 @@ function DeveloperDashboardView({
               const raised = Number(project.sold_tokens) * Number(project.token_price);
 
               return (
-                <Link key={project.id} href={`/projects/${project.id}`} className="card-interactive">
+                <Link key={project.id} href={`/projects/${project.id}`} className="card-interactive group overflow-hidden p-0">
+                  <div className="relative h-48 bg-surface-200">
+                    {project.image_url ? (
+                      <Image
+                        src={project.image_url}
+                        alt={project.title}
+                        fill
+                        sizes="(min-width: 1024px) 50vw, 100vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center">
+                        <Building2 className="h-10 w-10 text-surface-500" />
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-surface-100 via-transparent to-black/20" />
+                    <div className="absolute bottom-4 left-4 rounded-2xl border border-white/10 bg-black/38 px-3 py-2 text-xs font-semibold text-white backdrop-blur-xl">
+                      Foto real del activo
+                    </div>
+                  </div>
+
+                  <div className="p-6">
                   <div className="mb-3 flex items-start justify-between">
                     <div>
                       <h3 className="font-display font-semibold text-surface-900">{project.title}</h3>
@@ -168,6 +191,7 @@ function DeveloperDashboardView({
 
                   <ProgressBar value={project.sold_tokens} max={project.total_tokens} size="sm" />
                   <p className="mt-2 text-xs text-surface-500">{progress}% financiado</p>
+                  </div>
                 </Link>
               );
             })}
