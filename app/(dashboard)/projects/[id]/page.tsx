@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
@@ -22,6 +22,7 @@ import {
   Wallet,
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase-browser';
+import { demoInvestments, demoProfiles, demoProjects, isDemoMode } from '@/lib/demo';
 import { generateContractPDF } from '@/utils/contract-pdf';
 import { cn, formatCurrency, formatDate, getProgressPercent, getStatusLabel } from '@/utils/helpers';
 import { Badge, Button, Input, LoadingSpinner, ProgressBar, StatCard } from '@/components/ui';
@@ -59,6 +60,25 @@ export default function ProjectDetailPage() {
     setInvestError('');
 
     try {
+      if (isDemoMode()) {
+        const demoProject = demoProjects.find((item) => item.id === projectId || item.slug === projectId) || demoProjects[0];
+        setProfile(demoProfiles.investor);
+        setProject(demoProject);
+        setInvestments(demoInvestments.filter((investment) => investment.project_id === demoProject.id) as Investment[]);
+        setWallet({
+          id: 'demo-wallet',
+          user_id: demoProfiles.investor.id,
+          balance_available: 12500,
+          balance_locked: 0,
+          balance_returns: 386,
+          currency: 'USD',
+          is_active: true,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        });
+        return;
+      }
+
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -108,7 +128,28 @@ export default function ProjectDetailPage() {
     }
 
     if (amount < Number(project.min_investment)) {
-      setInvestError(`La inversión mínima es ${formatCurrency(Number(project.min_investment))}`);
+      setInvestError(`La inversiÃ³n mÃ­nima es ${formatCurrency(Number(project.min_investment))}`);
+      setInvesting(false);
+      return;
+    }
+
+    if (isDemoMode()) {
+      const investment = {
+        id: `demo-investment-${Date.now()}`,
+        investor_id: profile.id,
+        project_id: project.id,
+        tokens_purchased: tokensToBuy,
+        amount,
+        status: 'confirmed',
+        contract_hash: `demo-hash-${Date.now()}`,
+        contract_url: null,
+        notes: 'Inversión demo',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      } as InvestmentResult;
+      setInvestments((prev) => [investment, ...prev]);
+      setLastInvestment(investment);
+      setInvestSuccess(true);
       setInvesting(false);
       return;
     }
@@ -124,7 +165,7 @@ export default function ProjectDetailPage() {
     const result = await response.json();
 
     if (!response.ok) {
-      setInvestError(result.error || 'No pudimos confirmar la inversión');
+      setInvestError(result.error || 'No pudimos confirmar la inversiÃ³n');
       setInvesting(false);
       return;
     }
@@ -242,7 +283,7 @@ export default function ProjectDetailPage() {
           <div className="rounded-3xl border border-white/10 bg-white/[0.065] p-5 backdrop-blur-xl">
             <div className="mb-4 flex items-center justify-between">
               <div>
-                <p className="text-xs uppercase tracking-[0.16em] text-white/40">Financiación</p>
+                <p className="text-xs uppercase tracking-[0.16em] text-white/40">FinanciaciÃ³n</p>
                 <p className="mt-1 font-display text-3xl font-bold">{metrics.progress}%</p>
               </div>
               <div className="rounded-2xl border border-emerald-300/20 bg-emerald-300/10 p-3">
@@ -271,23 +312,48 @@ export default function ProjectDetailPage() {
         <StatCard title="Disponibles" value={`${metrics.availableTokens}`} change={`${project.total_tokens} tokens totales`} icon={Building2} />
       </div>
 
+      <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
+        <div className="card border-brand-500/20 bg-brand-500/5">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-500">Suelo Score</p>
+              <p className="mt-2 font-display text-5xl font-bold text-surface-900">{Math.min(96, Math.round(78 + metrics.progress / 5))}/100</p>
+              <p className="mt-2 text-sm text-surface-500">Puntaje propio: documentación, avance, ubicación, desarrolladora y liquidez.</p>
+            </div>
+            <div className="rounded-3xl bg-brand-500/10 p-5">
+              <ShieldCheck className="h-9 w-9 text-brand-500" />
+            </div>
+          </div>
+        </div>
+
+        <div className="card">
+          <h2 className="font-display text-xl font-bold text-surface-900">Acciones inteligentes</h2>
+          <p className="mt-2 text-sm text-surface-500">Compará, preguntá y decidí con contexto antes de invertir.</p>
+          <div className="mt-5 grid gap-3 sm:grid-cols-3">
+            <Link href={`/compare?projects=${project.id}`} className="btn-secondary">Comparar proyecto</Link>
+            <Link href={`/assistant?project=${project.id}`} className="btn-secondary">Preguntar a IA</Link>
+            <Link href="/trust" className="btn-secondary">Ver confianza</Link>
+          </div>
+        </div>
+      </div>
+
       <div className="card border-brand-500/15 bg-brand-500/5">
         <div className="mb-5 flex items-center gap-3">
           <div className="rounded-2xl bg-brand-500/10 p-3">
             <Sparkles className="h-5 w-5 text-brand-500" />
           </div>
           <div>
-            <h2 className="font-display text-xl font-bold text-surface-900">Proyecto explicado fácil</h2>
-            <p className="text-sm text-surface-500">Resumen rápido para entender antes de invertir.</p>
+            <h2 className="font-display text-xl font-bold text-surface-900">Proyecto explicado fÃ¡cil</h2>
+            <p className="text-sm text-surface-500">Resumen rÃ¡pido para entender antes de invertir.</p>
           </div>
         </div>
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-          <EasyPoint title="Qué es" text={project.description || 'Proyecto inmobiliario fraccionado disponible en Suelo.'} />
-          <EasyPoint title="Cómo gana el inversor" text={`Participás proporcionalmente y el retorno objetivo es ${project.expected_return}% en ${project.return_period_months} meses.`} />
-          <EasyPoint title="Qué puede salir mal" text="Puede haber demoras, menor demanda, cambios de costos o menor liquidez para vender antes del plazo." />
-          <EasyPoint title="Entrada mínima" text={`Desde ${formatCurrency(Number(project.min_investment))}, sujeto a disponibilidad de tokens.`} />
-          <EasyPoint title="Documentos" text={project.documents_url ? 'Documentación disponible para revisión.' : 'Documentación en revisión o pendiente de carga.'} />
-          <EasyPoint title="Verificación" text="El contrato puede quedar asociado a un hash público para comprobar integridad." />
+          <EasyPoint title="QuÃ© es" text={project.description || 'Proyecto inmobiliario fraccionado disponible en Suelo.'} />
+          <EasyPoint title="CÃ³mo gana el inversor" text={`ParticipÃ¡s proporcionalmente y el retorno objetivo es ${project.expected_return}% en ${project.return_period_months} meses.`} />
+          <EasyPoint title="QuÃ© puede salir mal" text="Puede haber demoras, menor demanda, cambios de costos o menor liquidez para vender antes del plazo." />
+          <EasyPoint title="Entrada mÃ­nima" text={`Desde ${formatCurrency(Number(project.min_investment))}, sujeto a disponibilidad de tokens.`} />
+          <EasyPoint title="Documentos" text={project.documents_url ? 'DocumentaciÃ³n disponible para revisiÃ³n.' : 'DocumentaciÃ³n en revisiÃ³n o pendiente de carga.'} />
+          <EasyPoint title="VerificaciÃ³n" text="El contrato puede quedar asociado a un hash pÃºblico para comprobar integridad." />
         </div>
       </div>
 
@@ -300,14 +366,14 @@ export default function ProjectDetailPage() {
               </div>
               <div>
                 <h2 className="font-display text-lg font-bold text-surface-900">Centro de confianza</h2>
-                <p className="text-sm text-surface-500">Tu participación, tus documentos, tu trazabilidad.</p>
+                <p className="text-sm text-surface-500">Tu participaciÃ³n, tus documentos, tu trazabilidad.</p>
               </div>
             </div>
             <div className="grid gap-3 md:grid-cols-3">
               {[
                 ['Desarrolladora', 'Verificada'],
-                ['Contrato', 'SHA-256 público'],
-                ['Documentación', project.documents_url ? 'Disponible' : 'En revisión'],
+                ['Contrato', 'SHA-256 pÃºblico'],
+                ['DocumentaciÃ³n', project.documents_url ? 'Disponible' : 'En revisiÃ³n'],
               ].map(([label, value]) => (
                 <div key={label} className="rounded-2xl border border-surface-200 bg-surface-50 p-4">
                   <p className="text-xs uppercase tracking-[0.14em] text-surface-500">{label}</p>
@@ -319,12 +385,12 @@ export default function ProjectDetailPage() {
 
           <div className="card">
             <h2 className="font-display text-lg font-bold text-surface-900">Escenarios de retorno</h2>
-            <p className="mt-1 text-sm text-surface-500">Simulación sobre el monto seleccionado.</p>
+            <p className="mt-1 text-sm text-surface-500">SimulaciÃ³n sobre el monto seleccionado.</p>
             <div className="mt-5 grid gap-3 md:grid-cols-3">
               {[
                 ['Conservador', metrics.conservative, 'Ritmo menor al objetivo'],
                 ['Medio', metrics.balanced, 'Retorno esperado del proyecto'],
-                ['Optimista', metrics.optimistic, 'Mayor plusvalía estimada'],
+                ['Optimista', metrics.optimistic, 'Mayor plusvalÃ­a estimada'],
               ].map(([label, value, note], index) => (
                 <div
                   key={label as string}
@@ -351,7 +417,7 @@ export default function ProjectDetailPage() {
                   <div key={inv.id} className="flex flex-col gap-3 rounded-2xl border border-surface-200 p-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                       <p className="font-semibold text-surface-900">
-                        {inv.tokens_purchased} tokens · {formatCurrency(Number(inv.amount))}
+                        {inv.tokens_purchased} tokens Â· {formatCurrency(Number(inv.amount))}
                       </p>
                       <p className="mt-1 text-xs text-surface-500">{formatDate(inv.created_at)}</p>
                     </div>
@@ -433,10 +499,10 @@ export default function ProjectDetailPage() {
                 <div className="mt-4 rounded-2xl border border-brand-500/20 bg-brand-500/10 p-4">
                   <div className="flex items-center gap-2 text-sm font-semibold text-brand-500">
                     <CheckCircle2 className="h-4 w-4" />
-                    Inversión confirmada
+                    InversiÃ³n confirmada
                   </div>
                   <p className="mt-2 text-xs leading-relaxed text-surface-500">
-                    El contrato se descargó y tu hash público ya está disponible.
+                    El contrato se descargÃ³ y tu hash pÃºblico ya estÃ¡ disponible.
                   </p>
                   {lastInvestment.contract_hash && (
                     <Link href={`/verify/${lastInvestment.contract_hash}`} className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-brand-500">
@@ -447,11 +513,11 @@ export default function ProjectDetailPage() {
               )}
 
               <Button onClick={handleInvest} loading={investing} disabled={!hasEnoughBalance || investing} className="mt-4 w-full" icon={ShieldCheck}>
-                Confirmar inversión
+                Confirmar inversiÃ³n
               </Button>
 
               <p className="mt-3 text-center text-xs leading-relaxed text-surface-500">
-                Se debita tu wallet, se confirma la participación y se genera un contrato PDF verificable.
+                Se debita tu wallet, se confirma la participaciÃ³n y se genera un contrato PDF verificable.
               </p>
             </div>
           ) : (

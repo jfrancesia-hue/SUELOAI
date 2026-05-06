@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase-browser';
 import { Button, LoadingSpinner } from '@/components/ui';
 import {
@@ -8,6 +9,7 @@ import {
   TrendingUp, Building2, Wallet, Search, Calculator,
 } from 'lucide-react';
 import { formatDate } from '@/utils/helpers';
+import { demoProjects, isDemoMode } from '@/lib/demo';
 
 interface Message {
   id: string;
@@ -34,6 +36,8 @@ const SUGGESTED_PROMPTS = [
 
 export default function AssistantPage() {
   const supabase = createClient();
+  const searchParams = useSearchParams();
+  const contextualProject = demoProjects.find((project) => project.id === searchParams?.get('project') || project.slug === searchParams?.get('project'));
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [activeConversation, setActiveConversation] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -52,6 +56,11 @@ export default function AssistantPage() {
   }, [messages]);
 
   async function loadConversations() {
+    if (isDemoMode()) {
+      setConversations([]);
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     const res = await fetch('/api/ai/chat');
     const data = await res.json();
@@ -80,6 +89,22 @@ export default function AssistantPage() {
       created_at: new Date().toISOString(),
     };
     setMessages((prev) => [...prev, tempUserMsg]);
+
+    if (isDemoMode()) {
+      setTimeout(() => {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `assistant-${Date.now()}`,
+            role: 'assistant',
+            content: buildDemoAssistantReply(messageText, contextualProject?.title),
+            created_at: new Date().toISOString(),
+          },
+        ]);
+        setSending(false);
+      }, 450);
+      return;
+    }
 
     try {
       const res = await fetch('/api/ai/chat', {
@@ -191,7 +216,7 @@ export default function AssistantPage() {
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {messages.length === 0 ? (
-            <WelcomeScreen onSelectPrompt={sendMessage} />
+            <WelcomeScreen onSelectPrompt={sendMessage} projectTitle={contextualProject?.title} />
           ) : (
             <>
               {messages.filter((m) => m.role !== 'tool').map((msg) => (
@@ -245,7 +270,7 @@ export default function AssistantPage() {
 // ============================================
 // WELCOME SCREEN
 // ============================================
-function WelcomeScreen({ onSelectPrompt }: { onSelectPrompt: (text: string) => void }) {
+function WelcomeScreen({ onSelectPrompt, projectTitle }: { onSelectPrompt: (text: string) => void; projectTitle?: string }) {
   return (
     <div className="flex flex-col items-center justify-center h-full text-center max-w-2xl mx-auto">
       <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center shadow-2xl shadow-brand-500/30 mb-6">
@@ -256,7 +281,9 @@ function WelcomeScreen({ onSelectPrompt }: { onSelectPrompt: (text: string) => v
         Hola, soy tu Analista Suelo
       </h2>
       <p className="text-surface-600 mb-8 max-w-lg">
-        Puedo analizar tu portfolio, recomendar proyectos según tu perfil, calcular retornos proyectados y responder cualquier duda sobre tus inversiones.
+        {projectTitle
+          ? `Estoy viendo el proyecto ${projectTitle}. Puedo explicarte riesgo, documentos, retorno y compararlo con otras oportunidades.`
+          : 'Puedo analizar tu portfolio, recomendar proyectos seg?n tu perfil, calcular retornos proyectados y responder cualquier duda sobre tus inversiones.'}
       </p>
 
       <div className="w-full max-w-2xl space-y-2">
@@ -331,4 +358,17 @@ function MessageBubble({ message }: { message: Message }) {
       </div>
     </div>
   );
+}
+
+function buildDemoAssistantReply(message: string, projectTitle?: string) {
+  const context = projectTitle ? ` sobre ${projectTitle}` : '';
+  return [
+    `Te respondo en modo demo${context}:`,
+    '',
+    '1. Primero mirar?a Suelo Score, avance de funding, documentaci?n y liquidez esperada.',
+    '2. Para Paraguay/Bolivia conviene separar proyectos de renta mensual y proyectos de crecimiento.',
+    '3. No prometas retorno garantizado: evalu? plazo, riesgo de obra, demanda y salida.',
+    '',
+    `Consulta recibida: "${message}"`,
+  ].join('\n');
 }

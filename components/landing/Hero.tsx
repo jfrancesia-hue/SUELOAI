@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Building2, CircleDollarSign, ShieldCheck, Sparkles, TrendingUp } from 'lucide-react';
 import { ActivityTicker } from '@/components/ui/activity-ticker';
@@ -68,6 +69,22 @@ export function Hero() {
           <motion.div variants={fadeUp} className="mt-10 flex flex-col gap-3 sm:flex-row">
             <PremiumCta href="/register">Empezar a invertir</PremiumCta>
             <PremiumCta href="#proyectos" variant="secondary">Ver proyectos</PremiumCta>
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="mt-5 flex flex-wrap gap-2">
+            {[
+              ['Demo inversor', '/investor'],
+              ['Demo developer', '/developer'],
+              ['Demo admin', '/admin'],
+            ].map(([label, href]) => (
+              <Link
+                key={href}
+                href={href}
+                className="rounded-full border border-white/10 bg-white/[0.055] px-4 py-2 text-xs font-semibold text-white/70 transition-colors hover:bg-white/[0.09] hover:text-white"
+              >
+                {label}
+              </Link>
+            ))}
           </motion.div>
 
           <motion.div variants={fadeUp} className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3">

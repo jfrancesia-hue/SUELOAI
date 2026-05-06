@@ -10,6 +10,7 @@ import {
   Sprout, LayoutDashboard, Building2, Wallet, Store, FileCheck,
   LogOut, Menu, X, ChevronRight, User, Bitcoin, Users, Receipt,
   RefreshCcw, Sparkles, Bell, Gift, Settings, MessageCircle, ShieldCheck,
+  Scale,
 } from 'lucide-react';
 
 interface SidebarProps { profile: Profile; }
@@ -27,6 +28,7 @@ export function Sidebar({ profile }: SidebarProps) {
     { href: '/investor', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/ai-analyst', label: 'Mi Analista IA', icon: Sparkles, badge: 'AI', highlight: true },
     { href: '/marketplace', label: 'Marketplace', icon: Store },
+    { href: '/compare', label: 'Comparador', icon: Scale, badge: 'NEW' },
     { section: 'Finanzas' },
     { href: '/wallet', label: 'Mi Billetera', icon: Wallet },
     ...(cryptoEnabled ? [{ href: '/wallet/crypto', label: 'Crypto', icon: Bitcoin, badge: 'NEW' }] : []),
@@ -43,6 +45,7 @@ export function Sidebar({ profile }: SidebarProps) {
     { href: '/ai-analyst', label: 'Suelo AI', icon: Sparkles, badge: 'AI', highlight: true },
     { href: '/projects', label: 'Mis Proyectos', icon: Building2 },
     { href: '/marketplace', label: 'Marketplace', icon: Store },
+    { href: '/compare', label: 'Comparador', icon: Scale, badge: 'NEW' },
     { section: 'CRM' },
     { href: '/crm', label: 'CRM', icon: Users, badge: 'PRO' },
     { href: '/crm/pipeline', label: 'Pipeline', icon: LayoutDashboard },
@@ -62,6 +65,7 @@ export function Sidebar({ profile }: SidebarProps) {
     { href: '/investor', label: 'Dashboard inversor', icon: User },
     { section: 'Operación' },
     { href: '/projects', label: 'Proyectos', icon: Building2 },
+    { href: '/compare', label: 'Comparador', icon: Scale },
     { href: '/crm', label: 'CRM', icon: Users },
     { href: '/wallet', label: 'Billetera', icon: Wallet },
     { href: '/invoicing', label: 'Fiscal', icon: Receipt },
